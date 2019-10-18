@@ -21,7 +21,7 @@ if %ERRORLEVEL% equ 1 exit /b
 call .version
 
 echo Updating version tags
-for /f %%f in ('dir /b /s template.json') do move %%f %%f.org > nul && type %%f.org | jq --arg version %VERSION% ".classifications = [\"Dot\", \"Scripts\", $version]" > %%f
+for /f %%f in ('dir /b /s template.json') do move %%f %%f.org > nul && type %%f.org | jq --arg version %VERSION% ".classifications += [$version]" > %%f
 
 set DOTS=.dots\.dots.cmd
 
