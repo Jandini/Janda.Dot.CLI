@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Matt Janda",
+  "classifications": [
+    "Dot",
+    "Solution"
+  ],
+  "name": "Dot Solution",
+  "generatorVersions": "[1.0.0.0-*)",
+  "description": "Dot solution.",
+  "groupIdentity": "Dot.Solution",
+  "precedence": "4000",
+  "identity": "Dot.Solution.CSharp.2.2",
+  "shortName": "dotsln",
+  "tags": {
+    "language": "C#",
+    "type": "library"
+  },
+  "sourceName": "Dot.Solution",
+  "preferNameDirectory": true,
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "**/.vs/**",
+            ".git/**",
+            ".cid/**",
+            ".nuspec"
+          ]
+        },
+        {
+          "condition": "(noGit)",
+          "exclude": [
+            ".init.cmd",
+            ".gitattributes",
+            ".gitignore",
+            "GitVersion.yml",
+            "**/GitVersion.targets"
+          ]
+        }
+      ]
+    }
+  ],
+  "symbols": {
+    "sourceName": {
+      "type": "parameter",
+      "defaultValue": "Dot.Solution",
+      "replaces": "Dot.Solution"
+    },
+    "sourceNameLower": {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source": "name",
+        "toLower": true
+      },
+      "replaces": "dot.solution"
+    },
+    "noGit": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false"
+    }
+  }
+}

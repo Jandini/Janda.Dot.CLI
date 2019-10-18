@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Matt Janda",
+  "classifications": [
+    "Dot",
+    "Solution",
+    "Console"    
+  ],
+  "name": "Dot Solution Console Application",
+  "generatorVersions": "[1.0.0.0-*)",
+  "description": "Dot console",
+  "groupIdentity": "Dot.Console",
+  "precedence": "4000",
+  "identity": "Dot.Console.CSharp.2.2",
+  "shortName": "dotcon",
+  "tags": {
+    "language": "C#",
+    "type": "library"
+  },
+  "sourceName": "Dot.Console",
+  "preferNameDirectory": true,
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "**/.vs/**",
+            ".git/**",
+            ".cid/**",
+            ".nuspec"
+          ]
+        }
+      ]
+    }
+  ],
+  "symbols": {
+    "sourceName": {
+      "type": "parameter",
+      "replaces": "Dot.Console"
+    },
+    "noGit": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false"
+    },
+    "addArgs": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false"
+    }
+  }
+}
