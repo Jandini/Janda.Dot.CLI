@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>dots-cli</id>
+    <version>0.0.0</version>
+    <title></title>
+    <authors>Matt Janda</authors>
+    <owners></owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET Core Templates and Scripts</description>
+  </metadata>
+  <files> 
+    <file src=".dots\template.json" target="content\DotScripts\.template.config\template.json" /> 
+    <file src=".dots\.addcon.cmd" target="content\DotScripts\.dots\.addcon.cmd" /> 
+    <file src=".dots\.addlib.cmd" target="content\DotScripts\.dots\.addlib.cmd" /> 
+    <file src=".dots\.addsln.cmd" target="content\DotScripts\.dots\.addsln.cmd" /> 
+    <file src=".dots\.backup.cmd" target="content\DotScripts\.dots\.backup.cmd" /> 
+    <file src=".dots\.branch.cmd" target="content\DotScripts\.dots\.branch.cmd" /> 
+    <file src=".dots\.build.cmd" target="content\DotScripts\.dots\.build.cmd" /> 
+    <file src=".dots\.clone.cmd" target="content\DotScripts\.dots\.clone.cmd" /> 
+    <file src=".dots\.commit.cmd" target="content\DotScripts\.dots\.commit.cmd" /> 
+    <file src=".dots\.develop.cmd" target="content\DotScripts\.dots\.develop.cmd" /> 
+    <file src=".dots\.diff.cmd" target="content\DotScripts\.dots\.diff.cmd" /> 
+    <file src=".dots\.dotnet.cmd" target="content\DotScripts\.dots\.dotnet.cmd" /> 
+    <file src=".dots\.dots.cmd" target="content\DotScripts\.dots\.dots.cmd" /> 
+    <file src=".dots\.feature.cmd" target="content\DotScripts\.dots\.feature.cmd" /> 
+    <file src=".dots\.foreach.cmd" target="content\DotScripts\.dots\.foreach.cmd" /> 
+    <file src=".dots\.gitlab.cmd" target="content\DotScripts\.dots\.gitlab.cmd" /> 
+    <file src=".dots\.help.cmd" target="content\DotScripts\.dots\.help.cmd" /> 
+    <file src=".dots\.init.cmd" target="content\DotScripts\.dots\.init.cmd" /> 
+    <file src=".dots\.master.cmd" target="content\DotScripts\.dots\.master.cmd" /> 
+    <file src=".dots\.mirror.cmd" target="content\DotScripts\.dots\.mirror.cmd" /> 
+    <file src=".dots\.newsln.cmd" target="content\DotScripts\.dots\.newsln.cmd" /> 
+    <file src=".dots\.pack.cmd" target="content\DotScripts\.dots\.pack.cmd" /> 
+    <file src=".dots\.prerequisites.cmd" target="content\DotScripts\.dots\.prerequisites.cmd" /> 
+    <file src=".dots\.publish.cmd" target="content\DotScripts\.dots\.publish.cmd" /> 
+    <file src=".dots\.release.cmd" target="content\DotScripts\.dots\.release.cmd" /> 
+    <file src=".dots\.restore.cmd" target="content\DotScripts\.dots\.restore.cmd" /> 
+    <file src=".dots\.status.cmd" target="content\DotScripts\.dots\.status.cmd" /> 
+    <file src=".dots\.sync.cmd" target="content\DotScripts\.dots\.sync.cmd" /> 
+    <file src=".dots\.undo.cmd" target="content\DotScripts\.dots\.undo.cmd" /> 
+    <file src=".dots\.version.cmd" target="content\DotScripts\.dots\.version.cmd" /> 
+    <file src=".dots\_dots.cmd" target="content\DotScripts\.dots\_dots.cmd" /> 
+    <file src=".dots\_elevate.cmd" target="content\DotScripts\.dots\_elevate.cmd" /> 
+    <file src=".dots\_help.cmd" target="content\DotScripts\.dots\_help.cmd" /> 
+  </files> 
+</package>
