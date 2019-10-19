@@ -43,17 +43,17 @@ echo if "%%DOTS_TYPE%%" neq "local" goto exit >> %DOTS%
 echo mkdir %%DOTS_GLOBAL%% 2^>nul >> %DOTS%
 echo copy %%DOTS_PATH%%\*.cmd %%DOTS_GLOBAL%% ^> nul >> %DOTS%
 echo echo .dots copied to %%DOTS_GLOBAL%% >> %DOTS%
-echo if "%1" equ "noprereq" goto exit >> %DOTS%
+echo if "%%2" equ "noprereq" goto exit >> %DOTS%
 echo .prerequisites >> %DOTS%
 echo :exit >> %DOTS%
 
 
 
 set PACKAGE=%BASE_NAME%.%VERSION%.nupkg
-nuget pack .nuspec -OutputDirectory bin -NoDefaultExcludes -Version %VERSION%
+nuget pack .nuspec -OutputDirectory bin -NoDefaultExcludes -Version %VERSION% -Properties NoWarn=NU5105
 if %ERRORLEVEL% equ 0 dotnet new -i bin\%PACKAGE%
 
 echo Removing version tags
 for /f %%f in ('dir /b /s template.json') do move %%f.org %%f > nul
 
-call .dots install noprereq
+.dots install noprereq
