@@ -1,6 +1,9 @@
 import groovy.json.JsonSlurperClassic
 properties([[$class: 'GitLabConnectionProperty', gitLabConnection: 'NAS']])
 
+env.REPO_NAME = "dots-cli"
+env.FTP_BASE_URL = "ftp://nas/builds/${env.REPO_NAME}/"
+
 def updateStatus(String status) {
     updateGitlabCommitStatus(state: status);
 }
@@ -13,9 +16,7 @@ def Object getGitVersion() {
 }
 
 def String getPackageFtpLinkText(String link, String text) {
-
-	def ftp = "ftp://nas/builds/dots-cli/" + link
-	return hudson.console.ModelHyperlinkNote.encodeTo(ftp, text);
+	return hudson.console.ModelHyperlinkNote.encodeTo(env.FTP_BASE_URL + link, text);
 }
 
 def void getPackageLinks(Object gitVersion) {
@@ -32,9 +33,9 @@ node("matt10") {
     try {
 
         def gitVersion
-        def nugetName
-        def buildPath
-        
+        def packageName
+        def packageOutputPath
+
         updateStatus('running')
 
         stage('Init') {
@@ -47,26 +48,23 @@ node("matt10") {
             checkout scm
             gitVersion = getGitVersion();
             
-            nugetName = """dots-cli.${gitVersion.InformationalVersion}"""
-            buildPath = """${env.CID_BUILD_PATH}\\dots-cli\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
+            packageName = """${env.REPO_NAME}.${gitVersion.InformationalVersion}"""
+            packageOutputPath = """${env.CID_BUILD_PATH}\\${env.REPO_NAME}\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
         }
         
          stage('Publish') {
             milestone()
 
-            def installScript = "${buildPath}\\${nugetName}.cmd"
+            def installScript = "${packageOutputPath}\\${packageName}.cmd"
 
             bat """
-                for /f %%f in ('dir /b /s template.json') do type %%f | jq ".classifications += [\\"${gitVersion.InformationalVersion}\\"]" > %%f.ver && move %%f.ver %%f > nul
-		set path=.\\.dots;%userprofile%\\.dots;%path%
-                call .install
-                nuget pack .nuspec -OutputDirectory ${buildPath} -NoDefaultExcludes -Version ${gitVersion.InformationalVersion}     
-                if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%
+                set OUTPUT_DIR=${packageOutputPath}
+                call .pack noinstall
+                if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%      
 
-                echo del /s %userprofile%\\.templateengine\\dotnetcli\\dots-cli.*.nupkg > ${installScript}
-                echo dotnet new -i ${buildPath}\\${nugetName}.nupkg >> ${installScript}
-                echo pause >> ${installScript}             
-                if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%
+                echo dotnet new -u ${env.REPO_NAME} > ${installScript}
+                echo dotnet new -i ${packageOutputPath}\\${packageName}.nupkg >> ${installScript}
+                echo pause >> ${installScript}
             """
         }
     
@@ -76,7 +74,7 @@ node("matt10") {
             bat """
                 rd %USERPROFILE%\\.templateengine /s/q
                 dotnet new -l && if %ERRORLEVEL% NEQ 0 exit %ERRORLEVEL%
-                dotnet new -i ${buildPath}\\${nugetName}.nupkg && if %ERRORLEVEL% NEQ 0 exit %ERRORLEVEL%
+                dotnet new -i ${packageOutputPath}\\${packageName}.nupkg && if %ERRORLEVEL% NEQ 0 exit %ERRORLEVEL%
             """
         }
 
@@ -84,14 +82,14 @@ node("matt10") {
             milestone()
             // install global .dots
             bat """
-		.dots install	   
+               .dots install	   
             """
         }
 
         stage('Uninstall') {
             milestone()
             bat """
-                dotnet new -u ${nugetName}
+               call .uninstall
             """
         }
                 
