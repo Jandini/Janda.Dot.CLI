@@ -60,7 +60,7 @@ set LAST_ERRORLEVEL=%ERRORLEVEL%
 if %LAST_ERRORLEVEL% neq 0 goto cleanup
 
 echo Checking %PACKAGE% in %OUTPUT_DIR%...
-if not exist %OUTPUT_DIR%\1%PACKAGE% echo Cannot find package %PACKAGE% in %OUTPUT_DIR%&&set LAST_ERRORLEVEL=1
+if not exist %OUTPUT_DIR%\%PACKAGE% echo Cannot find package %PACKAGE% in %OUTPUT_DIR%&&set LAST_ERRORLEVEL=1
 
 :cleanup
 echo Running cleanup...
