@@ -19,13 +19,17 @@ rem set this .script help text and usage syntax
 
 if /i "%~1" equ "" exit
 
+rem get properties only once
+if defined TIME_STAMP goto already_defined
 rem get timestamp
-if defined TIME_STAMP goto skip_timestamp
 for /f "skip=1" %%x in ('wmic os get localdatetime') do if not defined TIME_STAMP set TIME_STAMP=%%x
 set DATE_STAMP=%TIME_STAMP:~0,8%
 
-:skip_timestamp
+rem get directory where script was executed
+for %%I in (.) do set CURRENT_DIR_NAME=%%~nxI
+set CURRENT_DIR_PATH=%cd%
 
+:already_defined
 
 set DOTS_FILE=.dotset
 set DOTS_PATH=%~dp0
@@ -67,6 +71,7 @@ if "%~1" equ ".newsln" goto skip_dotset
 if "%~1" equ ".clone" goto skip_dotset
 if "%~1" equ ".develop" goto skip_dotset
 if "%~1" equ ".master" goto skip_dotset
+if "%~1" equ ".pack" goto skip_dotset
 
 echo %DOTS_FILE% not found 
 exit /b 1
@@ -93,6 +98,7 @@ if "%~1" equ ".addcon" goto exit
 if "%~1" equ ".addlib" goto exit
 if "%~1" equ ".prerequisites" goto exit
 if "%~1" equ ".install" goto exit
+if "%~1" equ ".pack" goto exit
 
 
 git rev-parse --is-inside-work-tree 1>nul 2>nul
