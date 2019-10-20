@@ -54,7 +54,7 @@ echo :exit >> %DOTS%
 
 
 set PACKAGE=%BASE_NAME%.%VERSION%.nupkg
-echo Packing dots-cli to %PACKAGE%...
+echo Packing %PACKAGE% to %OUTPUT_DIR%...
 nuget pack .nuspec -OutputDirectory %OUTPUT_DIR% -NoDefaultExcludes -Version %VERSION% -Properties NoWarn=NU5105
 set LAST_ERRORLEVEL=%ERRORLEVEL%
 if %LAST_ERRORLEVEL% neq 0 goto cleanup

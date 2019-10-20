@@ -51,7 +51,7 @@ node("matt10") {
             gitVersion = getGitVersion();
             
             nugetName = """${appName}.${gitVersion.InformationalVersion}"""
-            buildPath = """${env.CID_BUILD_PATH}\\${appName}\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
+            buildPath = """${env.CID_BUILD_PATH}\\${appName}\\${gitVersion.InformationalVersion}"""
         }
         
          stage('Publish') {
