@@ -1,6 +1,10 @@
 @call _dots %~n0 "Create and install nuget package" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
+rem by default output to bin within current folder
+rem output can be overriden by setting OUTPUT_DIR variable
+if "%OUTPUT_DIR%" equ "" set OUTPUT_DIR=bin
+
 rem check if path variable contains local dots location
 for %%G in ("%PATH:;=" "%") do if /i %%G equ ".\.dots" goto global_path
 echo You must add "%.\.dots" to PATH variable. 
@@ -50,15 +54,13 @@ echo :exit >> %DOTS%
 
 
 set PACKAGE=%BASE_NAME%.%VERSION%.nupkg
-echo Packing dots-cli to %PACKAGE%...
-nuget pack .nuspec -OutputDirectory bin -NoDefaultExcludes -Version %VERSION% -Properties NoWarn=NU5105
+echo Packing %PACKAGE%...
+nuget pack .nuspec -OutputDirectory %OUTPUT_DIR% -NoDefaultExcludes -Version %VERSION% -Properties NoWarn=NU5105
 set LAST_ERRORLEVEL=%ERRORLEVEL%
 if %LAST_ERRORLEVEL% neq 0 goto cleanup
 
-echo Checking if %PACKAGE% exists...
-dir bin\%PACKAGE% 1>nul 2>nul
-set LAST_ERRORLEVEL=%ERRORLEVEL%
-if %LAST_ERRORLEVEL% neq 0 goto cleanup
+echo Checking %PACKAGE% in %OUTPUT_DIR%...
+if not exist %OUTPUT_DIR%\%PACKAGE% echo Cannot find package %PACKAGE% in %OUTPUT_DIR%&&set LAST_ERRORLEVEL=1
 
 :cleanup
 echo Running cleanup...
@@ -67,6 +69,6 @@ if %LAST_ERRORLEVEL% neq 0 echo Exiting with error %LAST_ERRORLEVEL% && exit /b 
 
 if "%1" equ "noinstall" goto exit
 
-dotnet new -i bin\%PACKAGE%
+dotnet new -i %OUTPUT_DIR%\%PACKAGE%
 .dots install noprereq
 :exit
