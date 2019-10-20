@@ -1,6 +1,8 @@
 import groovy.json.JsonSlurperClassic
 properties([[$class: 'GitLabConnectionProperty', gitLabConnection: 'NAS']])
 
+def appName = "dots-cli"
+
 def updateStatus(String status) {
     updateGitlabCommitStatus(state: status);
 }
@@ -14,7 +16,7 @@ def Object getGitVersion() {
 
 def String getPackageFtpLinkText(String link, String text) {
 
-	def ftp = "ftp://nas/builds/dots-cli/" + link
+	def ftp = "ftp://nas/builds/${appName}/" + link
 	return hudson.console.ModelHyperlinkNote.encodeTo(ftp, text);
 }
 
@@ -35,6 +37,7 @@ node("matt10") {
         def nugetName
         def buildPath
         
+        
         updateStatus('running')
 
         stage('Init') {
@@ -47,8 +50,8 @@ node("matt10") {
             checkout scm
             gitVersion = getGitVersion();
             
-            nugetName = """dots-cli.${gitVersion.InformationalVersion}"""
-            buildPath = """${env.CID_BUILD_PATH}\\dots-cli\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
+            nugetName = """${appName}.${gitVersion.InformationalVersion}"""
+            buildPath = """${env.CID_BUILD_PATH}\\${appName}\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
         }
         
          stage('Publish') {
@@ -57,8 +60,13 @@ node("matt10") {
             def installScript = "${buildPath}\\${nugetName}.cmd"
 
             bat """
+                set OUTPUT_DIR=${buildPath}
                 call .pack noinstall
-                if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%                                  
+                if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%      
+
+                echo dotnet new -u ${appName} > ${installScript}
+                echo dotnet new -i ${buildPath}\\${nugetName}.nupkg >> ${installScript}
+                echo pause >> ${installScript}
             """
         }
     
