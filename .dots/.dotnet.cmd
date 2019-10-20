@@ -1,10 +1,10 @@
-@call _dots %~n0 "Run dotnet command for project within current folder, default solution or solutions defined in .dotset file" "<pack|build|restore> [.|dot]" %1 %2 %3
+@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all BUILD_SLN defined in .dotset file" "<pack|build|restore> [.|all]" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 if "%1" equ "" .help dotnet && exit /b
 
 if /i "%2" equ "." goto this
-if /i "%2" equ "dot" goto foreach
+if /i "%2" equ "all" goto foreach
 if /i "%2" equ "sln" set SLN_NAME=%~3.sln&& goto dotnet
 set SLN_NAME=%BASE_NAME%.sln
 goto dotnet
@@ -18,7 +18,7 @@ goto execute
 
 :dotnet
 cd src
-if not exist %SLN_NAME% echo Default solution %SLN_NAME% not found. Running solutions defined in .dotset file... && goto foreach
+if not exist %SLN_NAME% echo Default solution %SLN_NAME% not found. Running all solutions defined in .dotset file... && goto foreach
 set DISPLAY_NAME=%SLN_NAME%
 
 :execute

@@ -71,7 +71,10 @@ if "%~1" equ ".newsln" goto skip_dotset
 if "%~1" equ ".clone" goto skip_dotset
 if "%~1" equ ".develop" goto skip_dotset
 if "%~1" equ ".master" goto skip_dotset
+
 if "%~1" equ ".pack" goto skip_dotset
+if "%~1" equ ".build" goto skip_dotset
+if "%~1" equ ".restore" goto skip_dotset
 
 echo %DOTS_FILE% not found 
 exit /b 1
@@ -98,7 +101,10 @@ if "%~1" equ ".addcon" goto exit
 if "%~1" equ ".addlib" goto exit
 if "%~1" equ ".prerequisites" goto exit
 if "%~1" equ ".install" goto exit
+
 if "%~1" equ ".pack" goto exit
+if "%~1" equ ".build" goto exit
+if "%~1" equ ".restore" goto exit
 
 
 git rev-parse --is-inside-work-tree 1>nul 2>nul
