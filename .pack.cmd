@@ -54,15 +54,13 @@ echo :exit >> %DOTS%
 
 
 set PACKAGE=%BASE_NAME%.%VERSION%.nupkg
-echo Packing %PACKAGE% to %OUTPUT_DIR%...
+echo Packing %PACKAGE%...
 nuget pack .nuspec -OutputDirectory %OUTPUT_DIR% -NoDefaultExcludes -Version %VERSION% -Properties NoWarn=NU5105
 set LAST_ERRORLEVEL=%ERRORLEVEL%
 if %LAST_ERRORLEVEL% neq 0 goto cleanup
 
-echo Checking if %PACKAGE% exists...
-dir %OUTPUT_DIR%\%PACKAGE% 1>nul 2>nul
-set LAST_ERRORLEVEL=%ERRORLEVEL%
-if %LAST_ERRORLEVEL% neq 0 goto cleanup
+echo Checking %PACKAGE% in %OUTPUT_DIR%...
+if not exist %OUTPUT_DIR%\1%PACKAGE% echo Cannot find package %PACKAGE% in %OUTPUT_DIR%&&set LAST_ERRORLEVEL=1
 
 :cleanup
 echo Running cleanup...
