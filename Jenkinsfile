@@ -57,16 +57,8 @@ node("matt10") {
             def installScript = "${buildPath}\\${nugetName}.cmd"
 
             bat """
-                for /f %%f in ('dir /b /s template.json') do type %%f | jq ".classifications += [\\"${gitVersion.InformationalVersion}\\"]" > %%f.ver && move %%f.ver %%f > nul
-		set path=.\\.dots;%userprofile%\\.dots;%path%
-                call .install
-                nuget pack .nuspec -OutputDirectory ${buildPath} -NoDefaultExcludes -Version ${gitVersion.InformationalVersion}     
-                if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%
-
-                echo del /s %userprofile%\\.templateengine\\dotnetcli\\dots-cli.*.nupkg > ${installScript}
-                echo dotnet new -i ${buildPath}\\${nugetName}.nupkg >> ${installScript}
-                echo pause >> ${installScript}             
-                if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%
+                call .pack noinstall
+                if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%                                  
             """
         }
     
@@ -84,14 +76,14 @@ node("matt10") {
             milestone()
             // install global .dots
             bat """
-		.dots install	   
+		        .dots install	   
             """
         }
 
         stage('Uninstall') {
             milestone()
             bat """
-                dotnet new -u ${nugetName}
+                call .uninstall
             """
         }
                 

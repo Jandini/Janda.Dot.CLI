@@ -84,6 +84,7 @@ exit /b 1
 cd %BASE_PATH%
 rem .dotset file consist of set statements VARIABLE=value(s)
 rem read all lines and apply as sets
+rem this file can be used to override e.g. BASE_NAME
 for /F "tokens=*" %%A in (%DOTS_FILE%) do set %%A
     
 

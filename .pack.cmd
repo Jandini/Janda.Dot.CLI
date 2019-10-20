@@ -22,7 +22,7 @@ if %ERRORLEVEL% equ 1 exit /b
  
 call .version
 
-echo Updating version tags
+echo Updating templates...
 for /f %%f in ('dir /b /s template.json') do move %%f %%f.org > nul && type %%f.org | jq --arg version %VERSION% ".classifications += [$version]" > %%f
 
 set DOTS=.dots\.dots.cmd
@@ -50,10 +50,23 @@ echo :exit >> %DOTS%
 
 
 set PACKAGE=%BASE_NAME%.%VERSION%.nupkg
+echo Packing dots-cli to %PACKAGE%...
 nuget pack .nuspec -OutputDirectory bin -NoDefaultExcludes -Version %VERSION% -Properties NoWarn=NU5105
-if %ERRORLEVEL% equ 0 dotnet new -i bin\%PACKAGE%
+set LAST_ERRORLEVEL=%ERRORLEVEL%
+if %LAST_ERRORLEVEL% neq 0 goto cleanup
 
-echo Removing version tags
+echo Checking if %PACKAGE% exists...
+dir bin\%PACKAGE% 1>nul 2>nul
+set LAST_ERRORLEVEL=%ERRORLEVEL%
+if %LAST_ERRORLEVEL% neq 0 goto cleanup
+
+:cleanup
+echo Running cleanup...
 for /f %%f in ('dir /b /s template.json') do move %%f.org %%f > nul
+if %LAST_ERRORLEVEL% neq 0 echo Exiting with error %LAST_ERRORLEVEL% && exit /b %LAST_ERRORLEVEL%
 
+if "%1" equ "noinstall" goto exit
+
+dotnet new -i bin\%PACKAGE%
 .dots install noprereq
+:exit
