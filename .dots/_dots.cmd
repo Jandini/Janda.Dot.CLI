@@ -1,7 +1,7 @@
 @echo off 
 
 rem TODO: add number of required parameters - show help when not match => Usage: call _dots <caller script name> <help text|""> <usage syntax|""> <number of required parameters> <flags string> [parameters]
-rem TODO: add flags "" "DG" "D " " G"   
+rem TODO: add flags "" "dg" "d " " g"   
 
 rem This is a boot strap script. It will handle 
 
@@ -13,7 +13,7 @@ rem %3 - Usage syntax when usage is requested
 rem %4...  %1... parameter of main script
 
 rem Example: 
-rem @call _dots %~n0 "This is a scritp" "[some|parameter]" %1 %2 %3 %4
+rem @call _dots %~n0 "This is a script" "[some|parameter]" %1 %2 %3 %4
 
 rem set this .script help text and usage syntax
 
