@@ -1,4 +1,6 @@
-@echo off 
+@echo off
+set DOT_NUL=nul
+if /i "%DOT_TRACE%" equ "1" echo on && set DOT_NUL=con
 
 rem TODO: add number of required parameters - show help when not match => Usage: call _dots <caller script name> <help text|""> <usage syntax|""> <number of required parameters> <flags string> [parameters]
 rem TODO: add flags "" "dg" "d " " g"   

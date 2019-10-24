@@ -1,9 +1,11 @@
 @echo off
 cd %TEMP%
+call .dots
+
 
 SET COMMAND=.help
 <nul set /p =Running %COMMAND%	
-call %COMMAND% > nul
+call %COMMAND% > %DOT_NUL%
 if %ERRORLEVEL% neq 1 echo [ FAILED ] && exit 1 /b
 echo [ OK ]
 
@@ -49,8 +51,9 @@ goto exit
 :help_test
 SET COMMAND=%1
 <nul set /p =Running .help %COMMAND%	
-call .help %COMMAND% > nul
-if %ERRORLEVEL% neq 1 echo [ FAILED ] && exit 1 /b
+call .help %COMMAND% > %DOT_NUL%
+set RESULT=%ERRORLEVEL% 
+if %RESULT% neq 1 echo [ FAILED ] && echo Expected value is 1. Return value is %RESULT% && exit 1 /b
 echo [ OK ]
 :EOF
 
