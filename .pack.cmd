@@ -25,6 +25,7 @@ pause
 if %ERRORLEVEL% equ 1 exit /b
  
 call .version
+if "%VERSION%" equ "" echo %%VERSION%% was not set && goto cleanup
 
 echo Updating templates...
 for /f %%f in ('dir /b /s template.json') do move %%f %%f.org > nul && type %%f.org | jq --arg version %VERSION% ".classifications += [$version]" > %%f
