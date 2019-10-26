@@ -1,4 +1,4 @@
-@call _dots %~n0 "Start new or finish current git flow feature" "[-c(heckout)|[-d(elete)] <feature-branch-name>" %1 %2 %3
+@call _dots %~n0 "Start new or checkout existing feature. Finish current feature. Update feature from develop branch. Delete feature." "[-u(pdate)|[-d(elete)] <feature-branch-name>" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem exit if not a git repository
@@ -8,15 +8,15 @@ set PARAM_BRANCH=%1
 
 :parameter_delete
 rem parameter -d(elete) script block
-if /i "%PARAM_BRANCH:~0,2%" neq "-d" goto parameter_checkout
+if /i "%PARAM_BRANCH:~0,2%" neq "-d" goto parameter_update
 
-rem allow to delte only feature branch
+rem allow to delete only feature branch
 if "%CURRENT_BRANCH:~0,8%" neq "feature/" echo Branch %CURRENT_BRANCH% is not feature branch. && exit
 rem confirm before deleting
 set /p CONFIRM=WARNING: You are working on %CURRENT_BRANCH%. Do you want to [D]elete it (D/[N])?
 if /i "%CONFIRM%" neq "D" goto script_end
 
-echo Checking out develop branch			
+echo Checking out develop branch...
 git checkout develop
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
 echo Deleting %CURRENT_BRANCH% 
@@ -24,13 +24,14 @@ git branch -d %CURRENT_BRANCH%
 goto script_end
 
 
-:parameter_checkout
-if /i "%PARAM_BRANCH:~0,2%" neq "-c" goto script_start
+:parameter_update
+if /i "%PARAM_BRANCH:~0,2%" neq "-u" goto script_start
+if "%CURRENT_BRANCH:~0,8%" neq "feature/" echo Branch %CURRENT_BRANCH% is not feature branch. && exit
+set /p CONFIRM=WARNING: You are working on %CURRENT_BRANCH%. Do you want to [U]pdate it from develop branch (U/[N])?
+if /i "%CONFIRM%" neq "U" goto script_end
+git merge develop 
+goto script_end
 
-set CHECKOUT_BRANCH=%2
-if "%CHECKOUT_BRANCH%" equ "" git branch && goto script_usage
-if "%CHECKOUT_BRANCH:~0,8!" equ "feature/" goto branch_checkout 
-set CHECKOUT_BRANCH=feature/%CHECKOUT_BRANCH%
 
 :branch_checkout
 echo Checking out %CHECKOUT_BRANCH%
@@ -57,6 +58,8 @@ if /i "%CONFIRM%" neq "Y" goto script_end
 :feature_start
 echo Starting feature/%1
 git flow feature start %PARAM_BRANCH%
+if %ERRORLEVEL% neq 0 echo Create new feature branch failed. Trying checkout...&&set CHECKOUT_BRANCH=feature/%PARAM_BRANCH%&&goto branch_checkout
+
 goto script_end
 
 
