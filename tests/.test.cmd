@@ -20,7 +20,7 @@ echo Running global dots %USERPROFILE%\.dots folder
 
 set TEST_DIR=%TEMP%\T%RANDOM%
 mkdir %TEST_DIR%
-cd %TEST_DIR%
+pushd %TEST_DIR%
 
 
 call :test_command version 1
@@ -31,6 +31,7 @@ rem help must work everywhere
 call :test_help 
 for %%c in (%COMMAND_LIST%) do call :test_help %%c
 
+popd 
 
 
 goto exit
