@@ -17,7 +17,7 @@ goto help_show_all_commands
 
 
 :help_show_signle_command
-if not exist %DOTS_PATH%.%DOTS_NAME%.cmd echo .%DOTS_NAME% is missing && goto exit 
+if not exist %DOTS_PATH%.%DOTS_NAME%.cmd echo .%DOTS_NAME% script is missing && exit /b 2 
 call .%DOTS_NAME% --help
 call .%DOTS_NAME% --usage
 goto exit

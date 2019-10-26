@@ -1,19 +1,25 @@
-@echo off 
+@echo off
+set DOT_NUL=nul
+if /i "%DOT_TRACE%" equ "1" echo on && set DOT_NUL=con
 
 rem TODO: add number of required parameters - show help when not match => Usage: call _dots <caller script name> <help text|""> <usage syntax|""> <number of required parameters> <flags string> [parameters]
 rem TODO: add flags "" "dg" "d " " g"   
 
 rem This is a boot strap script. It will handle 
 
-rem Usage: call _dots <caller script name> <help text|""> <usage syntax|""> [parameters]
+rem Usage: @call _dots <caller name> <help text|""> <usage syntax|""> <script flags> [parameters %1 %2 %3 %4]
 rem 
-rem %1 - The calling script name. It should be always set to %~n0
-rem %2 - Text to be displayed when help is requested
-rem %3 - Usage syntax when usage is requested
-rem %4...  %1... parameter of main script
+rem <caller name>  - Calling script name. It should be always set to %~n0
+rem <help text>    - Text to be displayed when help is requested
+rem <usage synax>  - Usage syntax when usage help is requested
+rem <script flags> - String containing flags. Each position in string represents one flag. Space character represents the flag as not set.
+rem                  Available flags: "dg"
+rem                  d - command must be run in dot repository (.dotset file must be present) 
+rem                  g - command must be run withing git repository
+rem [parameters]   - Pass privided parameters %1 %2 %3 %4
 
 rem Example: 
-rem @call _dots %~n0 "This is a script" "[some|parameter]" %1 %2 %3 %4
+rem @call _dots %~n0 "This is a script" "[some|parameter]" "dg" %1 %2 %3 %4
 
 rem set this .script help text and usage syntax
 
