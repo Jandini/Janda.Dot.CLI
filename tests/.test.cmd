@@ -1,46 +1,30 @@
 @echo off
 rem call dots to receive few variables
-
 call .dots
 
+set COMMAND_LIST=help addcon addlib addsln backup branch build clone commit develop diff dotnet dots feature foreach gitlab init master mirror newsln origin pack prerequisites publish restore status sync undo version release
 
-:external
+
+echo Running local dots from current .\.dots folder
+
+call :help_test 
+for %%c in (%COMMAND_LIST%) do call :help_test %%c
+
+
+
+
+echo Running global dots %USERPROFILE%\.dots folder
+
 set TEST_DIR=%TEMP%\T%RANDOM%
 mkdir %TEST_DIR%
 cd %TEST_DIR%
 
 
 call :help_test 
-call :help_test help
-call :help_test addcon
-call :help_test addlib
-call :help_test addsln
-call :help_test backup
-call :help_test branch
-call :help_test build
-call :help_test clone
-call :help_test commit 
-call :help_test develop
-call :help_test diff
-call :help_test dotnet
-call :help_test dots
-call :help_test feature
-call :help_test foreach
-call :help_test gitlab
-call :help_test init
-call :help_test master
-call :help_test mirror
-call :help_test newsln
-call :help_test origin
-call :help_test pack
-call :help_test prerequisites
-call :help_test publish
-call :help_test restore
-call :help_test status
-call :help_test sync
-call :help_test undo
-call :help_test version
-call :help_test release
+for %%c in (%COMMAND_LIST%) do call :help_test %%c
+
+
+
 
 
 
