@@ -71,7 +71,10 @@ goto script_end
 
 
 :script_usage
-.help feature 
+call .help feature 
+echo Feature branches:
+git branch | grep feature/
+
 
 :script_end
 exit %ERRORLEVEL%

@@ -25,6 +25,9 @@ curl --help 1>2>nul || choco install curl
 echo .dots gitversion
 rem checking gitversion after the repo is initialized
 gitversion 1>2>nul || choco install gitversion.portable --pre
+echo .dots grep
+grep --help 1>2>nul || choco install grep
+
 rem echo .dots registry
 rem remove master Visual Studio extension association
 rem reg DELETE /f HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.master 2>nul
