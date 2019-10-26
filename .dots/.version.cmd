@@ -3,10 +3,12 @@ if %ERRORLEVEL% equ 1 exit /b
 
 if "%1" equ "" (set GIT_VERSION=InformationalVersion) else (set GIT_VERSION=%1)
 echo Retrieving %GIT_VERSION%
-set setver=%temp%\%~n0.cmd 
+set setver=%temp%\_dot%RANDOM%version.cmd 
 gitversion | jq -r "\"set VERSION=\"+ .%GIT_VERSION%" > %setver% 2>nul
 if %ERRORLEVEL% neq 0 goto fixed_version
 call %setver%
+echo %setver%
+del /q %setver%
 goto exit
 
 :fixed_version

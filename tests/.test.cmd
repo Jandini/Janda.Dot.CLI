@@ -7,9 +7,12 @@ set COMMAND_LIST=help addcon addlib addsln backup branch build clone commit deve
 
 echo Running local dots from current .\.dots folder
 
-call :help_test 
-for %%c in (%COMMAND_LIST%) do call :help_test %%c
 
+
+call :test_command version
+call :test_command branch
+call :test_help 
+for %%c in (%COMMAND_LIST%) do call :test_help %%c
 
 
 
@@ -20,20 +23,34 @@ mkdir %TEST_DIR%
 cd %TEST_DIR%
 
 
-call :help_test 
-for %%c in (%COMMAND_LIST%) do call :help_test %%c
+call :test_command version 1
+call :test_command branch 1
 
 
-
-
+rem help must work everywhere
+call :test_help 
+for %%c in (%COMMAND_LIST%) do call :test_help %%c
 
 
 
 goto exit
 
 
-:help_test
-SET COMMAND=%1
+
+:test_command
+set COMMAND=.%1
+set EXPECTED=%2
+if "%EXPECTED%" equ "" set EXPECTED=0
+<nul set /p =Running %COMMAND%	
+call %COMMAND% > %DOT_NUL% 
+if %ERRORLEVEL% neq %EXPECTED% echo [ FAILED ] && echo Expected value is %EXPECTED%. Return value is %ERRORLEVEL% && exit 1 /b
+echo [ OK ]
+exit /b
+
+
+
+:test_help
+set COMMAND=%1
 <nul set /p =Running .help %COMMAND%	
 if "%1" equ "" ( call .help > %DOT_NUL% ) else ( call .help %COMMAND% > %DOT_NUL% )
 if %ERRORLEVEL% neq 1 echo [ FAILED ] && echo Expected value is 1. Return value is %ERRORLEVEL% && exit 1 /b

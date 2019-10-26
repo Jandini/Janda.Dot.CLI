@@ -52,7 +52,7 @@ node("matt10") {
             packageOutputPath = """${env.CID_BUILD_PATH}\\${env.REPO_NAME}\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
         }
         
-         stage('Publish') {
+        stage('Publish') {
             milestone()
 
             def installScript = "${packageOutputPath}\\${packageName}.cmd"
@@ -85,6 +85,16 @@ node("matt10") {
                .dots install	   
             """
         }
+
+        stage('Tests') {
+            milestone()
+            // install global .dots
+            bat """
+	       cd tests
+	       .test
+            """
+        }
+
 
         stage('Uninstall') {
             milestone()
