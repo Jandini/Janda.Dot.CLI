@@ -9,8 +9,9 @@ echo Running local dots from current .\.dots folder
 
 
 
-call :test_command version
-call :test_command branch
+rem call :test_command version
+rem call :test_command branch
+
 call :test_help 
 for %%c in (%COMMAND_LIST%) do call :test_help %%c
 
