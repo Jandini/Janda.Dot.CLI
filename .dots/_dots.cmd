@@ -47,10 +47,6 @@ if /i "%DOTS_FLAGS:~0,1%" neq "d" set FLAG_SKIP_DOTSET_CHECK=1
 if /i "%DOTS_FLAGS:~1,1%" neq "g" set FLAG_SKIP_GITREPO_CHECK=1
 if /i "%DOTS_FLAGS:~2,1%" neq "1" set FLAG_SKIP_PARAM_CHECK=1
 
-rem ECHO FLAGS:%DOTS_FLAGS%
-rem ECHO D:%DOTS_FLAGS:~0,1%
-rem ECHO G:%DOTS_FLAGS:~1,1%
-rem ECHO 1:%DOTS_FLAGS:~2,1%
 
 :already_defined
 
@@ -71,23 +67,21 @@ rem call help and exit script if help was requested
 call _help %~5 %~1 
 if %ERRORLEVEL% equ 1 exit /b
 
+rem skip parameter check if it is not required  
+if /i "%FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotset
+if /i "%~5" neq "" goto find_dotset
 
-rem if "%FLAG_SKIP_PARAM_CHECK%" equ "1" goto parent
-rem if /i "%~5" neq "" goto parent
-rem set COMMAND=%~n0
-rem echo COMMAND: %COMMAND:~1,50%
-rem .help commit
-
-
-
+call _help --help %~1
+call _help --usage %~1 
+exit /b 1
 
 
-
-:parent
+:find_dotset
 for %%I in (%BASE_PATH%) do set BASE_NAME=%%~nI%%~xI
 if exist %BASE_PATH%\%DOTS_FILE% goto use_dotset
 set BASE_PATH=%BASE_PATH%\..
-if "%BASE_NAME%" neq "" goto parent
+rem goto parent
+if "%BASE_NAME%" neq "" goto find_dotset
 
 rem set base name to current folder if .dotset file not found
 if "%BASE_NAME%" equ "" for %%I in (.) do set BASE_NAME=%%~nI%%~xI
