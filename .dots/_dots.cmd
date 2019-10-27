@@ -38,26 +38,21 @@ for %%I in (.) do set CURRENT_DIR_NAME=%%~nxI
 set CURRENT_DIR_PATH=%cd%
 
 set DOTS_FLAGS=%~4
-set FLAG_SKIP_GITREPO_CHECK=
+
 set FLAG_SKIP_DOTSET_CHECK=
+set FLAG_SKIP_GITREPO_CHECK=
 set FLAG_SKIP_PARAM_CHECK=
 
 if /i "%DOTS_FLAGS:~0,1%" neq "d" set FLAG_SKIP_DOTSET_CHECK=1
 if /i "%DOTS_FLAGS:~1,1%" neq "g" set FLAG_SKIP_GITREPO_CHECK=1
 if /i "%DOTS_FLAGS:~2,1%" neq "1" set FLAG_SKIP_PARAM_CHECK=1
 
-ECHO FLAGS:%DOTS_FLAGS%
-
-ECHO D:%DOTS_FLAGS:~0,1%
-ECHO G:%DOTS_FLAGS:~1,1%
-ECHO 1:%DOTS_FLAGS:~2,1%
-
-echo FLAG_SKIP_DOTSET_CHECK=%FLAG_SKIP_DOTSET_CHECK%
-echo FLAG_SKIP_GITREPO_CHECK=%FLAG_SKIP_GITREPO_CHECK%
-echo FLAG_SKIP_PARAM_CHECK=%FLAG_SKIP_PARAM_CHECK%
+rem ECHO FLAGS:%DOTS_FLAGS%
+rem ECHO D:%DOTS_FLAGS:~0,1%
+rem ECHO G:%DOTS_FLAGS:~1,1%
+rem ECHO 1:%DOTS_FLAGS:~2,1%
 
 :already_defined
-
 
 
 set DOTS_FILE=.dotset
@@ -77,39 +72,57 @@ call _help %~5 %~1
 if %ERRORLEVEL% equ 1 exit /b
 
 
+rem if "%FLAG_SKIP_PARAM_CHECK%" equ "1" goto parent
+rem if /i "%~5" neq "" goto parent
+rem set COMMAND=%~n0
+rem echo COMMAND: %COMMAND:~1,50%
+rem .help commit
+
+
+
+
+
+
 :parent
 for %%I in (%BASE_PATH%) do set BASE_NAME=%%~nI%%~xI
-if exist %BASE_PATH%\%DOTS_FILE% goto dotset
+if exist %BASE_PATH%\%DOTS_FILE% goto use_dotset
 set BASE_PATH=%BASE_PATH%\..
 if "%BASE_NAME%" neq "" goto parent
 
 rem set base name to current folder if .dotset file not found
 if "%BASE_NAME%" equ "" for %%I in (.) do set BASE_NAME=%%~nI%%~xI
 
+
+
 rem following commands does not require .dotset file
-if "%~1" equ ".foreach" goto skip_dotset
-if "%~1" equ ".help" goto skip_dotset
-if "%~1" equ ".dots" goto skip_dotset
-if "%~1" equ ".status" goto skip_dotset
-if "%~1" equ ".sync" goto skip_dotset
-if "%~1" equ ".mirror" goto skip_dotset
-if "%~1" equ ".origin" goto skip_dotset
-if "%~1" equ ".diff" goto skip_dotset
-if "%~1" equ ".prerequisites" goto skip_dotset
-if "%~1" equ ".newsln" goto skip_dotset
-if "%~1" equ ".clone" goto skip_dotset
-if "%~1" equ ".develop" goto skip_dotset
-if "%~1" equ ".master" goto skip_dotset
+rem if "%~1" equ ".foreach" goto skip_dotset
+rem if "%~1" equ ".help" goto skip_dotset
+rem if "%~1" equ ".dots" goto skip_dotset
+rem if "%~1" equ ".status" goto skip_dotset
+rem if "%~1" equ ".sync" goto skip_dotset
+rem if "%~1" equ ".mirror" goto skip_dotset
+rem if "%~1" equ ".origin" goto skip_dotset
+rem if "%~1" equ ".diff" goto skip_dotset
+rem if "%~1" equ ".prerequisites" goto skip_dotset
+rem if "%~1" equ ".newsln" goto skip_dotset
+rem if "%~1" equ ".clone" goto skip_dotset
+rem if "%~1" equ ".develop" goto skip_dotset
+rem if "%~1" equ ".master" goto skip_dotset
+rem 
+rem if "%~1" equ ".pack" goto skip_dotset
+rem if "%~1" equ ".build" goto skip_dotset
+rem if "%~1" equ ".restore" goto skip_dotset
 
-if "%~1" equ ".pack" goto skip_dotset
-if "%~1" equ ".build" goto skip_dotset
-if "%~1" equ ".restore" goto skip_dotset
 
+
+
+rem dotset file is required but file is not found
+if "%FLAG_SKIP_DOTSET_CHECK%" equ "1" goto skip_dotset
 echo %DOTS_FILE% not found 
 exit /b 1
 
 
-:dotset
+:use_dotset
 cd %BASE_PATH%
 rem .dotset file consist of set statements VARIABLE=value(s)
 rem read all lines and apply as sets
@@ -120,28 +133,31 @@ for /F "tokens=*" %%A in (%DOTS_FILE%) do set %%A
 :skip_dotset
 
 rem following commands does not require git repository
-if "%~1" equ ".foreach" goto exit
-if "%~1" equ ".init" goto exit
-if "%~1" equ ".help" goto exit
-if "%~1" equ ".dots" goto exit
-if "%~1" equ ".clone" goto exit
-if "%~1" equ ".newsln" goto exit
-if "%~1" equ ".addsln" goto exit
-if "%~1" equ ".addcon" goto exit
-if "%~1" equ ".addlib" goto exit
-if "%~1" equ ".prerequisites" goto exit
-if "%~1" equ ".install" goto exit
+rem if "%~1" equ ".foreach" goto exit
+rem if "%~1" equ ".init" goto exit
+rem if "%~1" equ ".help" goto exit
+rem if "%~1" equ ".dots" goto exit
+rem if "%~1" equ ".clone" goto exit
+rem if "%~1" equ ".newsln" goto exit
+rem if "%~1" equ ".addsln" goto exit
+rem if "%~1" equ ".addcon" goto exit
+rem if "%~1" equ ".addlib" goto exit
+rem if "%~1" equ ".prerequisites" goto exit
+rem if "%~1" equ ".install" goto exit
+rem 
+rem if "%~1" equ ".pack" goto exit
+rem if "%~1" equ ".build" goto exit
+rem if "%~1" equ ".restore" goto exit
 
-if "%~1" equ ".pack" goto exit
-if "%~1" equ ".build" goto exit
-if "%~1" equ ".restore" goto exit
 
-
+if "%FLAG_SKIP_GITREPO_CHECK%" equ "1" goto skip_gitrepo
 git rev-parse --is-inside-work-tree 1>nul 2>nul
 if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository. && exit /b 1
 
 rem get the current git branch name only if git is available
 for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set CURRENT_BRANCH=%%F
+
+:skip_gitrepo
 
 rem check if path variable contains local dots location
 rem for %%G in ("%PATH:;=" "%") do if /i %%G equ ".\.dots" goto exit
@@ -149,3 +165,4 @@ rem echo You must add ".\.dots" to PATH variable.
 rem exit 2
 
 :exit
+

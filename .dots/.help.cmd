@@ -1,4 +1,4 @@
-@call _dots %~n0 "List all available scripts or get single command description and syntax" "[command name|--help|--usage]" "" %1 %2 %3
+@call _dots %~n0 "List all available scripts or get single command description and syntax" "[command name|--help|--usage]" "  1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 call .dots
