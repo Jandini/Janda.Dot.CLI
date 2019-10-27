@@ -1,4 +1,4 @@
-@call _dots %~n0 "Add new console application to existing or new solution" "<.|[.]new application name> [existing or new solution full name] [--addArgs]" %1 %2 %3
+@call _dots %~n0 "Add new console application to existing or new solution" "<.|[.]new application name> [existing or new solution full name] [--addArgs]" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 set ARGS_FLAG=--addArgs

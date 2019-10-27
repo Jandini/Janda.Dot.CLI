@@ -52,7 +52,7 @@ set HELP_TEXT=%~2
 set HELP_USAGE=%3
 
 rem call help and exit script if help was requested
-call _help %~4 %~1 
+call _help %~5 %~1 
 if %ERRORLEVEL% equ 1 exit /b
 
 

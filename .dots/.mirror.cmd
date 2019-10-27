@@ -1,4 +1,4 @@
-@call _dots %~n0 "Synchronize with remote git repository" "" %1 %2 %3
+@call _dots %~n0 "Synchronize with remote git repository" "" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 echo Fetching branches...

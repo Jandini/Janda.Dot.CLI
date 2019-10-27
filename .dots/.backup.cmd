@@ -1,4 +1,4 @@
-@call _dots %~n0 "Backup repository or local nuget packages" "[nuget]" %1 %2 %3
+@call _dots %~n0 "Backup repository or local nuget packages" "[nuget]" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 if /i "%1" neq "nuget" goto backup

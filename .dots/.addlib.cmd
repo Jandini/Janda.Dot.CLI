@@ -1,4 +1,4 @@
-@call _dots %~n0 "Add new class library to existing or new solution" "<.|[.]new class library name> [existing or new solution full name]" %1 %2 %3
+@call _dots %~n0 "Add new class library to existing or new solution" "<.|[.]new class library name> [existing or new solution full name]" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem the . creates class library project with the same as default solution name or indicates that the name should be added to base name

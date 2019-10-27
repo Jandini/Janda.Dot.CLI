@@ -1,4 +1,4 @@
-@call _dots %~n0 "Initialize git flow repository" "[project name]" %1 %2 %3
+@call _dots %~n0 "Initialize git flow repository" "[project name]" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 set PROJECT_NAME=%BASE_NAME%

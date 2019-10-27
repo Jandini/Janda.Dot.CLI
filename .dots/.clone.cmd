@@ -1,4 +1,4 @@
-@call _dots %~n0 "Clone git repository" "<.|project name>" %1 %2 %3
+@call _dots %~n0 "Clone git repository" "<.|project name>" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 if "%1" equ "" goto help
