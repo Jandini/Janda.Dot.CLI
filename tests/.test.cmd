@@ -8,9 +8,11 @@ set COMMAND_LIST=help addcon addlib addsln backup branch build clone commit deve
 echo Running local dots from current .\.dots folder
 
 
+call :test_command clone 1
+call :test_command commit 1
 
-rem call :test_command version
-rem call :test_command branch
+call :test_command version
+call :test_command branch
 
 call :test_help 
 for %%c in (%COMMAND_LIST%) do call :test_help %%c
@@ -26,6 +28,8 @@ pushd %TEST_DIR%
 
 call :test_command version 1
 call :test_command branch 1
+call :test_command clone 1
+call :test_command commit 1
 
 
 rem help must work everywhere
@@ -33,8 +37,6 @@ call :test_help
 for %%c in (%COMMAND_LIST%) do call :test_help %%c
 
 popd 
-
-
 goto exit
 
 
@@ -44,8 +46,8 @@ set COMMAND=.%1
 set EXPECTED=%2
 if "%EXPECTED%" equ "" set EXPECTED=0
 <nul set /p =Running %COMMAND%	
-call %COMMAND% > %DOT_NUL% 
-if %ERRORLEVEL% neq %EXPECTED% echo [ FAILED ] && echo Expected value is %EXPECTED%. Return value is %ERRORLEVEL% && exit 1 /b
+call %COMMAND% 1> %DOT_NUL% 2> %DOT_NUL%
+if "%ERRORLEVEL%" neq "%EXPECTED%" echo [ FAILED ] && echo Expected value is %EXPECTED%. Return value is %ERRORLEVEL% && exit 1 /b
 echo [ OK ]
 exit /b
 
@@ -61,4 +63,4 @@ exit /b
 
 :exit
 cd %CURRENT_DIR_PATH%
-rd /q %TEST_DIR%
+if "%TEST_DIR%" neq "" rd /q %TEST_DIR%
