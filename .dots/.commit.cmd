@@ -1,4 +1,4 @@
-@call _dots %~n0 "Add changes and commit" "<comment>" "" %1 %2 %3
+@call _dots %~n0 "Add changes and commit" "<comment>" " g1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem must compare dequoted hence %~1
