@@ -17,6 +17,6 @@ git commit -m %1
 goto script_end
 
 :script_help
-rem call .help commit
+call .help commit
 
 :script_end

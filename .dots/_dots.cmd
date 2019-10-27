@@ -4,6 +4,7 @@ if /i "%DOT_TRACE%" equ "1" echo on && set DOT_NUL=con
 
 rem TODO: add number of required parameters - show help when not match => Usage: call _dots <caller script name> <help text|""> <usage syntax|""> <number of required parameters> <flags string> [parameters]
 rem TODO: add flags "" "dg" "d" " g" "  1" "dg1" 
+rem TODO: help via grep type _dots.cmd | grep -o -P (?^<=rem).*
 
 rem This is a boot strap script. It will handle 
 
@@ -16,7 +17,7 @@ rem <script flags> - Flag string. Each position in string represents one flag. S
 rem                  Available flags: "dg"
 rem                  d - command must be run in dot repository (.dotset file must be present) 
 rem                  g - command must be run withing git repository
-rem                  1 - at least one parameter is required 
+rem                  1 - at least one parameter is required (%~1 checking as unquoted)
 rem [parameters]   - Pass privided parameters %1 %2 %3 %4
 
 rem Example: 
