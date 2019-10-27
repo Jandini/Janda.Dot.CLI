@@ -1,4 +1,4 @@
-@call _dots %~n0 "Start new or checkout existing feature. Finish current feature. Update feature from develop branch. Delete feature." "[-u(pdate)|[-d(elete)] <feature-branch-name>" %1 %2 %3
+@call _dots %~n0 "Start new or checkout existing feature. Finish current feature. Update current feature from develop branch. Delete current feature." "[-u(pdate)|[-d(elete)] <[feature-branch-name]>" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem exit if not a git repository
@@ -33,14 +33,8 @@ git merge develop
 goto script_end
 
 
-:branch_checkout
-echo Checking out %CHECKOUT_BRANCH%
-git checkout %CHECKOUT_BRANCH%
-goto script_end
-
 
 :script_start
-
 rem if we are on develop or master branch and the new feature branch name was not provided then end the script
 if /i "%CURRENT_BRANCH%" equ "develop" (if "%PARAM_BRANCH%" equ "" (goto script_usage) else (goto feature_start)) 
 if /i "%CURRENT_BRANCH%" equ "master" (if "%PARAM_BRANCH%" equ "" (goto script_usage) else (goto feature_start)) 
@@ -55,11 +49,13 @@ rem make sure we don't switch without confirmation
 set /P CONFIRM=WIP: You are working on %CURRENT_BRANCH%. Do you want to start new feature/%PARAM_BRANCH% now (Y/[N])?
 if /i "%CONFIRM%" neq "Y" goto script_end
 
+
 :feature_start
+set CHECKOUT_BRANCH=feature/%PARAM_BRANCH%
+git checkout %CHECKOUT_BRANCH% 2>nul
+if %ERRORLEVEL% equ 0 echo Checkout existing %CHECKOUT_BRANCH% completed successfully.&& goto script_end
 echo Starting feature/%1
 git flow feature start %PARAM_BRANCH%
-if %ERRORLEVEL% neq 0 echo Create new feature branch failed. Trying checkout...&&set CHECKOUT_BRANCH=feature/%PARAM_BRANCH%&&goto branch_checkout
-
 goto script_end
 
 
@@ -72,7 +68,8 @@ goto script_end
 
 :script_usage
 call .help feature 
-echo Feature branches:
+rem empty line
+echo.
 git branch | grep feature/
 
 
