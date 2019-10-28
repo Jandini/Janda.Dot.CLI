@@ -16,11 +16,11 @@ rem get file temp name from script name
 set setver=%temp%\%~n0.cmd 
 
 rem get current version
-gitversion | jq -r "\"set VERSION=\"+ .MajorMinorPatch" > %setver%
+gitversion | jq -r "\"set DOT_GITVERSION=\"+ .MajorMinorPatch" > %setver%
 call %setver%
 
 rem adjust release version to 1.0.0
-if "%DOT_GITVERSION%" equ "0.1.0" set VERSION=1.0.0
+if "%DOT_GITVERSION%" equ "0.1.0" set DOT_GITVERSION=1.0.0
 
 
 set NO_CONFIRM=N

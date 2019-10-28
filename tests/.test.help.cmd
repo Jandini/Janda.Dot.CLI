@@ -26,6 +26,15 @@ mkdir %TEST_DIR%
 pushd %TEST_DIR%
 
 
+
+echo Running .newsln
+
+call .newsln TEST
+echo %ERRORLEVEL%
+cd ..
+rd /s TEST
+
+
 call :test_command version 1
 call :test_command branch 1
 call :test_command clone 1
@@ -35,6 +44,9 @@ call :test_command commit 1
 rem help must work everywhere
 call :test_help 
 for %%c in (%COMMAND_LIST%) do call :test_help %%c
+
+
+
 
 popd 
 goto exit

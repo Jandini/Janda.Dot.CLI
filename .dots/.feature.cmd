@@ -2,7 +2,7 @@
 if %ERRORLEVEL% equ 1 exit /b
 
 rem exit if not a git repository
-if "%CURRENT_BRANCH%" equ "" exit
+if "%CURRENT_BRANCH%" equ "" exit /b
 
 set PARAM_BRANCH=%1
 
@@ -11,14 +11,14 @@ rem parameter -d(elete) script block
 if /i "%PARAM_BRANCH:~0,2%" neq "-d" goto parameter_update
 
 rem allow to delete only feature branch
-if "%CURRENT_BRANCH:~0,8%" neq "feature/" echo Branch %CURRENT_BRANCH% is not feature branch. && exit
+if "%CURRENT_BRANCH:~0,8%" neq "feature/" echo Branch %CURRENT_BRANCH% is not feature branch. && exit /b
 rem confirm before deleting
 set /p CONFIRM=WARNING: You are working on %CURRENT_BRANCH%. Do you want to [D]elete it (D/[N])?
 if /i "%CONFIRM%" neq "D" goto script_end
 
 echo Checking out develop branch...
 git checkout develop
-if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 echo Deleting %CURRENT_BRANCH% 
 git branch -d %CURRENT_BRANCH%
 goto script_end
@@ -26,7 +26,7 @@ goto script_end
 
 :parameter_update
 if /i "%PARAM_BRANCH:~0,2%" neq "-u" goto script_start
-if "%CURRENT_BRANCH:~0,8%" neq "feature/" echo Branch %CURRENT_BRANCH% is not feature branch. && exit
+if "%CURRENT_BRANCH:~0,8%" neq "feature/" echo Branch %CURRENT_BRANCH% is not feature branch. && exit /b
 set /p CONFIRM=WARNING: You are working on %CURRENT_BRANCH%. Do you want to [U]pdate it from develop branch (U/[N])?
 if /i "%CONFIRM%" neq "U" goto script_end
 git merge develop 
@@ -73,4 +73,4 @@ git branch | grep feature/
 
 
 :script_end
-exit %ERRORLEVEL%
+exit /b %ERRORLEVEL%
