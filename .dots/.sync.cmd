@@ -1,4 +1,4 @@
-@call _dots %~n0 "Synchronize repository" "" %1 %2 %3
+@call _dots %~n0 "Synchronize repository" "" " g" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 git fetch --all

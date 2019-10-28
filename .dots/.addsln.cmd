@@ -1,7 +1,5 @@
-@call _dots %~n0 "Add new solution to the repository" "<.|[.]new solution name>" %1 %2 %3
+@call _dots %~n0 "Add new solution to the repository" "<.|[.]new solution name>" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
-
-if "%1" equ "" .help addsln && exit /b
 
 SET SOLUTION_NAME=%1
 SET SLN_NAME=%SOLUTION_NAME%

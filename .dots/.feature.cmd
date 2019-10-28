@@ -1,4 +1,4 @@
-@call _dots %~n0 "Start new or checkout existing feature. Finish current feature. Update current feature from develop branch. Delete current feature." "[-u(pdate)|[-d(elete)] <[feature-branch-name]>" %1 %2 %3
+@call _dots %~n0 "Start new or checkout existing feature. Finish current feature. Update current feature from develop branch. Delete current feature." "[-u(pdate)|[-d(elete)] <[feature-branch-name]>" " g" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem exit if not a git repository
@@ -68,7 +68,6 @@ goto script_end
 
 :script_usage
 call .help feature 
-rem empty line
 echo.
 git branch | grep feature/
 

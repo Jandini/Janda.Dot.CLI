@@ -1,4 +1,4 @@
-@call _dots %~n0 "Get current version and set VERSION variable (InformationalVersion is default)" "[InformationalVersion|AssemblySemFileVer|MajorMinorPatch...]" %1 %2 %3
+@call _dots %~n0 "Get current version and set VERSION variable (InformationalVersion is default)" "[InformationalVersion|AssemblySemFileVer|MajorMinorPatch...]" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 if "%1" equ "" (set GIT_VERSION=InformationalVersion) else (set GIT_VERSION=%1)

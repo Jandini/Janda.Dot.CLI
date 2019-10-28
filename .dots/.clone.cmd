@@ -1,7 +1,5 @@
-@call _dots %~n0 "Clone git repository" "<.|project name>" %1 %2 %3
+@call _dots %~n0 "Clone git repository" "<.|project name>" "  1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
-
-if "%1" equ "" goto help
 
 set PROJECT_NAME=%BASE_NAME%
 set PROJECT_DIR=.
@@ -31,11 +29,5 @@ git flow init -d
 if %ERRORLEVEL% neq 0 goto exit
 
 git branch
-
-goto exit
-
-:help
-call .help clone
-
 
 :exit
