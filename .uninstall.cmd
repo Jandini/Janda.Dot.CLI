@@ -9,7 +9,7 @@ dotnet new -u %PACKAGE%
 
 
 rem dotnet 2.2 requires NUGET_ID with version
-rem set PACKAGE=%BASE_NAME%.%VERSION%
+rem set PACKAGE=%BASE_NAME%.%DOT_GITVERSION%
 rem echo Uninstalling %PACKAGE%
 rem dotnet new -u %PACKAGE% > nul
 rem dotnet new -l
