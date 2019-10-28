@@ -1,7 +1,5 @@
-@call _dots %~n0 "Create new repository and solution from template" "[.|new solution name]" "" %1 %2 %3
+@call _dots %~n0 "Create new repository and solution from template" "[.|new solution name]" "  1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
-
-if "%1" equ "" .help newsln && exit /b
 
 if "%1" neq "." goto named_solution
 

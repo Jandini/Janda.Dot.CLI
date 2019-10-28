@@ -1,7 +1,5 @@
-@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all BUILD_SLN defined in .dotset file" "<pack|build|restore> [.|all]" "" %1 %2 %3
+@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all BUILD_SLN defined in .dotset file" "<pack|build|restore> [.|all]" "  1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
-
-if "%1" equ "" .help dotnet && exit /b
 
 if /i "%2" equ "." goto this
 if /i "%2" equ "all" goto foreach

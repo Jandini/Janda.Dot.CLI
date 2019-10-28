@@ -37,6 +37,9 @@ rem get directory where script was executed
 for %%I in (.) do set CURRENT_DIR_NAME=%%~nxI
 set CURRENT_DIR_PATH=%cd%
 
+:already_defined
+
+rem always update flags as the script may call another where requirements are different
 set DOTS_FLAGS=%~4
 
 set FLAG_SKIP_DOTSET_CHECK=
@@ -46,9 +49,6 @@ set FLAG_SKIP_PARAM_CHECK=
 if /i "%DOTS_FLAGS:~0,1%" neq "d" set FLAG_SKIP_DOTSET_CHECK=1
 if /i "%DOTS_FLAGS:~1,1%" neq "g" set FLAG_SKIP_GITREPO_CHECK=1
 if /i "%DOTS_FLAGS:~2,1%" neq "1" set FLAG_SKIP_PARAM_CHECK=1
-
-
-:already_defined
 
 
 set DOTS_FILE=.dotset
@@ -87,29 +87,6 @@ rem set base name to current folder if .dotset file not found
 if "%BASE_NAME%" equ "" for %%I in (.) do set BASE_NAME=%%~nI%%~xI
 
 
-
-rem following commands does not require .dotset file
-rem if "%~1" equ ".foreach" goto skip_dotset
-rem if "%~1" equ ".help" goto skip_dotset
-rem if "%~1" equ ".dots" goto skip_dotset
-rem if "%~1" equ ".status" goto skip_dotset
-rem if "%~1" equ ".sync" goto skip_dotset
-rem if "%~1" equ ".mirror" goto skip_dotset
-rem if "%~1" equ ".origin" goto skip_dotset
-rem if "%~1" equ ".diff" goto skip_dotset
-rem if "%~1" equ ".prerequisites" goto skip_dotset
-rem if "%~1" equ ".newsln" goto skip_dotset
-rem if "%~1" equ ".clone" goto skip_dotset
-rem if "%~1" equ ".develop" goto skip_dotset
-rem if "%~1" equ ".master" goto skip_dotset
-rem 
-rem if "%~1" equ ".pack" goto skip_dotset
-rem if "%~1" equ ".build" goto skip_dotset
-rem if "%~1" equ ".restore" goto skip_dotset
-
-
-
-
 rem dotset file is required but file is not found
 if "%FLAG_SKIP_DOTSET_CHECK%" equ "1" goto skip_dotset
 echo %DOTS_FILE% not found 
@@ -125,24 +102,6 @@ for /F "tokens=*" %%A in (%DOTS_FILE%) do set %%A
     
 
 :skip_dotset
-
-rem following commands does not require git repository
-rem if "%~1" equ ".foreach" goto exit
-rem if "%~1" equ ".init" goto exit
-rem if "%~1" equ ".help" goto exit
-rem if "%~1" equ ".dots" goto exit
-rem if "%~1" equ ".clone" goto exit
-rem if "%~1" equ ".newsln" goto exit
-rem if "%~1" equ ".addsln" goto exit
-rem if "%~1" equ ".addcon" goto exit
-rem if "%~1" equ ".addlib" goto exit
-rem if "%~1" equ ".prerequisites" goto exit
-rem if "%~1" equ ".install" goto exit
-rem 
-rem if "%~1" equ ".pack" goto exit
-rem if "%~1" equ ".build" goto exit
-rem if "%~1" equ ".restore" goto exit
-
 
 if "%FLAG_SKIP_GITREPO_CHECK%" equ "1" goto skip_gitrepo
 git rev-parse --is-inside-work-tree 1>nul 2>nul

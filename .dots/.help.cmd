@@ -7,16 +7,18 @@ set DOTS_MASK=.*.cmd
 set DOTS_HELP=--help
 set DOTS_NAME=%1
 
-if /i "%DOTS_NAME%" equ "usage" goto usage_show_all_commands
-if /i "%DOTS_NAME%" neq "" goto help_show_signle_command
+
+if /i "%DOTS_NAME:~0,1%" equ "." goto already_dotted
+set DOTS_NAME=.%DOTS_NAME%
+
+:already_dotted
+if /i "%DOTS_NAME%" neq "." goto help_show_signle_command
 goto help_show_all_commands
+
 
 :usage_show_all_commands
 set DOTS_HELP=--usage
 goto help_show_all_commands
-
-if /i "%DOTS_NAME:~0,1%" equ "." goto help_show_signle_command
-set DOTS_NAME=.%DOTS_NAME%
 
 
 :help_show_signle_command
