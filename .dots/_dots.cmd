@@ -25,6 +25,31 @@ rem @call _dots %~n0 "This is a script" "[some|parameter]" "dg1" %1 %2 %3 %4
 
 rem set this .script help text and usage syntax
 
+
+rem version 1.2.0
+
+rem * As user I cannot run .pack, .build and .restore commands recursively only when '*' is given. 
+rem * As user I can run .pack, .build and .restore commands only within single project by giving '.' parameter. 
+rem * As user I can see ".dots prerequisites" instead of "Elevating privileges..." when I call .dots install 
+rem * As user I can upstream local branches using .mirror command
+rem * As developer I want to access current git version through DOT_GIT_VERSION environment variable
+rem * As user I don't need .prerequisites to be separate command.  
+rem * As developer I want to access dot repository directory name through DOT_DIR_NAME environment variable
+rem * As developer I want to access dot repository full path through DOT_DIR_PATH environment variable
+rem * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
+rem * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
+rem * As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
+rem * As developer I want to access DOT_BASE_NAME
+rem * As user I do not want any of dot commands to close cmd window if execute directly from it
+
+
+rem - As developer I can define command flags so they can check command's constraints before the command is executed    
+rem - As user I can use .feature command to checkout feature branch so I can work on it  
+rem - As user I cannot execute git based commands outside git repositories 
+rem - As user I can run .init command in any folder without dotset or git repository check
+rem - As user I want the installer to replace old dots so the depricated commands are removed
+
+
 if /i "%~1" equ "" exit
 
 rem get properties only once

@@ -61,6 +61,10 @@
 
     <!-- Dots -->
     <file src=".dots\template.json" target="content\DotScripts\.template.config\template.json" /> 
+    <file src=".dots\_dots.cmd" target="content\DotScripts\.dots\_dots.cmd" /> 
+    <file src=".dots\_elevate.cmd" target="content\DotScripts\.dots\_elevate.cmd" /> 
+    <file src=".dots\_help.cmd" target="content\DotScripts\.dots\_help.cmd" /> 
+
     <file src=".dots\.addcon.cmd" target="content\DotScripts\.dots\.addcon.cmd" /> 
     <file src=".dots\.addlib.cmd" target="content\DotScripts\.dots\.addlib.cmd" /> 
     <file src=".dots\.addsln.cmd" target="content\DotScripts\.dots\.addsln.cmd" /> 
@@ -90,8 +94,5 @@
     <file src=".dots\.sync.cmd" target="content\DotScripts\.dots\.sync.cmd" /> 
     <file src=".dots\.undo.cmd" target="content\DotScripts\.dots\.undo.cmd" /> 
     <file src=".dots\.version.cmd" target="content\DotScripts\.dots\.version.cmd" /> 
-    <file src=".dots\_dots.cmd" target="content\DotScripts\.dots\_dots.cmd" /> 
-    <file src=".dots\_elevate.cmd" target="content\DotScripts\.dots\_elevate.cmd" /> 
-    <file src=".dots\_help.cmd" target="content\DotScripts\.dots\_help.cmd" /> 
   </files> 
 </package>
