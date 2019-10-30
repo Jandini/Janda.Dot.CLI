@@ -21,6 +21,8 @@
  * As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
  * As developer I want to access DOT_BASE_NAME
  * As user I do not want any of dot commands to close cmd window if execute directly from it
+ * As user I want to use latest dotnet core 3.0 in dot templates
+ * As user I want to use VS2019 solutions 
 
  - As developer I want keep track the stories and history of changes in README.MD file
  - As developer I can define command flags so they can check command's constraints before the command is executed 
