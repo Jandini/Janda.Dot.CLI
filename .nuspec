@@ -85,6 +85,7 @@
     <file src=".dots\.master.cmd" target="content\DotScripts\.dots\.master.cmd" /> 
     <file src=".dots\.mirror.cmd" target="content\DotScripts\.dots\.mirror.cmd" /> 
     <file src=".dots\.newsln.cmd" target="content\DotScripts\.dots\.newsln.cmd" /> 
+    <file src=".dots\.origin.cmd" target="content\DotScripts\.dots\.origin.cmd" /> 
     <file src=".dots\.pack.cmd" target="content\DotScripts\.dots\.pack.cmd" /> 
     <file src=".dots\.prerequisites.cmd" target="content\DotScripts\.dots\.prerequisites.cmd" /> 
     <file src=".dots\.publish.cmd" target="content\DotScripts\.dots\.publish.cmd" /> 

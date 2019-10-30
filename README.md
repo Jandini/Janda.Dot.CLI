@@ -6,14 +6,13 @@
 
 ### version 1.2.0
 
- * As developer I want all dot scripts to be stored in nuget package 
- * As developer I want to validate that all commands are inside nuget package 
+
  * As user I cannot run .pack, .build and .restore commands recursively only when '*' is given. 
  * As user I can run .pack, .build and .restore commands only within single project by giving '.' parameter. 
  * As user I can see ".dots prerequisites" instead of "Elevating privileges..." when I call .dots install 
  * As user I can upstream local branches using .mirror command
  * As developer I want to access current git version through DOT_GIT_VERSION environment variable
- * As user I don't need .prerequisites to be separate command. 
+ * As user I don't need .prerequisites as separate command 
  * As developer I want to access dot repository directory name through DOT_DIR_NAME environment variable
  * As developer I want to access dot repository full path through DOT_DIR_PATH environment variable
  * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
@@ -24,6 +23,8 @@
  * As user I want to use latest dotnet core 3.0 in dot templates
  * As user I want to use VS2019 solutions 
 
+ - As developer I want all dot scripts to be stored in nuget package 
+ - As developer I want to validate that all commands are inside nuget package 
  - As developer I want keep track the stories and history of changes in README.MD file
  - As developer I can define command flags so they can check command's constraints before the command is executed 
  - As user I can use .feature command to checkout feature branch so I can work on it 
