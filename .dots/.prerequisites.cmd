@@ -24,7 +24,7 @@ echo .dots curl
 curl --help 1>2>nul || choco install curl
 echo .dots gitversion
 rem checking gitversion after the repo is initialized
-gitversion 1>2>nul || choco install gitversion.portable --pre
+where gitversion 1>2>nul || choco install gitversion.portable --pre
 echo .dots grep
 grep --help 1>2>nul || choco install grep
 

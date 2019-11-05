@@ -42,6 +42,7 @@
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
  * As user I can upstream local branches using .mirror command	
  * As user I do not want any of dot commands to close cmd window if execute directly from it
+ * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
 
 
 ### Prerequisites
