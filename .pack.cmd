@@ -57,7 +57,7 @@ echo if not exist %%DOTS_GLOBAL%% mkdir %%DOTS_GLOBAL%% 2^>nul >> %DOTS%
 echo copy %%DOTS_PATH%%\*.cmd %%DOTS_GLOBAL%% ^> nul >> %DOTS%
 echo echo .dots copied to %%DOTS_GLOBAL%% >> %DOTS%
 echo if "%%2" equ "noprereq" goto exit >> %DOTS%
-echo .prerequisites >> %DOTS%
+echo %%DOTS_PATH%%_install.cmd >> %DOTS%
 echo :exit >> %DOTS%
 
 

@@ -22,7 +22,7 @@
 
 
  - As user I can see ".dots prerequisites" instead of "Elevating privileges..." when I call .dots install 
- * As user I don't need .prerequisites as separate command 
+ - As user I don't need .prerequisites as separate command 
  - As user I want to run .pack, .build and .restore commands recursively only when '*' is given. 
  - Fix endless loop when calling dotnet pack|build|restore and default solution does not exist.
  - As user I can run .pack, .build and .restore commands only within single project by giving '.' parameter. 

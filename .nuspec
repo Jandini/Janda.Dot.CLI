@@ -64,6 +64,7 @@
     <file src=".dots\_dots.cmd" target="content\DotScripts\.dots\_dots.cmd" /> 
     <file src=".dots\_elevate.cmd" target="content\DotScripts\.dots\_elevate.cmd" /> 
     <file src=".dots\_help.cmd" target="content\DotScripts\.dots\_help.cmd" /> 
+    <file src=".dots\_install.cmd" target="content\DotScripts\.dots\_install.cmd" /> 
 
     <file src=".dots\.addcon.cmd" target="content\DotScripts\.dots\.addcon.cmd" /> 
     <file src=".dots\.addlib.cmd" target="content\DotScripts\.dots\.addlib.cmd" /> 
@@ -87,7 +88,6 @@
     <file src=".dots\.newsln.cmd" target="content\DotScripts\.dots\.newsln.cmd" /> 
     <file src=".dots\.origin.cmd" target="content\DotScripts\.dots\.origin.cmd" /> 
     <file src=".dots\.pack.cmd" target="content\DotScripts\.dots\.pack.cmd" /> 
-    <file src=".dots\.prerequisites.cmd" target="content\DotScripts\.dots\.prerequisites.cmd" /> 
     <file src=".dots\.publish.cmd" target="content\DotScripts\.dots\.publish.cmd" /> 
     <file src=".dots\.release.cmd" target="content\DotScripts\.dots\.release.cmd" /> 
     <file src=".dots\.restore.cmd" target="content\DotScripts\.dots\.restore.cmd" /> 
