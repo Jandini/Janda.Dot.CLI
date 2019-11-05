@@ -11,7 +11,6 @@ cd %USERPROFILE%\.nuget\local
 set BACKUP_DIR=%USERPROFILE%\.dotbak\%DATE_STAMP%\%DOT_BASE_NAME%
 set BACKUP_FILE=%DOT_BASE_NAME%-%TIME_STAMP%.7z
 
-
 if not exist %BACKUP_DIR% md %BACKUP_DIR% 
 if %ERRORLEVEL% neq 0 exit /b
 

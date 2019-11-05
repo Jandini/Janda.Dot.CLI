@@ -8,9 +8,9 @@
 
  * As user I want to use latest dotnet core 3.0 in dot templates
  * As user I want to use VS2019 solutions 
- * As user I want to see when foreach is scanning the folders
 
 
+ - As user I want to see when foreach is scanning the folders so I know the command is foreach syntax
  - As developer I want to access dot repository directory name through DOT_CURRENT_DIR_NAME environment variable so I know what directory name the command was called from
  - As developer I want to access current directory path through DOT_CURRENT_DIR_PATH environment variable so I know what directory path the command was called from
  - As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
@@ -41,6 +41,7 @@
  * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
  * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
+ * As user I don't want .build * to endup in endless loop
 
 ### Prerequisites
 
