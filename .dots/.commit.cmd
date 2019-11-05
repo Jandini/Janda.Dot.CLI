@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 git status
 
-set /P CONFIRM=Do you want to add and commit %1 to %CURRENT_BRANCH% now (Y/[N])?
+set /P CONFIRM=Do you want to add and commit %1 to %DOT_GIT_BRANCH% now (Y/[N])?
 if /i "%CONFIRM%" neq "Y" goto script_end
 
 git add .

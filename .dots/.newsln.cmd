@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 if "%1" neq "." goto named_solution
 
-echo Creating %BASE_NAME%...
+echo Creating %DOT_BASE_NAME%...
 dotnet new dotsln
 goto init
 

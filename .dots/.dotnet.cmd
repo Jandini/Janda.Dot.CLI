@@ -4,13 +4,13 @@ if %ERRORLEVEL% equ 1 exit /b
 if /i "%2" equ "." goto this
 if /i "%2" equ "all" goto foreach
 if /i "%2" equ "sln" set SLN_NAME=%~3.sln&& goto dotnet
-set SLN_NAME=%BASE_NAME%.sln
+set SLN_NAME=%DOT_BASE_NAME%.sln
 goto dotnet
 
 :this
 set SLN_NAME=
-set DISPLAY_NAME=%CURRENT_DIR_NAME%
-cd %CURRENT_DIR_PATH%
+set DISPLAY_NAME=%DOT_CURRENT_DIR_NAME%
+cd %DOT_CURRENT_DIR_PATH%
 goto execute
 
 
