@@ -6,21 +6,16 @@
 
 ### version 1.2.0
 
-
-
- * As developer I want to access current git version through DOT_GIT_VERSION environment variable
- * As developer I want to access dot repository directory name through DOT_DIR_NAME environment variable
- * As developer I want to access dot repository full path through DOT_DIR_PATH environment variable
- * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
- * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
- * As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
- * As developer I want to access dotset default repository name via DOT_BASE_NAME environemnt variable
-
  * As user I want to use latest dotnet core 3.0 in dot templates
  * As user I want to use VS2019 solutions 
  * As user I want to see when foreach is scanning the folders
 
 
+ * As developer I want to access current git version through DOT_GIT_VERSION environment variable
+ * As developer I want to access dot repository directory name through DOT_DIR_NAME environment variable
+ * As developer I want to access dot repository full path through DOT_DIR_PATH environment variable
+ * As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
+ * As developer I want to access dotset default repository name via DOT_BASE_NAME environemnt variable
  - As user I can see ".dots prerequisites" instead of "Elevating privileges..." when I call .dots install 
  - As user I don't need .prerequisites as separate command 
  - As user I want to run .pack, .build and .restore commands recursively only when '*' is given. 
@@ -43,7 +38,9 @@
  * As user I can upstream local branches using .mirror command	
  * As user I do not want any of dot commands to close cmd window if execute directly from it
  * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
-
+ * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
+ * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
+ * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
 
 ### Prerequisites
 
