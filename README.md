@@ -6,10 +6,12 @@
 
 ### version 1.2.0
 
- * As user I want to use latest dotnet core 3.0 in dot templates
- * As user I want to use VS2019 solutions 
-
-
+ * As user and developer I want to dot-cli templates to be renamed to dots cli; dots cid; dots solution; dots console; dots library
+ 
+ - As user I want to use latest dotnet core 3.0 in dot templates
+ - As developer I want to use latest gitversion task 5.1.1
+ - As developer I want to use latest serilog 3.0.1
+ - As user I want to use VS2019 solutions so dot cli is up to date 
  - As user I want to see when foreach is scanning the folders so I know the command is foreach syntax
  - As developer I want to access dot repository directory name through DOT_CURRENT_DIR_NAME environment variable so I know what directory name the command was called from
  - As developer I want to access current directory path through DOT_CURRENT_DIR_PATH environment variable so I know what directory path the command was called from
@@ -20,7 +22,7 @@
  - As user I can see ".dots prerequisites" instead of "Elevating privileges..." when I call .dots install 
  - As user I don't need .prerequisites as separate command 
  - As user I want to run .pack, .build and .restore commands recursively only when '*' is given. 
- - Fix endless loop when calling dotnet pack|build|restore and default solution does not exist.
+ - As user I want dotnet pack|build|restore to complete when default solution file does not exist so it not falls into endless loop
  - As user I can run .pack, .build and .restore commands only within single project by giving '.' parameter. 
  - As developer I want all dot scripts to be stored in nuget package 
  - As developer I want to validate that all commands are inside nuget package 
