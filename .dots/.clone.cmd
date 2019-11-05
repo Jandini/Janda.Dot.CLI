@@ -1,7 +1,7 @@
 @call _dots %~n0 "Clone git repository" "<.|project name>" "  1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-set PROJECT_NAME=%BASE_NAME%
+set PROJECT_NAME=%DOT_BASE_NAME%
 set PROJECT_DIR=.
 if "%1" neq "." set PROJECT_NAME=%1
 if "%1" equ "." goto get_origin

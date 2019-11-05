@@ -58,8 +58,8 @@ set DOTS_TYPE=local
 set DOTS_GLOBAL=%USERPROFILE%\.dots\
 if "%DOTS_PATH%" equ "%DOTS_GLOBAL%" set DOTS_TYPE=global
 
-set BASE_PATH=.
-set BASE_NAME=
+set DOT_BASE_PATH=.
+set DOT_BASE_NAME=
 
 set HELP_TEXT=%~2
 set HELP_USAGE=%3
@@ -78,14 +78,14 @@ exit /b 1
 
 
 :find_dotset
-for %%I in (%BASE_PATH%) do set BASE_NAME=%%~nI%%~xI
-if exist %BASE_PATH%\%DOTS_FILE% goto use_dotset
-set BASE_PATH=%BASE_PATH%\..
+for %%I in (%DOT_BASE_PATH%) do set DOT_BASE_NAME=%%~nI%%~xI
+if exist %DOT_BASE_PATH%\%DOTS_FILE% goto use_dotset
+set DOT_BASE_PATH=%DOT_BASE_PATH%\..
 rem goto parent
-if "%BASE_NAME%" neq "" goto find_dotset
+if "%DOT_BASE_NAME%" neq "" goto find_dotset
 
 rem set base name to current folder if .dotset file not found
-if "%BASE_NAME%" equ "" for %%I in (.) do set BASE_NAME=%%~nI%%~xI
+if "%DOT_BASE_NAME%" equ "" for %%I in (.) do set DOT_BASE_NAME=%%~nI%%~xI
 
 
 rem dotset file is required but file is not found
@@ -95,10 +95,10 @@ exit /b 1
 
 
 :use_dotset
-cd %BASE_PATH%
+cd %DOT_BASE_PATH%
 rem .dotset file consist of set statements VARIABLE=value(s)
 rem read all lines and apply as sets
-rem this file can be used to override e.g. BASE_NAME
+rem this file can be used to override e.g. DOT_BASE_NAME
 for /F "tokens=*" %%A in (%DOTS_FILE%) do set %%A
     
 

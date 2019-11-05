@@ -1,8 +1,11 @@
 @call _dots %~n0 "Environment variables test" "" "dg " %1 %2 %3
 call .version
 
-echo BASE_NAME=%BASE_NAME%
-if "%BASE_NAME%" equ "" echo %%BASE_NAME%% is empty&&exit 1 /b
+echo DOT_BASE_NAME=%DOT_BASE_NAME%
+if "%DOT_BASE_NAME%" equ "" echo %%DOT_BASE_NAME%% is empty&&exit 1 /b
+
+echo DOT_BASE_PATH=%DOT_BASE_PATH%
+if "%DOT_BASE_PATH%" equ "" echo %%DOT_BASE_PATH%% is empty&&exit 1 /b
 
 echo TIME_STAMP=%TIME_STAMP%
 if "%TIME_STAMP%" equ "" echo %%TIME_STAMP%% is empty&&exit 1 /b

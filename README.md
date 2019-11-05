@@ -11,12 +11,13 @@
  * As user I want to see when foreach is scanning the folders
 
 
- * As developer I want to access current git version through DOT_GIT_VERSION environment variable
  * As developer I want to access dot repository directory name through DOT_DIR_NAME environment variable
  * As developer I want to access dot repository full path through DOT_DIR_PATH environment variable
  * As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
- * As developer I want to access dotset default repository name via DOT_BASE_NAME environemnt variable
 
+ - As developer I want to access dotset default repository path via DOT_BASE_PATH environemnt variable
+ - As developer I want to access dotset default repository name via DOT_BASE_NAME environemnt variable
+ - As developer I want to access current git version through DOT_GIT_VERSION environment variable
  - As user I can see ".dots prerequisites" instead of "Elevating privileges..." when I call .dots install 
  - As user I don't need .prerequisites as separate command 
  - As user I want to run .pack, .build and .restore commands recursively only when '*' is given. 

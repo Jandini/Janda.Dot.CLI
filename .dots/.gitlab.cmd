@@ -1,7 +1,7 @@
 @call _dots %~n0 "Push git repository into remote CID_GITLAB_URL using CID_GITLAB_TOKEN" "[project name]" " g" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-set PROJECT_NAME=%BASE_NAME%
+set PROJECT_NAME=%DOT_BASE_NAME%
 if "%1" neq "" set PROJECT_NAME=%1
 
 if "%CID_GITLAB_URL%" == "" ( echo CID_GITLAB_URL not set && goto exit )

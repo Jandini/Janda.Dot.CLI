@@ -62,7 +62,7 @@ echo :exit >> %DOTS%
 
 
 
-set PACKAGE=%BASE_NAME%.%DOT_GIT_VERSION%.nupkg
+set PACKAGE=%DOT_BASE_NAME%.%DOT_GIT_VERSION%.nupkg
 echo Packing %PACKAGE%...
 nuget pack .nuspec -OutputDirectory %OUTPUT_DIR% -NoDefaultExcludes -Version %DOT_GIT_VERSION% -Properties NoWarn=NU5105
 set LAST_ERRORLEVEL=%ERRORLEVEL%
