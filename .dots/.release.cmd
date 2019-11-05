@@ -16,18 +16,18 @@ rem get file temp name from script name
 set setver=%temp%\%~n0.cmd 
 
 rem get current version
-gitversion | jq -r "\"set DOT_GITVERSION=\"+ .MajorMinorPatch" > %setver%
+gitversion | jq -r "\"set DOT_GIT_VERSION=\"+ .MajorMinorPatch" > %setver%
 call %setver%
 
 rem adjust release version to 1.0.0
-if "%DOT_GITVERSION%" equ "0.1.0" set DOT_GITVERSION=1.0.0
+if "%DOT_GIT_VERSION%" equ "0.1.0" set DOT_GIT_VERSION=1.0.0
 
 
 set NO_CONFIRM=N
 
 if "%CURRENT_BRANCH:~0,8%"=="release/" goto finish
 
-set /p CONFIRM=Do you want to start (finish and pack) release %DOT_GITVERSION% (Y/F/[N])?
+set /p CONFIRM=Do you want to start (finish and pack) release %DOT_GIT_VERSION% (Y/F/[N])?
 if /i "%CONFIRM%" equ "F" goto start_noconfirm
 if /i "%CONFIRM%" neq "Y" goto end
 goto start
@@ -36,8 +36,8 @@ goto start
 set NO_CONFIRM=Y
 
 :start
-echo Starting release/%DOT_GITVERSION%
-git flow release start %DOT_GITVERSION%
+echo Starting release/%DOT_GIT_VERSION%
+git flow release start %DOT_GIT_VERSION%
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
 
 rem get release branch name
@@ -56,7 +56,7 @@ goto release
 set NO_CONFIRM=Y
 
 :release
-git flow release finish -m "%DOT_GITVERSION%"
+git flow release finish -m "%DOT_GIT_VERSION%"
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
 
 

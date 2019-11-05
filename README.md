@@ -16,6 +16,7 @@
  * As developer I want to access dot repository full path through DOT_DIR_PATH environment variable
  * As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
  * As developer I want to access dotset default repository name via DOT_BASE_NAME environemnt variable
+
  - As user I can see ".dots prerequisites" instead of "Elevating privileges..." when I call .dots install 
  - As user I don't need .prerequisites as separate command 
  - As user I want to run .pack, .build and .restore commands recursively only when '*' is given. 

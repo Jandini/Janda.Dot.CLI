@@ -25,9 +25,8 @@ if "%DOTS_PATH%" equ "" echo %%DOTS_PATH%% is empty&&exit 1 /b
 echo DOTS_FILE=%DOTS_FILE%
 if "%DOTS_FILE%" neq ".dotset" echo %%DOTS_FILE%% is not .dotset&&exit 1 /b
 
-echo DOT_GITVERSION=%DOT_GITVERSION%
-if "%DOT_GITVERSION%" equ "" echo %%DOT_GITVERSION%% is empty&&exit 1 /b
-
+echo DOT_GIT_VERSION=%DOT_GIT_VERSION%
+if "%DOT_GIT_VERSION%" equ "" echo %%DOT_GIT_VERSION%% is empty&&exit 1 /b
 
 echo CURRENT_BRANCH=%CURRENT_BRANCH%
 if "%CURRENT_BRANCH%" equ "" echo %%CURRENT_BRANCH%% is empty&&exit 1 /b
