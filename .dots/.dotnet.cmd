@@ -16,7 +16,14 @@ goto execute
 
 :dotnet
 cd src
-if not exist %SLN_NAME% echo Default solution %SLN_NAME% not found. Running all solutions defined in .dotset file... && goto foreach
+if exist %SLN_NAME% goto use_default 
+rem if running through foreach already exit the call
+if /i "%2" equ "sln" exit /b
+
+echo Default solution %SLN_NAME% not found. Running all solutions defined in .dotset file... 
+goto foreach
+
+:use_default
 set DISPLAY_NAME=%SLN_NAME%
 
 :execute
@@ -43,6 +50,8 @@ dotnet restore %SLN_NAME% --ignore-failed-sources /p:PackageTargetFeed=%LOCAL_NU
 goto exit
 
 :foreach
+if "%BUILD_SLN%" equ "" echo %%BUILD_SLN%% is not defined.&&goto exit
+
 for %%S in ("%BUILD_SLN:;=" "%") do if "%%S" neq "" call %~n0 %1 sln %%S 
 
 :exit

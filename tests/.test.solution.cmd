@@ -17,6 +17,9 @@ echo Running .addcon .Application
 call .addcon .Application
 if %ERRORLEVEL% neq 0 echo [ FAILED ] && echo Expected value is 0. Return value is %ERRORLEVEL% && exit 1 /b
 
+call .build
+del Test.Solution.sln
+call .build 
 
 cd ..
 rd /q /s Test.Solution
