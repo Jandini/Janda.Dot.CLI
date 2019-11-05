@@ -13,8 +13,8 @@
 
  * As developer I want to access dot repository directory name through DOT_DIR_NAME environment variable
  * As developer I want to access dot repository full path through DOT_DIR_PATH environment variable
- * As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
 
+ - As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
  - As developer I want to access dotset default repository path via DOT_BASE_PATH environemnt variable
  - As developer I want to access dotset default repository name via DOT_BASE_NAME environemnt variable
  - As developer I want to access current git version through DOT_GIT_VERSION environment variable
@@ -31,7 +31,6 @@
  - As user I cannot execute git based commands outside git repositories 
  - As user I can run .init command in any folder without dotset or git repository check
  - As user I want the installer to replace old dots so the depricated commands are removed
-
 
 
 ### version 1.3.0
@@ -119,9 +118,6 @@ git remote remove origin
 git remote add origin http://nas/matt/hello.world.git
 git push -u origin --all
 ```
-
-
-
 
 
 ### Git

@@ -109,7 +109,7 @@ git rev-parse --is-inside-work-tree 1>nul 2>nul
 if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository. && exit /b 1
 
 rem get the current git branch name only if git is available
-for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set CURRENT_BRANCH=%%F
+for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set DOT_GIT_BRANCH=%%F
 
 :skip_gitrepo
 
