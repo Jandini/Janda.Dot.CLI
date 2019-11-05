@@ -23,7 +23,7 @@
  * As user I want to see when foreach is scanning the folders
 
 
- * As user I want to run .pack, .build and .restore commands recursively only when '*' is given. 
+ - As user I want to run .pack, .build and .restore commands recursively only when '*' is given. 
  - Fix endless loop when calling dotnet pack|build|restore and default solution does not exist.
  - As user I can run .pack, .build and .restore commands only within single project by giving '.' parameter. 
  - As developer I want all dot scripts to be stored in nuget package 
