@@ -9,8 +9,8 @@ goto dotnet
 
 :this
 set SLN_NAME=
-set DISPLAY_NAME=%CURRENT_DIR_NAME%
-cd %CURRENT_DIR_PATH%
+set DISPLAY_NAME=%DOT_CURRENT_DIR_NAME%
+cd %DOT_CURRENT_DIR_PATH%
 goto execute
 
 

@@ -23,7 +23,7 @@ rd /q /s .dots
  
 popd 
 
-cd %CURRENT_DIR_PATH%
+cd %DOT_CURRENT_DIR_PATH%
 if "%TEST_DIR%" neq "" rd /q %TEST_DIR%
 
 goto exit

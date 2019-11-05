@@ -35,8 +35,8 @@ for /f "skip=1" %%x in ('wmic os get localdatetime') do if not defined TIME_STAM
 set DATE_STAMP=%TIME_STAMP:~0,8%
 
 rem get directory where script was executed
-for %%I in (.) do set CURRENT_DIR_NAME=%%~nxI
-set CURRENT_DIR_PATH=%cd%
+for %%I in (.) do set DOT_CURRENT_DIR_NAME=%%~nxI
+set DOT_CURRENT_DIR_PATH=%cd%
 
 :already_defined
 

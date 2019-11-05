@@ -11,9 +11,8 @@
  * As user I want to see when foreach is scanning the folders
 
 
- * As developer I want to access dot repository directory name through DOT_DIR_NAME environment variable
- * As developer I want to access dot repository full path through DOT_DIR_PATH environment variable
-
+ - As developer I want to access dot repository directory name through DOT_CURRENT_DIR_NAME environment variable so I know what directory name the command was called from
+ - As developer I want to access current directory path through DOT_CURRENT_DIR_PATH environment variable so I know what directory path the command was called from
  - As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
  - As developer I want to access dotset default repository path via DOT_BASE_PATH environemnt variable
  - As developer I want to access dotset default repository name via DOT_BASE_NAME environemnt variable

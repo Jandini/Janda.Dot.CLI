@@ -13,12 +13,6 @@ if "%TIME_STAMP%" equ "" echo %%TIME_STAMP%% is empty&&exit 1 /b
 echo DATE_STAMP=%DATE_STAMP%
 if "%DATE_STAMP%" equ "" echo %%DATE_STAMP%% is empty&&exit 1 /b
 
-echo CURRENT_DIR_PATH=%CURRENT_DIR_PATH%
-if "%CURRENT_DIR_PATH%" equ "" echo %%CURRENT_DIR_PATH%% is empty&&exit 1 /b
-
-echo CURRENT_DIR_NAME=%CURRENT_DIR_NAME%
-if "%CURRENT_DIR_NAME%" equ "" echo %%CURRENT_DIR_NAME%% is empty&&exit 1 /b
-
 echo DOTS_TYPE=%DOTS_TYPE%
 if "%DOTS_TYPE%" equ "" echo %%DOTS_TYPE%% is empty&&exit 1 /b
 
@@ -33,5 +27,12 @@ if "%DOT_GIT_VERSION%" equ "" echo %%DOT_GIT_VERSION%% is empty&&exit 1 /b
 
 echo DOT_GIT_BRANCH=%DOT_GIT_BRANCH%
 if "%DOT_GIT_BRANCH%" equ "" echo %%DOT_GIT_BRANCH%% is empty&&exit 1 /b
+
+
+echo DOT_CURRENT_DIR_NAME=%DOT_CURRENT_DIR_NAME%
+if "%DOT_CURRENT_DIR_NAME%" equ "" echo %%DOT_CURRENT_DIR_NAME%% is empty&&exit 1 /b
+
+echo DOT_CURRENT_DIR_PATH=%DOT_CURRENT_DIR_PATH%
+if "%DOT_CURRENT_DIR_PATH%" equ "" echo %%DOT_CURRENT_DIR_PATH%% is empty&&exit 1 /b
 
 
