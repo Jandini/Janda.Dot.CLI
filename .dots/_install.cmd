@@ -1,7 +1,7 @@
 @call _dots %~n0 "Install prerequisites" "" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-cd /d "%~dp0" && call _elevate %~n0
+cd /d "%~dp0" && echo .dots prerequisites&&call _elevate %~n0 > nul
 if %ERRORLEVEL% equ 1 exit /b
 
 echo .dots choco
@@ -24,7 +24,7 @@ echo .dots curl
 curl --help 1>2>nul || choco install curl
 echo .dots gitversion
 rem checking gitversion after the repo is initialized
-gitversion 1>2>nul || choco install gitversion.portable --pre
+where gitversion 1>2>nul || choco install gitversion.portable --pre
 echo .dots grep
 grep --help 1>2>nul || choco install grep
 
