@@ -2,21 +2,19 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
   "classifications": [
-    "Dot", 
-    "Solution",
-    "Cid"
+    "dots", 
+    "cid"
   ],
-  "name": "Dot Solution Cid Scripts",
+  "name": "dots cid targets",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "Dot cid scripts",
-  "groupIdentity": "Dot.Cid",
+  "description": "dots cid targets",
+  "groupIdentity": "dots.cid",
   "precedence": "4000",
-  "identity": "Dot.Cid",
+  "identity": "dots.cid",
   "shortName": "dotcid",
   "tags": {
-    "language": "CMD",
     "type": "script"
   },
-  "sourceName": "Common.Cid",
+  "sourceName": "dots.cid",
   "preferNameDirectory": true
 }

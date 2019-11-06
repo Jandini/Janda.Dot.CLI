@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
  * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
- * As user and developer I want to dot-cli templates to be renamed to dots cli; dots cid; dots solution; dots console; dots library
+
 
 
 
@@ -29,6 +29,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ * As user and developer I want to dot-cli templates to be renamed to dots cli; dots cid; dots solution; dots console; dots library
  - As developer I want all dot scripts to be stored in nuget package 
  - As user I can run .init command in any folder without dotset or git repository check
  - As user I want to run .pack, .build and .restore commands recursively only when '*' is given. 
