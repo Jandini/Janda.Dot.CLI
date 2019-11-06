@@ -1,13 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
-  "classifications": [
-    "dots", 
-    "cid"
-  ],
-  "name": "dots cid targets",
+  "classifications": ["dots-cli"],
+  "name": "dot cid",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "dots cid targets",
+  "description": "dots cid targets and scripts",
   "groupIdentity": "dots.cid",
   "precedence": "4000",
   "identity": "dots.cid",

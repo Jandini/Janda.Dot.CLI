@@ -13,7 +13,8 @@ All notable changes to this project will be documented in this file.
  * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
-
+ * As developer and user I want to create dot repository not dot solution
+ - Add changelog file to dot repository
 
 
 

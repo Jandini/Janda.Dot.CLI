@@ -1,20 +1,18 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
-  "classifications": [
-    "dots",
-    "cli"],
-  "name": "dots cli",
+  "classifications": ["dots-cli"],
+  "name": "dot cli",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": ".Scripts for common templates flow.",
-  "groupIdentity": "dots.cli",
+  "description": "dot templates and scripts",
+  "groupIdentity": "dot.cli",
   "precedence": "4000",
-  "identity": "dots.cli",
+  "identity": "dot.cli",
   "shortName": "dots",
   "tags": {
     "type": "script"
   },
-  "sourceName": "dots.cli",
+  "sourceName": "dot.cli",
   "preferNameDirectory": true,
   "sources": [
     {

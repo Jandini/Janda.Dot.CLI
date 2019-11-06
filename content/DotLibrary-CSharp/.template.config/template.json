@@ -1,11 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
-  "classifications": [
-    "Dot",
-    "Solution",
-    "Library"
-  ],
+  "classifications": ["dots-cli"],
   "name": "Dot Solution Class Library",
   "generatorVersions": "[1.0.0.0-*)",
   "description": "Dot class library",
