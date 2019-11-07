@@ -10,7 +10,7 @@
   "identity": "Dot.Library.CSharp.2.2",
   "shortName": "dotlib",
   "tags": {
-    "language": "C#",
+    "language": "",
     "type": "library"
   },
   "sourceName": "Dot.Library",

@@ -2,7 +2,7 @@
 rem call dots to receive few variables
 call .dots
 
-set COMMAND_LIST=help addcon addlib addsln backup branch build clone commit develop diff dotnet dots feature foreach gitlab init master mirror newsln origin pack publish restore status sync undo version release
+set COMMAND_LIST=help addcon addlib addsln backup branch build clone commit develop diff dotnet dots feature foreach gitlab init master mirror newdot origin pack publish restore status sync undo version release
 
 
 echo Running local dots from current .\.dots folder

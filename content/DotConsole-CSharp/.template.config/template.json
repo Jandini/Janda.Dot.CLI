@@ -10,7 +10,7 @@
   "identity": "Dot.Console.CSharp.2.2",
   "shortName": "dotcon",
   "tags": {
-    "language": "C#",
+    "language": "",
     "type": "library"
   },
   "sourceName": "Dot.Console",

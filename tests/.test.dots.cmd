@@ -5,7 +5,7 @@ set TEST_DIR=%TEMP%\T%RANDOM%
 mkdir %TEST_DIR%
 pushd %TEST_DIR%
 
-set COMMAND_LIST=addcon addsln backup branch build clone commit develop diff dotnet dots feature foreach gitlab help init master mirror newsln origin pack publish release restore status sync undo version
+set COMMAND_LIST=addcon addsln backup branch build clone commit develop diff dotnet dots feature foreach gitlab help init master mirror newdot origin pack publish release restore status sync undo version
 set DOTS_LIST=_dots _help _elevate _install
 
 

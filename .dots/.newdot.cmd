@@ -1,4 +1,4 @@
-@call _dots %~n0 "Create new repository and default solution from template" "[.|new repository name]" "  1" %1 %2 %3
+@call _dots %~n0 "Create new dot repository with default solution from template" "[.|new repository name]" "  1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 if "%1" neq "." goto named_solution
