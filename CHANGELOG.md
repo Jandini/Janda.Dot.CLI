@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
  * As user I want to run publish command with '.' parameter so I can publish current library or application without need of using dotset definition 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
- * As user I can upstream local branches using .mirror command ```git log @{u}..```
+ * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
  * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
  * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
