@@ -1,20 +1,16 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
-  "classifications": [
-    "Dot",
-    "Solution",
-    "Console"    
-  ],
-  "name": "Dot Solution Console Application",
+  "classifications": ["dots-cli"],
+  "name": "dot console",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "Dot console",
-  "groupIdentity": "Dot.Console",
+  "description": "dot console application",
+  "groupIdentity": "dot.console",
   "precedence": "4000",
-  "identity": "Dot.Console.CSharp.2.2",
+  "identity": "dot.console",
   "shortName": "dotcon",
   "tags": {
-    "language": "C#",
+    "language": "",
     "type": "library"
   },
   "sourceName": "Dot.Console",

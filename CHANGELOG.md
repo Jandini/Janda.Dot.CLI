@@ -6,14 +6,14 @@ All notable changes to this project will be documented in this file.
 
  * As user I want to run publish command with '.' parameter so I can publish current library or application without need of using dotset definition 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
- * As user I can upstream local branches using .mirror command	
+ * As user I can upstream local branches using .mirror command ```git log @{u}..```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
  * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
  * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
  * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
- * As user and developer I want to dot-cli templates to be renamed to dots cli; dots cid; dots solution; dots console; dots library
+ * Add changelog file to dot repository
 
 
 
@@ -26,9 +26,10 @@ All notable changes to this project will be documented in this file.
  - As developer I want keep track the stories and history of changes in CHANGELOG.md file
  - As developer I can define command flags so they can check command's constraints before the command is executed 
 
-
 ### Changed
 
+ - As developer and user I want to create dot repository using .newdot command
+ - As user and developer I want to dot-cli templates to be renamed to dots cli; dots cid; dots solution; dots console; dots library
  - As developer I want all dot scripts to be stored in nuget package 
  - As user I can run .init command in any folder without dotset or git repository check
  - As user I want to run .pack, .build and .restore commands recursively only when '*' is given. 

@@ -5,8 +5,8 @@ set TEST_DIR=%TEMP%\T%RANDOM%
 mkdir %TEST_DIR%
 pushd %TEST_DIR%
 
-echo Running .newsln Test.Solution
-call .newsln Test.Solution
+echo Running .newdot Test.Solution
+call .newdot Test.Solution
 if %ERRORLEVEL% neq 0 echo [ FAILED ] && echo Expected value is 0. Return value is %ERRORLEVEL% && exit 1 /b
 
 echo Running .addcon Tool
