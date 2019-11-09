@@ -19,6 +19,21 @@ All notable changes to this project will be documented in this file.
 
 ## [1.2.0] 
 
+### Issues
+
+ * GitVersion 5.1.2
+ * C:\Users\Administrator\.nuget\packages\gitversiontask\5.1.1\build\GitVersionTask.targets(10,9): error MSB4062: The "WriteVersionInfoToBuildLog" task could not be loaded from the assembly C:\Users\Administrator\.
+   nuget\packages\gitversiontask\5.1.1\build\..\tools\netstandard2.0\GitVersionTask.MsBuild.dll. Assembly with same name is already loaded Confirm that the <UsingTask> declaration is correct, that the assembly and
+   all its dependencies are available, and that the task contains a public class that implements Microsoft.Build.Framework.ITask. [C:\Users\Administrator\Source\Repos\Common\Common.Extensions\src\Common.Extensions.
+   Hosting\Common.Extensions.Hosting.csproj]
+
+ * WIP: You are working on feature/remove-watchers. Do you want to SWITCH to feature/philipe-extraction now (Y/[N])?y
+
+ * C:\Users\Administrator\Source\Repos\Common\Common.Extensions>.restore
+   MSBUILD : error MSB1003: Specify a project or solution file. The current working directory does not contain a project or solution file.
+   Searching for dotset repositories in Common.Extensions...
+   Running dotnet for C:\Users\Administrator\Source\Repos\Common\Common.Extensions\.
+
 ### Added
 
  - As developer I want to run basic unit tests so I can ensure the essential commands are still working
