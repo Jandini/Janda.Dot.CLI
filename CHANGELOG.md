@@ -4,7 +4,6 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
- * As user I want to run publish command with '.' parameter so I can publish current library or application without need of using dotset definition 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
@@ -14,10 +13,27 @@ All notable changes to this project will be documented in this file.
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
  * Add changelog file to dot repository
-
-
+ * Change BUILD_SLN to DOT_BUILD_SOLUTIONS
+ * Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS
+ * Update date time variables to use DOT_ prefiex
+ * .release should try to checkout branch like feature does
 
 ## [1.2.0] 
+
+### Issues
+
+ * GitVersion 5.1.2
+ * C:\Users\Administrator\.nuget\packages\gitversiontask\5.1.1\build\GitVersionTask.targets(10,9): error MSB4062: The "WriteVersionInfoToBuildLog" task could not be loaded from the assembly C:\Users\Administrator\.
+   nuget\packages\gitversiontask\5.1.1\build\..\tools\netstandard2.0\GitVersionTask.MsBuild.dll. Assembly with same name is already loaded Confirm that the <UsingTask> declaration is correct, that the assembly and
+   all its dependencies are available, and that the task contains a public class that implements Microsoft.Build.Framework.ITask. [C:\Users\Administrator\Source\Repos\Common\Common.Extensions\src\Common.Extensions.
+   Hosting\Common.Extensions.Hosting.csproj]
+
+ * WIP: You are working on feature/remove-watchers. Do you want to SWITCH to feature/philipe-extraction now (Y/[N])?y
+
+ * C:\Users\Administrator\Source\Repos\Common\Common.Extensions>.restore
+   MSBUILD : error MSB1003: Specify a project or solution file. The current working directory does not contain a project or solution file.
+   Searching for dotset repositories in Common.Extensions...
+   Running dotnet for C:\Users\Administrator\Source\Repos\Common\Common.Extensions\.
 
 ### Added
 
@@ -28,6 +44,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - As user I want to run publish command with '.' parameter so I can publish current library or application without need of using dotset definition 
+ - Change to .status ```git status -sb```
  - As developer and user I want to create dot repository using .newdot command
  - As user and developer I want to dot-cli templates to be renamed to dots cli; dots cid; dots solution; dots console; dots library
  - As developer I want all dot scripts to be stored in nuget package 

@@ -3,5 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 echo You are working on %DOT_GIT_BRANCH%
 git branch
-git status
-
+echo.
+git status -sb
+echo.
+echo.
