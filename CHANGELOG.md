@@ -4,7 +4,6 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
- * As user I want to run publish command with '.' parameter so I can publish current library or application without need of using dotset definition 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
@@ -17,7 +16,7 @@ All notable changes to this project will be documented in this file.
  * Change BUILD_SLN to DOT_BUILD_SOLUTIONS
  * Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS
  * Update date time variables to use DOT_ prefiex
-
+ * .release should try to checkout branch like feature does
 
 ## [1.2.0] 
 
@@ -45,6 +44,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - As user I want to run publish command with '.' parameter so I can publish current library or application without need of using dotset definition 
+ - Change to .status ```git status -sb```
  - As developer and user I want to create dot repository using .newdot command
  - As user and developer I want to dot-cli templates to be renamed to dots cli; dots cid; dots solution; dots console; dots library
  - As developer I want all dot scripts to be stored in nuget package 
