@@ -1,24 +1,29 @@
-@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all BUILD_SLN defined in .dotset file" "<pack|build|restore> [.|all]" %1 %2 %3
+@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all BUILD_SLN defined in .dotset file" "<pack|build|restore> [.|all]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
-
-if "%1" equ "" .help dotnet && exit /b
 
 if /i "%2" equ "." goto this
 if /i "%2" equ "all" goto foreach
 if /i "%2" equ "sln" set SLN_NAME=%~3.sln&& goto dotnet
-set SLN_NAME=%BASE_NAME%.sln
+set SLN_NAME=%DOT_BASE_NAME%.sln
 goto dotnet
 
 :this
 set SLN_NAME=
-set DISPLAY_NAME=%CURRENT_DIR_NAME%
-cd %CURRENT_DIR_PATH%
+set DISPLAY_NAME=%DOT_CURRENT_DIR_NAME%
+cd %DOT_CURRENT_DIR_PATH%
 goto execute
 
 
 :dotnet
 cd src
-if not exist %SLN_NAME% echo Default solution %SLN_NAME% not found. Running all solutions defined in .dotset file... && goto foreach
+if exist %SLN_NAME% goto use_default 
+rem if running through foreach already exit the call
+if /i "%2" equ "sln" exit /b
+
+echo Default solution %SLN_NAME% not found. Running all solutions defined in .dotset file... 
+goto foreach
+
+:use_default
 set DISPLAY_NAME=%SLN_NAME%
 
 :execute
@@ -45,6 +50,8 @@ dotnet restore %SLN_NAME% --ignore-failed-sources /p:PackageTargetFeed=%LOCAL_NU
 goto exit
 
 :foreach
+if "%BUILD_SLN%" equ "" echo %%BUILD_SLN%% is not defined.&&goto exit
+
 for %%S in ("%BUILD_SLN:;=" "%") do if "%%S" neq "" call %~n0 %1 sln %%S 
 
 :exit

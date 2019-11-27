@@ -3,13 +3,13 @@ if %ERRORLEVEL% equ 1 exit /b
 call .version
 
 rem dotnet 3.0.0 only requires NUGET_ID
-set PACKAGE=%BASE_NAME%
+set PACKAGE=%DOT_BASE_NAME%
 echo Uninstalling %PACKAGE%...
 dotnet new -u %PACKAGE% 
 
 
 rem dotnet 2.2 requires NUGET_ID with version
-rem set PACKAGE=%BASE_NAME%.%VERSION%
+rem set PACKAGE=%DOT_BASE_NAME%.%DOT_GIT_VERSION%
 rem echo Uninstalling %PACKAGE%
 rem dotnet new -u %PACKAGE% > nul
 rem dotnet new -l

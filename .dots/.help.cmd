@@ -1,4 +1,4 @@
-@call _dots %~n0 "List all available scripts or get single command description and syntax" "[command name|--help|--usage]" %1 %2 %3
+@call _dots %~n0 "List all available scripts or get single command description and syntax" "[command name|--help|--usage]" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 call .dots
@@ -7,9 +7,14 @@ set DOTS_MASK=.*.cmd
 set DOTS_HELP=--help
 set DOTS_NAME=%1
 
-if /i "%DOTS_NAME%" equ "usage" goto usage_show_all_commands
-if /i "%DOTS_NAME%" neq "" goto help_show_signle_command
+
+if /i "%DOTS_NAME:~0,1%" equ "." goto already_dotted
+set DOTS_NAME=.%DOTS_NAME%
+
+:already_dotted
+if /i "%DOTS_NAME%" neq "." goto help_show_signle_command
 goto help_show_all_commands
+
 
 :usage_show_all_commands
 set DOTS_HELP=--usage
@@ -17,9 +22,9 @@ goto help_show_all_commands
 
 
 :help_show_signle_command
-if not exist %DOTS_PATH%.%DOTS_NAME%.cmd echo .%DOTS_NAME% is missing && goto exit 
-call .%DOTS_NAME% --help
-call .%DOTS_NAME% --usage
+if not exist %DOTS_PATH%%DOTS_NAME%.cmd echo %DOTS_NAME% script is missing && exit /b 2 
+call %DOTS_NAME% --help
+call %DOTS_NAME% --usage
 goto exit
 
 :help_show_all_commands

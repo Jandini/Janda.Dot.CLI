@@ -1,20 +1,16 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
-  "classifications": [
-    "Dot",
-    "Solution",
-    "Library"
-  ],
-  "name": "Dot Solution Class Library",
+  "classifications": ["dots-cli"],
+  "name": "dot class library",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "Dot class library",
-  "groupIdentity": "Dot.Library",
+  "description": "cot class library",
+  "groupIdentity": "dot.library",
   "precedence": "4000",
-  "identity": "Dot.Library.CSharp.2.2",
+  "identity": "dot.library",
   "shortName": "dotlib",
   "tags": {
-    "language": "C#",
+    "language": "",
     "type": "library"
   },
   "sourceName": "Dot.Library",

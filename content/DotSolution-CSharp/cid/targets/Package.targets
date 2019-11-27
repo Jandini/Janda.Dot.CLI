@@ -34,7 +34,7 @@
 
   <Target Condition="'$(ApplyVersioning)' == 'true' AND $(PackageTargetFeed) != '' " Name="AddPackage" AfterTargets="Pack" DependsOnTargets="GetProperties">
     <Message Text="Adding $(OutputPackagePath) package to $(PackageTargetFeed)" Importance="high" />    
-    <Exec Command="nuget add $(OutputPackagePath) -source $(PackageTargetFeed)"/>
+    <Exec Command="nuget add $(OutputPackagePath) -source $(PackageTargetFeed)" />
   </Target>
 
   <Target Condition="'$(ApplyVersioning)' == 'true' AND '$(PackageBuildPath)' == ''" Name="BuildPathWarning" AfterTargets="Pack" >

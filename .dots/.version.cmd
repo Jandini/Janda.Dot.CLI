@@ -1,16 +1,17 @@
-@call _dots %~n0 "Get current version and set VERSION variable (InformationalVersion is default)" "[InformationalVersion|AssemblySemFileVer|MajorMinorPatch...]" %1 %2 %3
+@call _dots %~n0 "Get current version and set DOT_GIT_VERSION variable (InformationalVersion is default)" "[InformationalVersion|AssemblySemFileVer|MajorMinorPatch...]" " g" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-if "%1" equ "" (set GIT_VERSION=InformationalVersion) else (set GIT_VERSION=%1)
-echo Retrieving %GIT_VERSION%
-set setver=%temp%\%~n0.cmd 
-gitversion | jq -r "\"set VERSION=\"+ .%GIT_VERSION%" > %setver% 2>nul
+if "%1" equ "" (set VERSION_NAME=InformationalVersion) else (set VERSION_NAME=%1)
+echo Retrieving %VERSION_NAME%...
+set setver=%temp%\_dot%RANDOM%version.cmd 
+gitversion | jq -r "\"set DOT_GIT_VERSION=\"+ .%VERSION_NAME%" > %setver% 2>nul
 if %ERRORLEVEL% neq 0 goto fixed_version
 call %setver%
+del /q %setver%
 goto exit
 
 :fixed_version
-set VERSION=1.0.0
+set DOT_GIT_VERSION=0.0.0
 
 :exit
-echo %GIT_VERSION% is %VERSION%
+echo %VERSION_NAME% is %DOT_GIT_VERSION%
