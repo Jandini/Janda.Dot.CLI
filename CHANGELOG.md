@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
  - Missing dotnet template causes odd behaviour in .newdot
+ - Changed diff to output only statistics
 
 
 ## [1.2.0] 
