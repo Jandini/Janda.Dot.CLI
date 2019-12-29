@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+ * Add optional parameter origin to .init command 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
@@ -17,6 +18,19 @@ All notable changes to this project will be documented in this file.
  * Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS
  * Update date time variables to use DOT_ prefiex
  * .release should try to checkout branch like feature does
+
+
+## [1.3.0]
+
+### Added
+
+ - Add template error handling for .newdot command.
+
+
+### Changed
+
+ - Missing dotnet template causes odd behaviour in .newdot
+
 
 ## [1.2.0] 
 
@@ -34,6 +48,9 @@ All notable changes to this project will be documented in this file.
    MSBUILD : error MSB1003: Specify a project or solution file. The current working directory does not contain a project or solution file.
    Searching for dotset repositories in Common.Extensions...
    Running dotnet for C:\Users\Administrator\Source\Repos\Common\Common.Extensions\.
+
+ * Missing dotnet template causes odd behaviour in .newdot (fixed in 1.3.0)
+
 
 ### Added
 
