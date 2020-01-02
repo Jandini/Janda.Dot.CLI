@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 
  - Add template error handling for .newdot command.
  - Add git stash support to .init command. Allow to run init git flow after git clone from any remote and changes were made.
+ - Add gitlog command
 
 
 ### Changed
