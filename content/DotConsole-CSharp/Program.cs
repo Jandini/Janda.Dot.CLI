@@ -1,68 +1,31 @@
-﻿using Microsoft.Extensions.CommandLineUtils;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.IO;
 
-namespace Dot.Console
+namespace Janda.Chime.Converter
 {
-    class Program : IApplication
-    {
-#if (addArgs)
-        public static CommandOption Option { get; private set; }
-        public static CommandOption Parameter { get; private set; }
-        public static CommandArgument Argument { get; private set; }
-#endif
+    class Program : IApplicationProgram
+    {        
         static int Main(string[] args)
         {
-#if (addArgs)
-            return Application.Run<Program>(args, (app) =>
-            {
-                if (string.IsNullOrEmpty(Argument.Value))
-                {
-                    app.ShowHelp();
-                    throw new Exception("The argument is requred.");
-                }
-
-                app.ShowRootCommandFullNameAndVersion();
-            });
-#else
-            return Application.Run<Program>(args, (app)=>app.ShowRootCommandFullNameAndVersion());
-#endif
+            return Application.Run<Program>(args);
         }
 
-        public int HandleException(Exception ex)
+        #region IApplicationProgram
+
+        public void ConfigureServices(IServiceCollection serviceCollection)
         {
-            Console.WriteLine(ex.Message);
-            return -1;
+            serviceCollection
+                .AddLogging(ConfigureLogging)
+                .AddSingleton<IProgramService, ProgramService>();
         }
 
-        public void ConfigureApplication(CommandLineApplication application)
+        public void InitializeApplication(ProgramOptions options)
         {
-            application.FullName = "Dot.Console";        
-#if (addArgs)
-            application.HelpOption("-h|--help");
-            Option = application.Option("-o|--option", "Application option", CommandOptionType.NoValue);
-            Parameter = application.Option("-p|--parameter", "Application parameter", CommandOptionType.SingleValue);
-            Argument = application.Argument("-a|--argument", "Application argument", true);
-#endif
-        }
-
-        public void InitializeApplication()
-        {
-            const string consoleOutput = "[{Timestamp:HH:mm:ss} {Level:u4}] {Message:jl}{NewLine}{Exception}";
-            const string fileOutput = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}";
-
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.ColoredConsole(outputTemplate: consoleOutput)
-                .WriteTo.File(@"logs\" + Path.ChangeExtension(
-                    AppDomain.CurrentDomain.FriendlyName, "log"), 
-                    outputTemplate: fileOutput, 
-                    rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+            CreateLogger(options);
         }
 
         public void FinalizeApplication()
@@ -77,6 +40,19 @@ namespace Dot.Console
                 .AddJsonFile("appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
                 .Build();
+        }          
+
+        private void CreateLogger(ProgramOptions options)
+        {
+            var loggerConfiguration = new LoggerConfiguration()
+                .WriteTo.ColoredConsole();
+
+            if (!string.IsNullOrEmpty(options.LogDir))
+                loggerConfiguration.WriteTo.File(
+                    path: $"{options.LogDir}\\{Path.ChangeExtension(Application.Name, "log")}",
+                    rollingInterval: RollingInterval.Day);
+
+            Log.Logger = loggerConfiguration.CreateLogger();
         }
 
         private void ConfigureLogging(ILoggingBuilder logging)
@@ -85,11 +61,16 @@ namespace Dot.Console
                 .AddSerilog(dispose: true);
         }
 
-        public void ConfigureServices(IServiceCollection serviceCollection)
+        public void UnhandledException(Exception ex)
         {
-            serviceCollection
-                .AddLogging(ConfigureLogging)
-                .AddSingleton<IProgramService, ProgramService>();
+            var logger = Application.GetService<ILogger<Application>>();
+
+            if (logger != null)
+                logger.LogCritical(ex, ex.Message);
+            else
+                Console.WriteLine(ex.Message);
         }
+
+        #endregion
     }
 }

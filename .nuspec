@@ -30,7 +30,6 @@
     <file src="content\DotSolution-CSharp\cid\targets\Package.targets" target="content\DotSolution-CSharp\cid\targets\Package.targets" />
     <file src="content\DotSolution-CSharp\cid\targets\GitVersion.targets" target="content\DotSolution-CSharp\cid\targets\GitVersion.targets" />
 
-
     <!-- Dot Cid -->
     <file src="content\DotSolution-CSharp\cid\template.json" target="content\DotCid\.template.config\template.json" />
     <file src="content\DotSolution-CSharp\cid\targets\Obfuscar.targets" target="content\DotCid\cid\targets\Obfuscar.targets" />
@@ -55,8 +54,11 @@
     <file src="content\DotConsole-CSharp\Dot.Console.csproj" target="content\DotConsole-CSharp\Dot.Console.csproj" />
     <file src="content\DotConsole-CSharp\Program.cs" target="content\DotConsole-CSharp\Program.cs" />    
     <file src="content\DotConsole-CSharp\Application.cs" target="content\DotConsole-CSharp\Application.cs" />    
+    <file src="content\DotConsole-CSharp\IApplicationProgram.cs" target="content\DotConsole-CSharp\IApplicationProgram.cs" />    
     <file src="content\DotConsole-CSharp\ProgramService.cs" target="content\DotConsole-CSharp\ProgramService.cs" />    
+    <file src="content\DotConsole-CSharp\ProgramOptions.cs" target="content\DotConsole-CSharp\ProgramOptions.cs" />    
     <file src="content\DotConsole-CSharp\IProgramService.cs" target="content\DotConsole-CSharp\IProgramService.cs" />    
+    <file src="content\DotConsole-CSharp\IProgramOptions.cs" target="content\DotConsole-CSharp\IProgramOptions.cs" />    
 
 
     <!-- Dots -->

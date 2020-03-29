@@ -9,7 +9,7 @@ echo Running .newdot Test.Solution
 call .newdot Test.Solution
 if %ERRORLEVEL% neq 0 echo [ FAILED ] && echo Expected value is 0. Return value is %ERRORLEVEL% && exit 1 /b
 
-echo Running .addcon Tool
+echo Running .addcon Tool --addArgs --addConfig
 call .addcon Tool
 if %ERRORLEVEL% neq 0 echo [ FAILED ] && echo Expected value is 0. Return value is %ERRORLEVEL% && exit 1 /b
 
@@ -18,9 +18,6 @@ call .addcon .Application
 if %ERRORLEVEL% neq 0 echo [ FAILED ] && echo Expected value is 0. Return value is %ERRORLEVEL% && exit 1 /b
 
 call .build
-if %ERRORLEVEL% neq 0 echo [ FAILED ] && echo Expected value is 0. Return value is %ERRORLEVEL% && exit 1 /b
-del Test.Solution.sln
-call .build 
 if %ERRORLEVEL% neq 0 echo [ FAILED ] && echo Expected value is 0. Return value is %ERRORLEVEL% && exit 1 /b
 
 cd ..

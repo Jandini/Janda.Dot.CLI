@@ -43,6 +43,11 @@
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false"
+    },
+    "addConfig": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false"
     }
   }
 }

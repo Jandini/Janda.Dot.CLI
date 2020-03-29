@@ -1,86 +1,75 @@
 ﻿using System;
 using System.Reflection;
-using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using CommandLine;
 
 namespace Dot.Console
 {
-
-    interface IApplication
-    {
-        IConfiguration CreateConfiguration();
-        void InitializeApplication();
-        void FinalizeApplication();
-        void ConfigureApplication(CommandLineApplication application);
-        void ConfigureServices(IServiceCollection serviceCollection);
-        int HandleException(Exception ex);
-    }
 
     internal class Application
     {
         public static IConfiguration Configuration { get; private set; }
         public static IServiceProvider Services { get; private set; }
         public static string Version { get; private set; }
+        public static string Name { get; private set; }
 
 
         static Application()
         {
+            Name = AppDomain.CurrentDomain.FriendlyName;
             Version = Assembly.GetEntryAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                 .InformationalVersion;
         }
 
-        public static int Run<TProgram>(string[] args, Action<CommandLineApplication> callback = null) where TProgram : IApplication, new()
+        public static int Run<TProgram>(string[] args) where TProgram : IApplicationProgram, new()
         {
-            var program = new TProgram();
+            var applicationProgram = new TProgram();
+            int returnCode = 0; 
 
             try
-            {
-                var serviceCollection = new ServiceCollection();
-                var application = new CommandLineApplication(true)
+            {              
+                Parser.Default.ParseArguments<ProgramOptions>(args).WithParsed(options =>
                 {
-                    ShortVersionGetter = () => { return Version; }
-                };
+                    var serviceCollection = new ServiceCollection();
 
-                program.ConfigureApplication(application);
-
-                application.OnExecute(() =>
-                {
                     try
                     {
-                        callback?.Invoke(application);
-                        program.InitializeApplication();
-                        Configuration = program.CreateConfiguration();
-                        program.ConfigureServices(serviceCollection);
+                        applicationProgram.InitializeApplication(options);
+
+                        Configuration = applicationProgram.CreateConfiguration();
+                    
+                        applicationProgram.ConfigureServices(serviceCollection);
+                        serviceCollection.AddSingleton<IProgramOptions>(options);
+
                         Services = serviceCollection.BuildServiceProvider();
-                        
-                        return Services.GetService<IProgramService>().Run();
+
+                        returnCode = Services.GetService<IProgramService>().Run();
                     }
                     catch (Exception ex)
                     {
-                        ILogger<Application> logger = Services?.GetService<ILogger<Application>>();
-
-                        if (logger == null)
-                            return program.HandleException(ex);
-
-                        logger.LogCritical(ex, ex.Message);
-
-                        return -1;
+                        applicationProgram.UnhandledException(ex);
                     }
-                    finally 
+                    finally
                     {
-                        program.FinalizeApplication();
+                        applicationProgram.FinalizeApplication();
                     }
-                });
-
-                return application.Execute(args);
+                });               
             }
             catch (Exception ex)
             {
-                return program.HandleException(ex);
+                applicationProgram.UnhandledException(ex);
             }
+          
+            return returnCode;            
+        }
+
+        public static T GetService<T>()
+        {
+            return Services != null
+                ? Services.GetService<T>() 
+                : default;
         }
     }
 }
