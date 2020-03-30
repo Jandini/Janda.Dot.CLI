@@ -14,8 +14,7 @@ namespace Dot.Console
     {        
         static int Main(string[] args)
         {
-              return Application.Run<Program, Options>(options => Parser.Default.ParseArguments<Options>(args)
-                .WithParsed(options));
+              return Application.Run<Program, Options>(options => Parser.Default.ParseArguments<Options>(args).WithParsed(options));
         }
 
         #region IApplicationProgram
