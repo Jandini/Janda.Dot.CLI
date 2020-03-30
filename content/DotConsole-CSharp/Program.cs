@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿#if (addConfig)
+using Microsoft.Extensions.Configuration;
+#endif
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -19,7 +21,11 @@ namespace Janda.Chime.Converter
         public void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
+#if (addConfig)
                 .AddLogging(ConfigureLogging)
+#else
+                .AddLogging(logging => logging.AddSerilog())
+#endif
                 .AddSingleton<IProgramService, ProgramService>();
         }
 
@@ -33,6 +39,7 @@ namespace Janda.Chime.Converter
             Log.CloseAndFlush();
         }
 
+#if (addConfig)
         public IConfiguration CreateConfiguration()
         {
             return new ConfigurationBuilder()
@@ -40,7 +47,8 @@ namespace Janda.Chime.Converter
                 .AddJsonFile("appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
                 .Build();
-        }          
+        }
+#endif
 
         private void CreateLogger(ProgramOptions options)
         {
@@ -55,11 +63,13 @@ namespace Janda.Chime.Converter
             Log.Logger = loggerConfiguration.CreateLogger();
         }
 
+#if (addConfig)
         private void ConfigureLogging(ILoggingBuilder logging)
         {
             logging.AddConfiguration(Application.Configuration)
                 .AddSerilog(dispose: true);
         }
+#endif
 
         public void UnhandledException(Exception ex)
         {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
+#if (addConfig)
 using Microsoft.Extensions.Configuration;
+#endif
 using Microsoft.Extensions.DependencyInjection;
 using CommandLine;
 
@@ -9,7 +11,9 @@ namespace Dot.Console
 
     internal class Application
     {
+#if (addConfig)
         public static IConfiguration Configuration { get; private set; }
+#endif
         public static IServiceProvider Services { get; private set; }
         public static string Version { get; private set; }
         public static string Name { get; private set; }
@@ -37,15 +41,16 @@ namespace Dot.Console
                     try
                     {
                         applicationProgram.InitializeApplication(options);
-
+#if (addConfig)
                         Configuration = applicationProgram.CreateConfiguration();
-                    
+#endif
                         applicationProgram.ConfigureServices(serviceCollection);
+  
                         serviceCollection.AddSingleton<IProgramOptions>(options);
 
-                        Services = serviceCollection.BuildServiceProvider();
-
-                        returnCode = Services.GetService<IProgramService>().Run();
+                        returnCode = (Services = serviceCollection.BuildServiceProvider())
+                            .GetService<IProgramService>()
+                            .Run();
                     }
                     catch (Exception ex)
                     {
