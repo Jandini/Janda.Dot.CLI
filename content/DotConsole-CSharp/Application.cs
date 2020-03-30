@@ -4,7 +4,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 #endif
 using Microsoft.Extensions.DependencyInjection;
-using CommandLine;
+
 
 namespace Dot.Console
 {
@@ -15,6 +15,7 @@ namespace Dot.Console
         public static IConfiguration Configuration { get; private set; }
 #endif
         public static IServiceProvider Services { get; private set; }
+        public static IApplicationOptions Options { get; private set; }
         public static string Version { get; private set; }
         public static string Name { get; private set; }
 
@@ -27,34 +28,38 @@ namespace Dot.Console
                 .InformationalVersion;
         }
 
-        public static int Run<TProgram>(string[] args) where TProgram : IApplicationProgram, new()
+        public static int Run<TProgram, TOptions>(Action<Action<TOptions>> parseArgs) 
+            where TProgram: IApplicationProgram, new() 
+            where TOptions: IApplicationOptions
         {
             var applicationProgram = new TProgram();
             int returnCode = 0; 
 
             try
             {              
-                Parser.Default.ParseArguments<ProgramOptions>(args).WithParsed(options =>
+                parseArgs(options =>
                 {
+                    Options = options;
+
                     var serviceCollection = new ServiceCollection();
+                    serviceCollection.AddSingleton<IApplicationOptions>(options);
 
                     try
                     {
-                        applicationProgram.InitializeApplication(options);
+                        applicationProgram.InitializeApplication();
 #if (addConfig)
                         Configuration = applicationProgram.CreateConfiguration();
 #endif
                         applicationProgram.ConfigureServices(serviceCollection);
   
-                        serviceCollection.AddSingleton<IProgramOptions>(options);
-
                         returnCode = (Services = serviceCollection.BuildServiceProvider())
-                            .GetService<IProgramService>()
+                            .GetService<IApplicationService>()
                             .Run();
+
                     }
                     catch (Exception ex)
                     {
-                        applicationProgram.UnhandledException(ex);
+                        returnCode = applicationProgram.UnhandledException(ex);
                     }
                     finally
                     {
@@ -64,7 +69,7 @@ namespace Dot.Console
             }
             catch (Exception ex)
             {
-                applicationProgram.UnhandledException(ex);
+                returnCode = applicationProgram.UnhandledException(ex);
             }
           
             return returnCode;            

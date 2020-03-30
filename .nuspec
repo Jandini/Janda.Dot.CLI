@@ -52,13 +52,13 @@
     <!-- Dot Console -->
     <file src="content\DotConsole-CSharp\.template.config\template.json" target="content\DotConsole-CSharp\.template.config\template.json" />
     <file src="content\DotConsole-CSharp\Dot.Console.csproj" target="content\DotConsole-CSharp\Dot.Console.csproj" />
-    <file src="content\DotConsole-CSharp\Program.cs" target="content\DotConsole-CSharp\Program.cs" />    
     <file src="content\DotConsole-CSharp\Application.cs" target="content\DotConsole-CSharp\Application.cs" />    
+    <file src="content\DotConsole-CSharp\ApplicationService.cs" target="content\DotConsole-CSharp\ApplicationService.cs" />    
     <file src="content\DotConsole-CSharp\IApplicationProgram.cs" target="content\DotConsole-CSharp\IApplicationProgram.cs" />    
-    <file src="content\DotConsole-CSharp\ProgramService.cs" target="content\DotConsole-CSharp\ProgramService.cs" />    
-    <file src="content\DotConsole-CSharp\ProgramOptions.cs" target="content\DotConsole-CSharp\ProgramOptions.cs" />    
-    <file src="content\DotConsole-CSharp\IProgramService.cs" target="content\DotConsole-CSharp\IProgramService.cs" />    
-    <file src="content\DotConsole-CSharp\IProgramOptions.cs" target="content\DotConsole-CSharp\IProgramOptions.cs" />    
+    <file src="content\DotConsole-CSharp\IApplicationService.cs" target="content\DotConsole-CSharp\IApplicationService.cs" />    
+    <file src="content\DotConsole-CSharp\IApplicationOptions.cs" target="content\DotConsole-CSharp\IApplicationOptions.cs" />    
+    <file src="content\DotConsole-CSharp\Program.cs" target="content\DotConsole-CSharp\Program.cs" />    
+    <file src="content\DotConsole-CSharp\Options.cs" target="content\DotConsole-CSharp\Options.cs" />    
 
 
     <!-- Dots -->

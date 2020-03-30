@@ -2,7 +2,7 @@
 
 namespace Dot.Console
 {
-    internal class ProgramOptions : IProgramOptions
+    internal class Options : IApplicationOptions
     {
 #if (addArgs)
         [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]

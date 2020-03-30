@@ -1,6 +1,6 @@
 ﻿namespace Dot.Console
 {
-    public interface IProgramOptions
+    public interface IApplicationOptions
     {
 #if (addArgs)
         bool Verbose { get; }  

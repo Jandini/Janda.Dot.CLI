@@ -1,6 +1,6 @@
 ﻿namespace Dot.Console
 {
-    public interface IProgramService
+    public interface IApplicationService
     {
         int Run();
     }

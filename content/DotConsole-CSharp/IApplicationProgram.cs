@@ -11,9 +11,9 @@ namespace Dot.Console
 #if (addConfig)
         IConfiguration CreateConfiguration();
 #endif
-        void InitializeApplication(ProgramOptions options);
+        void InitializeApplication();
         void FinalizeApplication();
         void ConfigureServices(IServiceCollection serviceCollection);
-        void UnhandledException(Exception ex);
+        int UnhandledException(Exception ex);
     }
 }

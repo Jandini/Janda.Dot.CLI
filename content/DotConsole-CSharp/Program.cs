@@ -1,19 +1,21 @@
-﻿#if (addConfig)
+﻿using System;
+using System.IO;
+#if (addConfig)
 using Microsoft.Extensions.Configuration;
 #endif
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using CommandLine;
 using Serilog;
-using System;
-using System.IO;
 
-namespace Janda.Chime.Converter
+namespace Dot.Console
 {
     class Program : IApplicationProgram
     {        
         static int Main(string[] args)
         {
-            return Application.Run<Program>(args);
+              return Application.Run<Program, Options>(options => Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(options));
         }
 
         #region IApplicationProgram
@@ -26,12 +28,12 @@ namespace Janda.Chime.Converter
 #else
                 .AddLogging(logging => logging.AddSerilog())
 #endif
-                .AddSingleton<IProgramService, ProgramService>();
+                .AddSingleton<IApplicationService, ApplicationService>();
         }
 
-        public void InitializeApplication(ProgramOptions options)
+        public void InitializeApplication()
         {
-            CreateLogger(options);
+            CreateLogger();
         }
 
         public void FinalizeApplication()
@@ -50,12 +52,14 @@ namespace Janda.Chime.Converter
         }
 #endif
 
-        private void CreateLogger(ProgramOptions options)
+        private void CreateLogger()
         {
             var loggerConfiguration = new LoggerConfiguration()
                 .WriteTo.ColoredConsole();
 
-            if (!string.IsNullOrEmpty(options.LogDir))
+            var options = Application.Options as Options;
+
+            if (!string.IsNullOrEmpty(options?.LogDir))
                 loggerConfiguration.WriteTo.File(
                     path: $"{options.LogDir}\\{Path.ChangeExtension(Application.Name, "log")}",
                     rollingInterval: RollingInterval.Day);
@@ -71,14 +75,17 @@ namespace Janda.Chime.Converter
         }
 #endif
 
-        public void UnhandledException(Exception ex)
+        public int UnhandledException(Exception ex)
         {
-            var logger = Application.GetService<ILogger<Application>>();
+            ILogger<Application> logger;
 
-            if (logger != null)
-                logger.LogCritical(ex, ex.Message);
-            else
-                Console.WriteLine(ex.Message);
+            (logger = Application.GetService<ILogger<Application>>())
+                ?.LogCritical(ex, ex.Message);
+
+            if (logger == null)
+                Console.WriteLine($"{ex.Message}\n{ex.StackTrace}");
+
+            return -1;
         }
 
         #endregion
