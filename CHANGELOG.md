@@ -4,8 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+ 
+ * .newapp must create repo and console application
+ * .newdot must not allow to be executed inside existing repo
+ * Make .add and .new commands 
+ * Create installer script that adds .dots to path
+ * Replace jq with gitversion /showvariable
+ * Add target dotnet core option netcoreapp2.2 with default netcoreapp3.0
  * Add optional parameter origin to .init command 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
+ * Perhaps use find insteaad grep
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
  * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
@@ -18,6 +26,15 @@ All notable changes to this project will be documented in this file.
  * Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS
  * Update date time variables to use DOT_ prefiex
  * .release should try to checkout branch like feature does
+
+## [1.4.0]
+
+### Changed
+
+ - Upgraded project templates to .NET Core 3.1.2
+ - Replaced Microsoft.Extensions.CommandLineUtils 1.1.1 with the most CommandLineParser 2.7.82
+  
+
 
 
 ## [1.3.0]

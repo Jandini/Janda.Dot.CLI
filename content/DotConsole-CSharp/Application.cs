@@ -1,86 +1,85 @@
 ﻿using System;
 using System.Reflection;
-using Microsoft.Extensions.CommandLineUtils;
+#if (addConfig)
 using Microsoft.Extensions.Configuration;
+#endif
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+
 
 namespace Dot.Console
 {
 
-    interface IApplication
-    {
-        IConfiguration CreateConfiguration();
-        void InitializeApplication();
-        void FinalizeApplication();
-        void ConfigureApplication(CommandLineApplication application);
-        void ConfigureServices(IServiceCollection serviceCollection);
-        int HandleException(Exception ex);
-    }
-
     internal class Application
     {
+#if (addConfig)
         public static IConfiguration Configuration { get; private set; }
+#endif
         public static IServiceProvider Services { get; private set; }
+        public static IApplicationOptions Options { get; private set; }
         public static string Version { get; private set; }
+        public static string Name { get; private set; }
 
 
         static Application()
         {
+            Name = AppDomain.CurrentDomain.FriendlyName;
             Version = Assembly.GetEntryAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                 .InformationalVersion;
         }
 
-        public static int Run<TProgram>(string[] args, Action<CommandLineApplication> callback = null) where TProgram : IApplication, new()
+        public static int Run<TProgram, TOptions>(Action<Action<TOptions>> parseArgs) 
+            where TProgram: IApplicationProgram, new() 
+            where TOptions: IApplicationOptions
         {
-            var program = new TProgram();
+            var applicationProgram = new TProgram();
+            int returnCode = 0; 
 
             try
-            {
-                var serviceCollection = new ServiceCollection();
-                var application = new CommandLineApplication(true)
+            {              
+                parseArgs(options =>
                 {
-                    ShortVersionGetter = () => { return Version; }
-                };
+                    Options = options;
 
-                program.ConfigureApplication(application);
+                    var serviceCollection = new ServiceCollection();
+                    serviceCollection.AddSingleton<IApplicationOptions>(options);
 
-                application.OnExecute(() =>
-                {
                     try
                     {
-                        callback?.Invoke(application);
-                        program.InitializeApplication();
-                        Configuration = program.CreateConfiguration();
-                        program.ConfigureServices(serviceCollection);
-                        Services = serviceCollection.BuildServiceProvider();
-                        
-                        return Services.GetService<IProgramService>().Run();
+                        applicationProgram.InitializeApplication();
+#if (addConfig)
+                        Configuration = applicationProgram.CreateConfiguration();
+#endif
+                        applicationProgram.ConfigureServices(serviceCollection);
+  
+                        returnCode = (Services = serviceCollection.BuildServiceProvider())
+                            .GetService<IApplicationService>()
+                            .Run();
+
                     }
                     catch (Exception ex)
                     {
-                        ILogger<Application> logger = Services?.GetService<ILogger<Application>>();
-
-                        if (logger == null)
-                            return program.HandleException(ex);
-
-                        logger.LogCritical(ex, ex.Message);
-
-                        return -1;
+                        returnCode = applicationProgram.UnhandledException(ex);
                     }
-                    finally 
+                    finally
                     {
-                        program.FinalizeApplication();
+                        applicationProgram.FinalizeApplication();
                     }
-                });
-
-                return application.Execute(args);
+                });               
             }
             catch (Exception ex)
             {
-                return program.HandleException(ex);
+                returnCode = applicationProgram.UnhandledException(ex);
             }
+          
+            return returnCode;            
+        }
+
+        public static T GetService<T>()
+        {
+            return Services != null
+                ? Services.GetService<T>() 
+                : default;
         }
     }
 }
