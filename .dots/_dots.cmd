@@ -3,10 +3,9 @@ set DOT_NUL=nul
 if /i "%DOT_TRACE%" equ "1" echo on && set DOT_NUL=con
 
 rem TODO: add number of required parameters - show help when not match => Usage: call _dots <caller script name> <help text|""> <usage syntax|""> <number of required parameters> <flags string> [parameters]
-rem TODO: add flags "" "dg" "d" " g" "  1" "dg1" 
-rem TODO: help via grep type _dots.cmd | grep -o -P (?^<=rem).*
+rem TODO: help via grep type _dots.cmd | grep -o -P (?^<=rem).* ; or find or findstr 
 
-rem This is a boot strap script. It will handle 
+rem This is a boot strap script. 
 
 rem Usage: @call _dots <caller name> <help text|""> <usage syntax|""> <script flags> [parameters %1 %2 %3 %4]
 rem 
@@ -14,10 +13,10 @@ rem <caller name>  - Calling script name. It should be always set to %~n0
 rem <help text>    - Text to be displayed when help is requested
 rem <usage synax>  - Usage syntax when usage help is requested
 rem <script flags> - Flag string. Each position in string represents one flag. Space character represents the flag as not set.
-rem                  Available flags: "dg"
-rem                  d - command must be run in dot repository (.dotset file must be present) 
-rem                  g - command must be run withing git repository
-rem                  1 - at least one parameter is required (%~1 checking as unquoted)
+rem                  Available flags: "d[g|G]1"
+rem                  d   - command must be run in dot repository (.dotset file must be present) 
+rem                  g/G - command must be/cannot run within git repository
+rem                  1   - at least one parameter is required (%~1 checking as unquoted)
 rem [parameters]   - Pass privided parameters %1 %2 %3 %4
 
 rem Example: 
@@ -42,14 +41,15 @@ set DOT_CURRENT_DIR_PATH=%cd%
 
 rem always update flags as the script may call another where requirements are different
 set DOTS_FLAGS=%~4
-
 set FLAG_SKIP_DOTSET_CHECK=
 set FLAG_SKIP_GITREPO_CHECK=
 set FLAG_SKIP_PARAM_CHECK=
+set FLAG_NO_GITREPO_ONLY=
 
-if /i "%DOTS_FLAGS:~0,1%" neq "d" set FLAG_SKIP_DOTSET_CHECK=1
-if /i "%DOTS_FLAGS:~1,1%" neq "g" set FLAG_SKIP_GITREPO_CHECK=1
-if /i "%DOTS_FLAGS:~2,1%" neq "1" set FLAG_SKIP_PARAM_CHECK=1
+if "%DOTS_FLAGS:~0,1%" neq "d" set FLAG_SKIP_DOTSET_CHECK=1
+if "%DOTS_FLAGS:~1,1%" neq "g" set FLAG_SKIP_GITREPO_CHECK=1
+if "%DOTS_FLAGS:~1,1%" neq "G" set FLAG_SKIP_NO_GITREPO_ONLY=1
+if "%DOTS_FLAGS:~2,1%" neq "1" set FLAG_SKIP_PARAM_CHECK=1
 
 
 set DOTS_FILE=.dotset
@@ -103,20 +103,18 @@ for /F "tokens=*" %%A in (%DOTS_FILE%) do set %%A
     
 
 :skip_dotset
+if "%FLAG_SKIP_NO_GITREPO_ONLY%" equ "1" goto check_gitrepo
+git rev-parse --is-inside-work-tree 1>nul 2>nul
+if %ERRORLEVEL% equ 0 echo %~1 cannot run inside existing git repository.&exit /b 1
 
+
+:check_gitrepo
 if "%FLAG_SKIP_GITREPO_CHECK%" equ "1" goto skip_gitrepo
 git rev-parse --is-inside-work-tree 1>nul 2>nul
-if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository. && exit /b 1
+if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository.& exit /b 1
 
 rem get the current git branch name only if git is available
 for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set DOT_GIT_BRANCH=%%F
 
 :skip_gitrepo
-
-rem check if path variable contains local dots location
-rem for %%G in ("%PATH:;=" "%") do if /i %%G equ ".\.dots" goto exit
-rem echo You must add ".\.dots" to PATH variable. 
-rem exit 2
-
-:exit
 

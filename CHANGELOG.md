@@ -5,9 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
  
- * .newapp must create repo and console application
- * .newdot must not allow to be executed inside existing repo
- * Make .add and .new commands 
+ * Expose new .net core 3 publishing features
  * Create installer script that adds .dots to path
  * Replace jq with gitversion /showvariable
  * Add target dotnet core option netcoreapp2.2 with default netcoreapp3.0
@@ -33,9 +31,8 @@ All notable changes to this project will be documented in this file.
 
  - Upgraded project templates to .NET Core 3.1.2
  - Replaced Microsoft.Extensions.CommandLineUtils 1.1.1 with the most CommandLineParser 2.7.82
-  
-
-
+ - Added .newcon command to create new dot repo and add console application
+ - New repos cannot be created within existing git repositories 
 
 ## [1.3.0]
 
