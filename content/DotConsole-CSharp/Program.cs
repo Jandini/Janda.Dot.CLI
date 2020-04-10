@@ -76,12 +76,11 @@ namespace Dot.Console
 
         public int UnhandledException(Exception ex)
         {
-            ILogger<Application> logger;
+            ILogger<Application> logger = Application.GetService<ILogger<Application>>();
 
-            (logger = Application.GetService<ILogger<Application>>())
-                ?.LogCritical(ex, ex.Message);
-
-            if (logger == null)
+            if (logger != null)
+                logger.LogCritical(ex, ex.Message);
+            else
                 Console.WriteLine($"{ex.Message}\n{ex.StackTrace}");
 
             return -1;

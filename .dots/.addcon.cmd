@@ -20,11 +20,15 @@ if "%APPLICATION_NAME%" equ "." set APP_NAME=%DOT_BASE_NAME%
 
 pushd src
 dotnet new dotcon -n %APP_NAME% %PARAM_ADD_ARGS%
+dotnet new dotprj -n %APP_NAME%.Abstractions
+move "%APP_NAME%\I*.cs" "%APP_NAME%.Abstractions"
 
 if not exist %SOLUTION_FILE% echo Creating %SOLUTION_FILE% && dotnet new sln -n %SOLUTION_NAME%
 echo Adding %APP_NAME% application to %SOLUTION_FILE%
 dotnet sln %SOLUTION_FILE% add %APP_NAME%
+dotnet sln %SOLUTION_FILE% add %APP_NAME%.Abstractions
 
 echo Restoring packages for %APP_NAME%
 dotnet restore %APP_NAME% --ignore-failed-sources 
+dotnet restore %APP_NAME%.Abstractions --ignore-failed-sources 
 popd

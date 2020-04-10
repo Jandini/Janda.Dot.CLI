@@ -6,7 +6,7 @@ using System;
 
 namespace Dot.Console
 {
-    interface IApplicationProgram
+    public interface IApplicationProgram
     {
 #if (addConfig)
         IConfiguration CreateConfiguration();
