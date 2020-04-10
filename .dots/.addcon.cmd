@@ -28,6 +28,10 @@ echo Adding %APP_NAME% application to %SOLUTION_FILE%
 dotnet sln %SOLUTION_FILE% add %APP_NAME%
 dotnet sln %SOLUTION_FILE% add %APP_NAME%.Abstractions
 
+
+find "PUBLISH_PRJ=" ..\.dotset >nul
+if %ERRORLEVEL% neq 0 echo PUBLISH_PRJ=%APP_NAME%>>..\.dotset
+
 echo Restoring packages for %APP_NAME%
 dotnet restore %APP_NAME% --ignore-failed-sources 
 dotnet restore %APP_NAME%.Abstractions --ignore-failed-sources 
