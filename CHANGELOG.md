@@ -7,7 +7,6 @@ All notable changes to this project will be documented in this file.
  
  * Expose new .net core 3 publishing features
  * Create installer script that adds .dots to path
- * Replace jq with gitversion /showvariable
  * Add target dotnet core option netcoreapp2.2 with default netcoreapp3.0
  * Add optional parameter origin to .init command 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
@@ -45,6 +44,7 @@ All notable changes to this project will be documented in this file.
 
  - Missing dotnet template causes odd behaviour in .newdot
  - Changed diff to output only statistics
+ - Replaced jq with gitversion /showvariable in version command
 
 
 ## [1.2.0] 
