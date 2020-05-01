@@ -25,14 +25,6 @@ All notable changes to this project will be documented in this file.
  * Update date time variables to use DOT_ prefiex
  * .release should try to checkout branch like feature does
 
-## [1.4.0]
-
-### Changed
-
- - Upgraded project templates to .NET Core 3.1.2
- - Replaced Microsoft.Extensions.CommandLineUtils 1.1.1 with the most CommandLineParser 2.7.82
- - Added .newcon command to create new dot repo and add console application
- - New repos cannot be created within existing git repositories 
 
 ## [1.3.0]
 
@@ -41,6 +33,12 @@ All notable changes to this project will be documented in this file.
  - Add template error handling for .newdot command.
  - Add git stash support to .init command. Allow to run init git flow after git clone from any remote and changes were made.
  - Add gitlog command
+ - Upgraded project templates to .NET Core 3.1.2
+ - Replaced Microsoft.Extensions.CommandLineUtils 1.1.1 with the most CommandLineParser 2.7.82
+ - Added .newcon command to create new dot repo and add console application
+ - New repos cannot be created within existing git repositories 
+ - Added branch checkout on partial name
+
 
 
 ### Changed
