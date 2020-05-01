@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 call .dots
 
-set DOTS_MASK=.*.cmd  
+set DOTS_MASK=.?*.cmd  
 set DOTS_HELP=--help
 set DOTS_NAME=%1
 

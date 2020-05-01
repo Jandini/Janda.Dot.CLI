@@ -37,6 +37,7 @@ All notable changes to this project will be documented in this file.
  - Added .newcon command to create new dot repo and add console application
  - New repos cannot be created within existing git repositories 
  - Added branch checkout on partial name
+ - Introduced double dots to avoid extension conflicts. e.g. ..master command will not conflict with .master extension 
 
 
 

@@ -89,7 +89,6 @@
     <file src=".dots\.gitlab.cmd" target="content\DotScripts\.dots\.gitlab.cmd" /> 
     <file src=".dots\.help.cmd" target="content\DotScripts\.dots\.help.cmd" /> 
     <file src=".dots\.init.cmd" target="content\DotScripts\.dots\.init.cmd" /> 
-    <file src=".dots\.master.cmd" target="content\DotScripts\.dots\.master.cmd" /> 
     <file src=".dots\.mirror.cmd" target="content\DotScripts\.dots\.mirror.cmd" /> 
     <file src=".dots\.newdot.cmd" target="content\DotScripts\.dots\.newdot.cmd" /> 
     <file src=".dots\.newcon.cmd" target="content\DotScripts\.dots\.newcon.cmd" /> 
@@ -102,5 +101,7 @@
     <file src=".dots\.sync.cmd" target="content\DotScripts\.dots\.sync.cmd" /> 
     <file src=".dots\.undo.cmd" target="content\DotScripts\.dots\.undo.cmd" /> 
     <file src=".dots\.version.cmd" target="content\DotScripts\.dots\.version.cmd" /> 
+
+    <file src=".dots\..master.cmd" target="content\DotScripts\.dots\.master.cmd" /> 
   </files> 
 </package>
