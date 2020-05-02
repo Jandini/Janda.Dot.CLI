@@ -63,6 +63,7 @@
     <file src="content\DotConsole-CSharp\IApplicationOptions.cs" target="content\DotConsole-CSharp\IApplicationOptions.cs" />    
     <file src="content\DotConsole-CSharp\Program.cs" target="content\DotConsole-CSharp\Program.cs" />    
     <file src="content\DotConsole-CSharp\Options.cs" target="content\DotConsole-CSharp\Options.cs" />    
+    <file src="content\DotConsole-CSharp\app.manifest" target="content\DotConsole-CSharp\app.manifest" />
 
 
     <!-- Dots -->
