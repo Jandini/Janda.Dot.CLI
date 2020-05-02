@@ -41,6 +41,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
  - Upgraded project templates to .NET Core 3.1.3
+ - Changed TargetFramework to netcoreapp3.1
  - Missing dotnet template causes odd behaviour in .newdot
  - Changed diff to output only statistics
  - Replaced jq with gitversion /showvariable in version command
