@@ -1,8 +1,8 @@
-﻿#if (addConfig)
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+#if (addConfig)
 using Microsoft.Extensions.Configuration;
 #endif
-using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Dot.Console
 {
@@ -10,10 +10,8 @@ namespace Dot.Console
     {
 #if (addConfig)
         IConfiguration CreateConfiguration();
-#endif
-        void InitializeApplication();
-        void FinalizeApplication();
+#endif        
+        void ConfigureLogging(ILoggingBuilder loggingBuilder);
         void ConfigureServices(IServiceCollection serviceCollection);
-        int UnhandledException(Exception ex);
     }
 }

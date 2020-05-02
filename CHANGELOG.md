@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
- 
+
+ * Expose --addConfig parameter to .newcon
  * Expose new .net core 3 publishing features
  * Create installer script that adds .dots to path
  * Add target dotnet core option netcoreapp2.2 with default netcoreapp3.0
@@ -46,6 +47,7 @@ All notable changes to this project will be documented in this file.
  - Missing dotnet template causes odd behaviour in .newdot
  - Changed diff to output only statistics
  - Replaced jq with gitversion /showvariable in version command
+ - Optimized console application template
 
 
 ## [1.2.0] 

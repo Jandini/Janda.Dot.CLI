@@ -23,6 +23,10 @@ dotnet new dotcon -n %APP_NAME% %PARAM_ADD_ARGS%
 dotnet new dotprj -n %APP_NAME%.Abstractions
 move "%APP_NAME%\I*.cs" "%APP_NAME%.Abstractions"
 
+cd "%APP_NAME%.Abstractions"
+dotnet add package Microsoft.Extensions.Logging
+cd..
+
 if not exist %SOLUTION_FILE% echo Creating %SOLUTION_FILE% && dotnet new sln -n %SOLUTION_NAME%
 echo Adding %APP_NAME% application to %SOLUTION_FILE%
 dotnet sln %SOLUTION_FILE% add %APP_NAME%

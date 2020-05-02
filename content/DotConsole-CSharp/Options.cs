@@ -9,7 +9,7 @@ namespace Dot.Console
         public bool Verbose { get; set; }
 
 #endif
-        [Option("logdir", Required = false, HelpText = "Set log directory and enable log to files")]
+        [Option("logdir", Required = false, HelpText = "Set log directory and enable logging to file")]
         public string LogDir { get; set; }
     }
 }
