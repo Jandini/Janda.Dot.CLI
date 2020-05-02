@@ -2,12 +2,12 @@
 
 namespace Dot.Console
 {
-    public class ApplicationService : IApplicationService
+    public class Service : IApplicationService
     {
-        private readonly ILogger<ApplicationService> _logger;
+        private readonly ILogger<Service> _logger;
         private readonly IApplicationOptions _options;
 
-        public ApplicationService(ILogger<ApplicationService> logger, IApplicationOptions options)
+        public Service(ILogger<Service> logger, IApplicationOptions options)
         {
             _logger = logger;
             _options = options;

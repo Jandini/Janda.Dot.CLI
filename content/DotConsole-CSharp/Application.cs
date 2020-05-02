@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 #if (addConfig)
 using Microsoft.Extensions.Configuration;
 #endif
-using Microsoft.Extensions.DependencyInjection;
-
 
 namespace Dot.Console
 {
-
     internal class Application
     {
+        public static IServiceProvider Services { get; private set; }
+        public static IApplicationOptions Options { get; private set; }
 #if (addConfig)
         public static IConfiguration Configuration { get; private set; }
 #endif
-        public static IServiceProvider Services { get; private set; }
-        public static IApplicationOptions Options { get; private set; }
         public static string Version { get; private set; }
         public static string Name { get; private set; }
 
@@ -28,57 +27,47 @@ namespace Dot.Console
                 .InformationalVersion;
         }
 
-        public static int Run<TProgram, TOptions>(Action<Action<TOptions>> parseArgs) 
-            where TProgram: IApplicationProgram, new() 
-            where TOptions: IApplicationOptions
+        public static int Run<TProgram, TOptions>(Action<Action<TOptions>> parseArgs)
+            where TProgram : IApplicationProgram, new()
+            where TOptions : IApplicationOptions
         {
             var applicationProgram = new TProgram();
-            int returnCode = 0; 
+            int returnCode = 0;
 
-            try
-            {              
-                parseArgs(options =>
+            parseArgs(options =>
+            {
+                Options = options;
+
+                var serviceCollection = new ServiceCollection();
+
+                try
                 {
-                    Options = options;
-
-                    var serviceCollection = new ServiceCollection();
+#if (addConfig)
+                    Configuration = applicationProgram.CreateConfiguration();
+#endif
+                    serviceCollection.AddLogging(configure => applicationProgram.ConfigureLogging(configure));
                     serviceCollection.AddSingleton<IApplicationOptions>(options);
 
-                    try
-                    {
-                        applicationProgram.InitializeApplication();
-#if (addConfig)
-                        Configuration = applicationProgram.CreateConfiguration();
-#endif
-                        applicationProgram.ConfigureServices(serviceCollection);
-  
-                        returnCode = (Services = serviceCollection.BuildServiceProvider())
-                            .GetService<IApplicationService>()
-                            .Run();
+                    applicationProgram.ConfigureServices(serviceCollection);
 
-                    }
-                    catch (Exception ex)
-                    {
-                        returnCode = applicationProgram.UnhandledException(ex);
-                    }
-                    finally
-                    {
-                        applicationProgram.FinalizeApplication();
-                    }
-                });               
-            }
-            catch (Exception ex)
-            {
-                returnCode = applicationProgram.UnhandledException(ex);
-            }
-          
-            return returnCode;            
+                    returnCode = (Services = serviceCollection.BuildServiceProvider())
+                        .GetService<IApplicationService>()
+                        .Run();
+                }
+                catch (Exception ex)
+                {
+                    GetService<ILogger<Application>>()?.LogCritical(ex, ex.Message);
+                    throw;
+                }
+            });
+
+            return returnCode;
         }
 
         public static T GetService<T>()
         {
             return Services != null
-                ? Services.GetService<T>() 
+                ? Services.GetService<T>()
                 : default;
         }
     }

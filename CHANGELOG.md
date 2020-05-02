@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
- 
- * Expose new .net core 3 publishing features
+
+ * Expose --addConfig parameter to .newcon
  * Create installer script that adds .dots to path
- * Add target dotnet core option netcoreapp2.2 with default netcoreapp3.0
  * Add optional parameter origin to .init command 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
  * Perhaps use find insteaad grep
@@ -22,30 +21,33 @@ All notable changes to this project will be documented in this file.
  * Change BUILD_SLN to DOT_BUILD_SOLUTIONS
  * Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS
  * Update date time variables to use DOT_ prefiex
- * .release should try to checkout branch like feature does
+ * Command .release should try to checkout branch like feature does
+ * Publish parameters should be configurable so we can leverage [-p:PublishSingleFile=true] [-p:PublishTrimmed=true]
+ * Expose new .net core 3 publishing features
 
 
 ## [1.3.0]
 
 ### Added
 
- - Add template error handling for .newdot command.
- - Add git stash support to .init command. Allow to run init git flow after git clone from any remote and changes were made.
- - Add gitlog command
- - Upgraded project templates to .NET Core 3.1.2
- - Replaced Microsoft.Extensions.CommandLineUtils 1.1.1 with the most CommandLineParser 2.7.82
- - Added .newcon command to create new dot repo and add console application
- - New repos cannot be created within existing git repositories 
- - Added branch checkout on partial name
- - Introduced double dots to avoid extension conflicts. e.g. ..master command will not conflict with .master extension 
-
+ - template error handling for .newdot command.
+ - git stash support to .init command. Allow to run init git flow after git clone from any remote and changes were made.
+ - gitlog command
+ - .newcon command to create new dot repo and add console application
+ - .checkout command that allows checkout from partial branch name
+ - double dots to avoid extension conflicts. e.g. ..master command will not conflict with .master extension 
 
 
 ### Changed
 
+ - Upgraded project templates to .NET Core 3.1.3
  - Missing dotnet template causes odd behaviour in .newdot
  - Changed diff to output only statistics
  - Replaced jq with gitversion /showvariable in version command
+ - Optimized console application template
+ - Replaced Microsoft.Extensions.CommandLineUtils 1.1.1 with the most CommandLineParser 2.8.0
+ - New repos cannot be created within existing git repositories 
+ - .branch use .checkout if branch not found
 
 
 ## [1.2.0] 
