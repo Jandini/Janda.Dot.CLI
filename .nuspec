@@ -61,9 +61,12 @@
     <file src="content\DotConsole-CSharp\IApplicationProgram.cs" target="content\DotConsole-CSharp\IApplicationProgram.cs" />    
     <file src="content\DotConsole-CSharp\IApplicationService.cs" target="content\DotConsole-CSharp\IApplicationService.cs" />    
     <file src="content\DotConsole-CSharp\IApplicationOptions.cs" target="content\DotConsole-CSharp\IApplicationOptions.cs" />    
+    <file src="content\DotConsole-CSharp\IApplicationSettings.cs" target="content\DotConsole-CSharp\IApplicationSettings.cs" />    
     <file src="content\DotConsole-CSharp\Program.cs" target="content\DotConsole-CSharp\Program.cs" />    
     <file src="content\DotConsole-CSharp\Options.cs" target="content\DotConsole-CSharp\Options.cs" />    
+    <file src="content\DotConsole-CSharp\Settings.cs" target="content\DotConsole-CSharp\Settings.cs" />
     <file src="content\DotConsole-CSharp\app.manifest" target="content\DotConsole-CSharp\app.manifest" />
+    <file src="content\DotConsole-CSharp\appsettings.json" target="content\DotConsole-CSharp\appsettings.json" />
 
 
     <!-- Dots -->

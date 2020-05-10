@@ -1,5 +1,4 @@
-﻿using ConfigTest.Abstractions;
-
+﻿    
 namespace Dot.Console
 {
     public class Settings : IApplicationSettings
