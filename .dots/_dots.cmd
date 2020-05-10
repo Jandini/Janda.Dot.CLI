@@ -53,6 +53,7 @@ if "%DOTS_FLAGS:~2,1%" neq "1" set FLAG_SKIP_PARAM_CHECK=1
 
 
 set DOTS_CONFIG=.dotconfig
+set DOTS_CONFIG_LOCAL=.dotlocal
 set DOTS_PATH=%~dp0
 set DOTS_TYPE=local
 set DOTS_GLOBAL=%USERPROFILE%\.dots\
@@ -100,7 +101,8 @@ rem .dotconfig file consist of set statements VARIABLE=value(s)
 rem read all lines and apply as sets
 rem this file can be used to override e.g. DOT_BASE_NAME
 for /F "tokens=*" %%A in (%DOTS_CONFIG%) do set %%A
-    
+
+if exist %DOTS_CONFIG_LOCAL% (for /F "tokens=*" %%A in (%DOTS_CONFIG_LOCAL%) do set %%A)
 
 :skip_dotconfig
 if "%FLAG_SKIP_NO_GITREPO_ONLY%" equ "1" goto check_gitrepo
