@@ -90,7 +90,7 @@ node("matt10") {
             milestone()
             // install global .dots
             bat """            
-	            for /f %%f in ('dir /b tests\\*.cmd') do echo *** RUNNING %%f&call tests\\%%f
+	            for /f %%f in ('dir /b tests\\*.cmd') do echo.&echo *** RUNNING TEST: %%f&call tests\\%%f
             """
         }
 

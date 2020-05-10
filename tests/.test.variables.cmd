@@ -19,8 +19,12 @@ if "%DOTS_TYPE%" equ "" echo %%DOTS_TYPE%% is empty&&exit 1 /b
 echo DOTS_PATH=%DOTS_PATH%
 if "%DOTS_PATH%" equ "" echo %%DOTS_PATH%% is empty&&exit 1 /b
 
-echo DOTS_FILE=%DOTS_FILE%
-if "%DOTS_FILE%" neq ".dotconfig" echo %%DOTS_FILE%% is not .dotconfig&&exit 1 /b
+echo DOTS_CONFIG_FILE=%DOTS_CONFIG_FILE%
+if "%DOTS_CONFIG_FILE%" neq ".dotconfig" echo ERROR: %%DOTS_CONFIG_FILE%% is not .dotconfig&&exit 1 /b
+
+echo DOTS_CONFIG_LOCAL=%DOTS_CONFIG_LOCAL%
+if "%DOTS_CONFIG_LOCAL%" neq ".dotlocal" echo ERROR: %%DOTS_CONFIG_LOCAL%% is not .dotlocal&&exit 1 /b
+
 
 echo DOT_GIT_VERSION=%DOT_GIT_VERSION%
 if "%DOT_GIT_VERSION%" equ "" echo %%DOT_GIT_VERSION%% is empty&&exit 1 /b

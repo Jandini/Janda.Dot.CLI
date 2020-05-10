@@ -22,12 +22,13 @@ rem @call _dots %~n0 "This is a script" "[some|parameter]" "dg1" %1 %2 %3 %4
 
 rem set this .script help text and usage syntax
 
-call :enable_debugger
+call :configure_output
 
 if /i "%~1" equ "" exit
 
 rem get properties only once
 if defined TIME_STAMP goto already_defined
+
 rem get timestamp
 for /f "skip=1" %%x in ('wmic os get localdatetime') do if not defined TIME_STAMP set TIME_STAMP=%%x
 set DATE_STAMP=%TIME_STAMP:~0,8%
@@ -127,8 +128,8 @@ goto :eof
 
 
 
-:enable_debugger
-if "%DOT_OUT%" neq "" goto :eof
+:configure_output
+if defined DOT_OUT goto :eof
 set DOT_OUT=nul
 goto :eof
 
