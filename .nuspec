@@ -24,10 +24,6 @@
     <file src="content\DotSolution-CSharp\src\Dot.Solution.sln" target="content\DotSolution-CSharp\src\Dot.Solution.sln" />
 
     <file src="content\DotSolution-CSharp\NuGet.config" target="content\DotSolution-CSharp\NuGet.config" />
-    <file src="content\DotSolution-CSharp\cid\win7-x64\_forsln.cmd" target="content\DotSolution-CSharp\cid\win7-x64\_forsln.cmd" />
-    <file src="content\DotSolution-CSharp\cid\win7-x64\build.cmd" target="content\DotSolution-CSharp\cid\win7-x64\build.cmd" />
-    <file src="content\DotSolution-CSharp\cid\win7-x64\pack.cmd" target="content\DotSolution-CSharp\cid\win7-x64\pack.cmd" />
-    <file src="content\DotSolution-CSharp\cid\win7-x64\publish.cmd" target="content\DotSolution-CSharp\cid\win7-x64\publish.cmd" />
     <file src="content\DotSolution-CSharp\cid\targets\Obfuscar.targets" target="content\DotSolution-CSharp\cid\targets\Obfuscar.targets" />
     <file src="content\DotSolution-CSharp\cid\targets\Package.targets" target="content\DotSolution-CSharp\cid\targets\Package.targets" />
     <file src="content\DotSolution-CSharp\cid\targets\GitVersion.targets" target="content\DotSolution-CSharp\cid\targets\GitVersion.targets" />
@@ -37,10 +33,6 @@
     <file src="content\DotSolution-CSharp\cid\targets\Obfuscar.targets" target="content\DotCid\cid\targets\Obfuscar.targets" />
     <file src="content\DotSolution-CSharp\cid\targets\Package.targets" target="content\DotCid\cid\targets\Package.targets" />
     <file src="content\DotSolution-CSharp\cid\targets\GitVersion.targets" target="content\DotCid\cid\targets\GitVersion.targets" />
-    <file src="content\DotSolution-CSharp\cid\win7-x64\build.cmd" target="content\DotCid\cid\win7-x64\build.cmd" />
-    <file src="content\DotSolution-CSharp\cid\win7-x64\pack.cmd" target="content\DotCid\cid\win7-x64\pack.cmd" />
-    <file src="content\DotSolution-CSharp\cid\win7-x64\publish.cmd" target="content\DotCid\cid\win7-x64\publish.cmd" />
-    <file src="content\DotSolution-CSharp\cid\win7-x64\_forsln.cmd" target="content\DotCid\cid\win7-x64\_forsln.cmd" />
     <file src="content\DotSolution-CSharp\NuGet.config" target="content\DotCid\NuGet.config" />
 
     <!-- Dot Library -->

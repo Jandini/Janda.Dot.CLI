@@ -15,18 +15,19 @@ All notable changes to this project will be documented in this file.
  * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
- * Change BUILD_SLN to DOT_BUILD_SOLUTIONS
- * Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS
- * Update date time variables to use DOT_ prefiex
  * Command .release should try to checkout branch like feature does
- * Publish parameters should be configurable so we can leverage [-p:PublishSingleFile=true] [-p:PublishTrimmed=true]
- * Expose new .net core 3 publishing features
+
+ * Update date time variables to use DOT_ prefiex
 
 
 ## [1.3.0]
 
 ### Added
 
+ - Expose new .net core 3 publishing features through DOT_PUBLISH_ARGUMENTS
+ - DOT_RUNTIME_IDENTIFIERS to .dotconfig to define runtime targets publish
+ - DOT_PUBLISH_ARGUMENTS to .dotconfig file to define list of parameters .e.g. -p:PublishSingleFile=true -p:PublishTrimmed=true
+ - DOT_DEBUG environment variable
  - Added CHANGELOG.md file to dot repository
  - Comments handler for .dotconfig and .dotlocal files.
  - .dotlocal configuration file
@@ -40,6 +41,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - LOCAL_NUGET_FEED replaced with .dotconfig DOT_LOCAL_NUGET_FEED
+ - Change BUILD_SLN to DOT_BUILD_SOLUTIONS
+ - Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS
  - Renamed .dotset to .dotconfig
  - Upgraded project templates to .NET Core 3.1.3
  - Changed TargetFramework to netcoreapp3.1
