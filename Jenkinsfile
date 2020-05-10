@@ -89,9 +89,8 @@ node("matt10") {
         stage('Tests') {
             milestone()
             // install global .dots
-            bat """
-                set DOT_OUT=con
-	            for /f %%f in ('dir /b tests\\*.cmd') do call tests\\%%f
+            bat """            
+	            for /f %%f in ('dir /b tests\\*.cmd') do echo *** RUNNING %%f&call tests\\%%f
             """
         }
 
