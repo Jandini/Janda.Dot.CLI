@@ -261,4 +261,3 @@ __pycache__/
 *.pyc
 .dots/_nuspec.files
 .dots/.dots.cmd
-.dotlocal
