@@ -22,7 +22,7 @@ cd %1
 :init
 call .init
 git add .
-git commit -m "Create dot repository"
+git commit -m "Create repository"
 goto exit
 
 :template_error

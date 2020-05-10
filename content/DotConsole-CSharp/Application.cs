@@ -2,9 +2,7 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-#if (addConfig)
 using Microsoft.Extensions.Configuration;
-#endif
 
 namespace Dot.Console
 {
@@ -12,9 +10,7 @@ namespace Dot.Console
     {
         public static IServiceProvider Services { get; private set; }
         public static IApplicationOptions Options { get; private set; }
-#if (addConfig)
         public static IConfiguration Configuration { get; private set; }
-#endif
         public static string Version { get; private set; }
         public static string Name { get; private set; }
 
@@ -42,9 +38,7 @@ namespace Dot.Console
 
                 try
                 {
-#if (addConfig)
                     Configuration = applicationProgram.CreateConfiguration();
-#endif
                     serviceCollection.AddLogging(configure => applicationProgram.ConfigureLogging(configure));
                     serviceCollection.AddSingleton<IApplicationOptions>(options);
 

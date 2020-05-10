@@ -1,9 +1,7 @@
 ﻿using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-#if (addConfig)
 using Microsoft.Extensions.Configuration;
-#endif
 using CommandLine;
 using Serilog;
 
@@ -24,7 +22,6 @@ namespace Dot.Console
                 .AddSingleton<IApplicationService, Service>();
         }
 
-#if (addConfig)
         public IConfiguration CreateConfiguration()
         {
             return new ConfigurationBuilder()
@@ -33,7 +30,7 @@ namespace Dot.Console
                 .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
                 .Build();
         }
-#endif
+
         public void ConfigureLogging(ILoggingBuilder loggingBuilder)
         {
             var loggerConfiguration = new LoggerConfiguration()
@@ -43,15 +40,13 @@ namespace Dot.Console
 
             if (!string.IsNullOrEmpty(applicationOptions?.LogDir))
                 loggerConfiguration.WriteTo.File(
-                    path: $"{applicationOptions.LogDir}\\{Path.ChangeExtension(Application.Name, "log")}",
+                    path: Path.Combine(applicationOptions.LogDir, Path.ChangeExtension(Application.Name, "log")),
                     rollingInterval: RollingInterval.Day);
 
             Log.Logger = loggerConfiguration.CreateLogger();
 
             loggingBuilder
-#if (addConfig)
                 .AddConfiguration(Application.Configuration)
-#endif
                 .AddSerilog(dispose: true);
         }
 

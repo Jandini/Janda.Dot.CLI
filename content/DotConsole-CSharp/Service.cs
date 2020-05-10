@@ -18,10 +18,10 @@ namespace Dot.Console
 #if (addArgs)
             if (_options.Verbose)
             {
-                _logger.LogInformation("Hello World");
+            	_logger.LogInformation($"Running {Application.Name} {Application.Version}");
             }
 #else
-            _logger.LogInformation("Hello World");
+            _logger.LogInformation($"Running {Application.Name} {Application.Version}");
 #endif
             return 0;
         }
