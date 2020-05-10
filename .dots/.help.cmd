@@ -29,6 +29,6 @@ call %DOT_CMD_NAME% --usage
 goto exit
 
 :help_show_all_commands
-for /f %%f in ('dir /b %DOT_PATH%%DOT_CMD_MASK%') do if "%%f" neq "%~nx0" call %DOTS_PATH%%%f %DOT_ARG_HELP% 
+for /f %%f in ('dir /b %DOT_PATH%%DOT_CMD_MASK%') do if "%%f" neq "%~nx0" call %DOT_PATH%%%f %DOT_ARG_HELP% 
 
 :exit

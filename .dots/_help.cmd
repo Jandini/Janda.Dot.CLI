@@ -5,14 +5,14 @@ if /i "%PARAM%" equ "--usage" goto usage
 goto continue
 
 :help
-echo %2 - %HELP_TEXT%
+echo %2 - %DOT_HELP_TEXT%
 exit /b 1
 
 :usage
-if %HELP_USAGE% equ "" goto parameters_not_required
+if "%DOT_HELP_USAGE%" equ "" goto parameters_not_required
 
 rem use this trick to escspe syntax characters
-for %%a in (%HELP_USAGE%) do echo %2 %%~a
+for %%a in (%DOT_HELP_USAGE%) do echo %2 %%~a
 exit /b 1
 
 :parameters_not_required
