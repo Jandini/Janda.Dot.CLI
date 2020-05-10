@@ -1,9 +1,7 @@
 ﻿using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-#if (addConfig)
 using Microsoft.Extensions.Configuration;
-#endif
 using CommandLine;
 using Serilog;
 
@@ -24,35 +22,30 @@ namespace Dot.Console
                 .AddSingleton<IApplicationService, Service>();
         }
 
-#if (addConfig)
         public IConfiguration CreateConfiguration()
         {
             return new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+                .AddJsonFile("appsettings.json", true)
                 .Build();
         }
-#endif
+
         public void ConfigureLogging(ILoggingBuilder loggingBuilder)
         {
             var loggerConfiguration = new LoggerConfiguration()
+                .ReadFrom.Configuration(Application.Configuration)
                 .WriteTo.ColoredConsole();
 
             var applicationOptions = Application.Options as Options;
 
             if (!string.IsNullOrEmpty(applicationOptions?.LogDir))
                 loggerConfiguration.WriteTo.File(
-                    path: $"{applicationOptions.LogDir}\\{Path.ChangeExtension(Application.Name, "log")}",
+                    path: Path.Combine(applicationOptions.LogDir, Path.ChangeExtension(Application.Name, "log")),
                     rollingInterval: RollingInterval.Day);
 
-            Log.Logger = loggerConfiguration.CreateLogger();
-
-            loggingBuilder
-#if (addConfig)
-                .AddConfiguration(Application.Configuration)
-#endif
-                .AddSerilog(dispose: true);
+            loggingBuilder.AddSerilog(
+                loggerConfiguration.CreateLogger(),
+                dispose: true);
         }
 
         #endregion
