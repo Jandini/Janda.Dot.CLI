@@ -1,2 +1,5 @@
+# Semicolon delimited solution names
 BUILD_SLN=Dot.Solution
+
+# Workaround for dotnet build, pack or publish
 MSBUILDSINGLELOADCONTEXT=1
