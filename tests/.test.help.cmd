@@ -4,20 +4,6 @@ call .dots
 
 set COMMAND_LIST=help addcon addlib addsln backup branch build clone commit develop diff dotnet dots feature foreach gitlab init ..master mirror newdot origin pack publish restore status sync undo version release
 
-
-echo Running local dots from current .\.dots folder
-
-
-call :test_command clone 1
-call :test_command commit 1
-call :test_command version
-call :test_command branch
-
-call :test_help 
-for %%c in (%COMMAND_LIST%) do call :test_help %%c
-
-
-
 echo Running global dots %USERPROFILE%\.dots folder
 
 set TEST_DIR=%TEMP%\T%RANDOM%
@@ -29,6 +15,7 @@ call :test_command version 1
 call :test_command branch 1
 call :test_command clone 1
 call :test_command commit 1
+rem TODO: more commands to add here
 
 
 rem help must work everywhere
