@@ -47,7 +47,7 @@ set COMMAND=.%1
 set EXPECTED=%2
 if "%EXPECTED%" equ "" set EXPECTED=0
 <nul set /p =Running %COMMAND%	
-call %COMMAND% 1> %DOT_NUL% 2> %DOT_NUL%
+call %COMMAND% 1> %DOT_OUT% 2> %DOT_OUT%
 if "%ERRORLEVEL%" neq "%EXPECTED%" echo [ FAILED ] && echo Expected value is %EXPECTED%. Return value is %ERRORLEVEL% && exit 1 /b
 echo [ OK ]
 exit /b
@@ -57,7 +57,7 @@ exit /b
 :test_help
 set COMMAND=%1
 <nul set /p =Running .help %COMMAND%	
-if "%1" equ "" ( call .help > %DOT_NUL% ) else ( call .help %COMMAND% > %DOT_NUL% )
+if "%1" equ "" ( call .help > %DOT_OUT% ) else ( call .help %COMMAND% > %DOT_OUT% )
 if %ERRORLEVEL% neq 1 echo [ FAILED ] && echo Expected value is 1. Return value is %ERRORLEVEL% && exit 1 /b
 echo [ OK ]
 exit /b

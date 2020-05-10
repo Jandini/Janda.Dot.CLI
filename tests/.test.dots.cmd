@@ -10,7 +10,7 @@ set DOTS_LIST=_dots _help _elevate _install
 
 
 echo Running dotnet new dots
-dotnet new dots > %DOT_NUL%
+dotnet new dots > %DOT_OUT%
 if %ERRORLEVEL% neq 0 echo [ FAILED ] && echo Expected value is 0. Return value is %ERRORLEVEL% && exit 1 /b
 
 

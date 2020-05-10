@@ -1,6 +1,4 @@
 @echo off
-set DOT_NUL=nul
-if /i "%DOT_TRACE%" equ "1" echo on && set DOT_NUL=con
 
 rem TODO: add number of required parameters - show help when not match => Usage: call _dots <caller script name> <help text|""> <usage syntax|""> <number of required parameters> <flags string> [parameters]
 rem TODO: help via grep type _dots.cmd | grep -o -P (?^<=rem).* ; or find or findstr 
@@ -24,6 +22,7 @@ rem @call _dots %~n0 "This is a script" "[some|parameter]" "dg1" %1 %2 %3 %4
 
 rem set this .script help text and usage syntax
 
+call :enable_debugger
 
 if /i "%~1" equ "" exit
 
@@ -126,6 +125,12 @@ for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set DOT
 
 goto :eof
 
+
+
+:enable_debugger
+if "%DOT_OUT%" neq "" goto :eof
+set DOT_OUT=nul
+goto :eof
 
 
 :parse_config_file
