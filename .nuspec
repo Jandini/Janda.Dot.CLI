@@ -15,10 +15,12 @@
     <file src="content\DotSolution-CSharp\.template.config\template.json" target="content\DotSolution-CSharp\.template.config\template.json" />
     <file src="content\DotSolution-CSharp\.gitattributes" target="content\DotSolution-CSharp\.gitattributes" />
     <file src="content\DotSolution-CSharp\.gitignore" target="content\DotSolution-CSharp\.gitignore" />
-    <file src="content\DotSolution-CSharp\.dotset" target="content\DotSolution-CSharp\.dotset" />
+    <file src="content\DotSolution-CSharp\.dotconfig" target="content\DotSolution-CSharp\.dotconfig" />
+    <file src="content\DotSolution-CSharp\.dotlocal" target="content\DotSolution-CSharp\.dotlocal" />
     <file src="content\DotSolution-CSharp\GitVersion.yml" target="content\DotSolution-CSharp\GitVersion.yml" />
     <file src="content\DotSolution-CSharp\Jenkinsfile" target="content\DotSolution-CSharp\Jenkinsfile" />
     <file src="content\DotSolution-CSharp\README.md" target="content\DotSolution-CSharp\README.md" />
+    <file src="content\DotSolution-CSharp\CHANGELOG.md" target="content\DotSolution-CSharp\CHANGELOG.md" />
     <file src="content\DotSolution-CSharp\src\Dot.Solution.sln" target="content\DotSolution-CSharp\src\Dot.Solution.sln" />
 
     <file src="content\DotSolution-CSharp\NuGet.config" target="content\DotSolution-CSharp\NuGet.config" />

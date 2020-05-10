@@ -33,8 +33,8 @@ dotnet sln %SOLUTION_FILE% add %APP_NAME%
 dotnet sln %SOLUTION_FILE% add %APP_NAME%.Abstractions
 
 
-find "PUBLISH_PRJ=" ..\.dotset >nul
-if %ERRORLEVEL% neq 0 echo PUBLISH_PRJ=%APP_NAME%>>..\.dotset
+find "PUBLISH_PRJ=" ..\.dotconfig >nul
+if %ERRORLEVEL% neq 0 echo PUBLISH_PRJ=%APP_NAME%>>..\.dotconfig
 
 echo Restoring packages for %APP_NAME%
 dotnet restore %APP_NAME% --ignore-failed-sources 

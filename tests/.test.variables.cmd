@@ -20,7 +20,7 @@ echo DOTS_PATH=%DOTS_PATH%
 if "%DOTS_PATH%" equ "" echo %%DOTS_PATH%% is empty&&exit 1 /b
 
 echo DOTS_FILE=%DOTS_FILE%
-if "%DOTS_FILE%" neq ".dotset" echo %%DOTS_FILE%% is not .dotset&&exit 1 /b
+if "%DOTS_FILE%" neq ".dotconfig" echo %%DOTS_FILE%% is not .dotconfig&&exit 1 /b
 
 echo DOT_GIT_VERSION=%DOT_GIT_VERSION%
 if "%DOT_GIT_VERSION%" equ "" echo %%DOT_GIT_VERSION%% is empty&&exit 1 /b

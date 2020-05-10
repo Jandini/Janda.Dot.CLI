@@ -4,8 +4,6 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-
- * Expose --addConfig parameter to .newcon
  * Create installer script that adds .dots to path
  * Add optional parameter origin to .init command 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
@@ -17,7 +15,6 @@ All notable changes to this project will be documented in this file.
  * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
- * Add changelog file to dot repository
  * Change BUILD_SLN to DOT_BUILD_SOLUTIONS
  * Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS
  * Update date time variables to use DOT_ prefiex
@@ -30,6 +27,9 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+ - Added CHANGELOG.md file to dot repository
+ - Comments handler for .dotconfig and .dotlocal files.
+ - .dotlocal configuration file
  - template error handling for .newdot command.
  - git stash support to .init command. Allow to run init git flow after git clone from any remote and changes were made.
  - gitlog command
@@ -40,6 +40,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Renamed .dotset to .dotconfig
  - Upgraded project templates to .NET Core 3.1.3
  - Changed TargetFramework to netcoreapp3.1
  - Missing dotnet template causes odd behaviour in .newdot
