@@ -26,14 +26,14 @@ namespace Dot.Console
         {
             return new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+                .AddJsonFile("appsettings.json", true)
                 .Build();
         }
 
         public void ConfigureLogging(ILoggingBuilder loggingBuilder)
         {
             var loggerConfiguration = new LoggerConfiguration()
+                .ReadFrom.Configuration(Application.Configuration)
                 .WriteTo.ColoredConsole();
 
             var applicationOptions = Application.Options as Options;
@@ -43,11 +43,9 @@ namespace Dot.Console
                     path: Path.Combine(applicationOptions.LogDir, Path.ChangeExtension(Application.Name, "log")),
                     rollingInterval: RollingInterval.Day);
 
-            Log.Logger = loggerConfiguration.CreateLogger();
-
-            loggingBuilder
-                .AddConfiguration(Application.Configuration)
-                .AddSerilog(dispose: true);
+            loggingBuilder.AddSerilog(
+                loggerConfiguration.CreateLogger(),
+                dispose: true);
         }
 
         #endregion

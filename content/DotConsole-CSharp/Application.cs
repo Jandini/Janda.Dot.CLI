@@ -35,12 +35,17 @@ namespace Dot.Console
                 Options = options;
 
                 var serviceCollection = new ServiceCollection();
+                var settings = new Settings();
 
                 try
                 {
                     Configuration = applicationProgram.CreateConfiguration();
-                    serviceCollection.AddLogging(configure => applicationProgram.ConfigureLogging(configure));
-                    serviceCollection.AddSingleton<IApplicationOptions>(options);
+                    Configuration.Bind(Name, settings);
+
+                    serviceCollection
+                        .AddLogging(configure => applicationProgram.ConfigureLogging(configure))
+                        .AddSingleton<IApplicationOptions>(options)
+                        .AddSingleton<IApplicationSettings>(settings);
 
                     applicationProgram.ConfigureServices(serviceCollection);
 
