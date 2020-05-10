@@ -8,6 +8,7 @@ set DOTS_HELP=--help
 set DOTS_NAME=%1
 
 
+if /i "%DOTS_NAME:~0,2%" equ "." goto already_dotted
 if /i "%DOTS_NAME:~0,1%" equ "." goto already_dotted
 set DOTS_NAME=.%DOTS_NAME%
 

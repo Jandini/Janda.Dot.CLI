@@ -14,7 +14,7 @@ rem <help text>    - Text to be displayed when help is requested
 rem <usage synax>  - Usage syntax when usage help is requested
 rem <script flags> - Flag string. Each position in string represents one flag. Space character represents the flag as not set.
 rem                  Available flags: "d[g|G]1"
-rem                  d   - command must be run in dot repository (.dotset file must be present) 
+rem                  d   - command must be run in dot repository (.dotconfig file must be present) 
 rem                  g/G - command must be/cannot run within git repository
 rem                  1   - at least one parameter is required (%~1 checking as unquoted)
 rem [parameters]   - Pass privided parameters %1 %2 %3 %4
@@ -52,7 +52,7 @@ if "%DOTS_FLAGS:~1,1%" neq "G" set FLAG_SKIP_NO_GITREPO_ONLY=1
 if "%DOTS_FLAGS:~2,1%" neq "1" set FLAG_SKIP_PARAM_CHECK=1
 
 
-set DOTS_FILE=.dotset
+set DOTS_CONFIG=.dotconfig
 set DOTS_PATH=%~dp0
 set DOTS_TYPE=local
 set DOTS_GLOBAL=%USERPROFILE%\.dots\
@@ -69,40 +69,40 @@ call _help %~5 %~1
 if %ERRORLEVEL% equ 1 exit /b
 
 rem skip parameter check if it is not required  
-if /i "%FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotset
-if /i "%~5" neq "" goto find_dotset
+if /i "%FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotconfig
+if /i "%~5" neq "" goto find_dotconfig
 
 call _help --help %~1
 call _help --usage %~1 
 exit /b 1
 
 
-:find_dotset
+:find_dotconfig
 for %%I in (%DOT_BASE_PATH%) do set DOT_BASE_NAME=%%~nI%%~xI
-if exist %DOT_BASE_PATH%\%DOTS_FILE% goto use_dotset
+if exist %DOT_BASE_PATH%\%DOTS_CONFIG% goto parse_dotconfig
 set DOT_BASE_PATH=%DOT_BASE_PATH%\..
 rem goto parent
-if "%DOT_BASE_NAME%" neq "" goto find_dotset
+if "%DOT_BASE_NAME%" neq "" goto find_dotconfig
 
-rem set base name to current folder if .dotset file not found
+rem set base name to current folder if .dotconfig file not found
 if "%DOT_BASE_NAME%" equ "" for %%I in (.) do set DOT_BASE_NAME=%%~nI%%~xI
 
 
 rem dotset file is required but file is not found
-if "%FLAG_SKIP_DOTSET_CHECK%" equ "1" goto skip_dotset
-echo %DOTS_FILE% not found 
+if "%FLAG_SKIP_DOTSET_CHECK%" equ "1" goto skip_dotconfig
+echo %DOTS_CONFIG% not found 
 exit /b 1
 
 
-:use_dotset
+:parse_dotconfig
 cd %DOT_BASE_PATH%
-rem .dotset file consist of set statements VARIABLE=value(s)
+rem .dotconfig file consist of set statements VARIABLE=value(s)
 rem read all lines and apply as sets
 rem this file can be used to override e.g. DOT_BASE_NAME
-for /F "tokens=*" %%A in (%DOTS_FILE%) do set %%A
+for /F "tokens=*" %%A in (%DOTS_CONFIG%) do set %%A
     
 
-:skip_dotset
+:skip_dotconfig
 if "%FLAG_SKIP_NO_GITREPO_ONLY%" equ "1" goto check_gitrepo
 git rev-parse --is-inside-work-tree 1>nul 2>nul
 if %ERRORLEVEL% equ 0 echo %~1 cannot run inside existing git repository.&exit /b 1
