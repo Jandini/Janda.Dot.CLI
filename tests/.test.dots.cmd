@@ -23,10 +23,9 @@ rd /q /s .dots
  
 popd 
 
-cd %DOT_CURRENT_DIR_PATH%
-if "%TEST_DIR%" neq "" rd /q %TEST_DIR%
+call :cleanup
 
-goto exit
+goto :eof
 
 
 
@@ -35,7 +34,10 @@ set COMMAND=.dots\%1.cmd
 <nul set /p =Checking %COMMAND%	
 if not exist %COMMAND% echo [ FAILED ] && echo %COMMAND% does not exist && exit 1 /b
 echo [ OK ]
-exit /b
+goto :eof
 
 
-:exit
+:cleanup
+cd %DOT_CURRENT_DIR_PATH%
+if "%TEST_DIR%" neq "" rd /q %TEST_DIR%
+goto :eof

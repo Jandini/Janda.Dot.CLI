@@ -38,9 +38,9 @@ echo @call _dots %%~n0 "Install global dots or upgrade local dots" "[install^|up
 echo if %%ERRORLEVEL%% equ 1 exit /b >> %DOTS%
 echo echo .dots %DOT_GIT_VERSION% %%DOT_TYPE%% >> %DOTS%
 
-rem echo echo %%DOTS_TYPE%% >> %DOTS%
-rem echo echo %%DOTS_GLOBAL%% >> %DOTS%
-rem echo echo %%DOTS_PATH%% >> %DOTS%
+rem echo echo %%DOT_TYPE%% >> %DOTS%
+rem echo echo %%DOT_PATH_GLOBAL%% >> %DOTS%
+rem echo echo %%DOT_PATH%% >> %DOTS%
 
 echo set PARAM=%%1 >> %DOTS%
 echo if /i "%%PARAM:~0,2%%" neq "up" goto install >> %DOTS%

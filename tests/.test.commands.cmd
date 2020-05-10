@@ -16,7 +16,9 @@ call :test_help
 for %%c in (%COMMAND_LIST%) do call :test_help %%c
 popd 
 
-call :cleanup
+
+cd %DOT_CURRENT_DIR_PATH%
+if "%TEST_DIR%" neq "" rd /q %TEST_DIR%
 goto :eof
 
 
@@ -27,9 +29,5 @@ set COMMAND=%1
 if "%1" equ "" ( call .help > %DOT_OUT% ) else ( call .help %COMMAND% > %DOT_OUT% )
 if %ERRORLEVEL% neq 1 echo [ FAILED ] && echo Expected value is 1. Return value is %ERRORLEVEL% && exit 1 /b
 echo [ OK ]
-goto :eof
+exit /b
 
-:cleanup
-cd %DOT_CURRENT_DIR_PATH%
-if "%TEST_DIR%" neq "" rd /q %TEST_DIR%
-goto :eof
