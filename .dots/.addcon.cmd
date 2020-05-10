@@ -33,10 +33,22 @@ dotnet sln %SOLUTION_FILE% add %APP_NAME%
 dotnet sln %SOLUTION_FILE% add %APP_NAME%.Abstractions
 
 
-find "PUBLISH_PRJ=" ..\.dotconfig >nul
-if %ERRORLEVEL% neq 0 echo PUBLISH_PRJ=%APP_NAME%>>..\.dotconfig
+call :update_config
 
 echo Restoring packages for %APP_NAME%
 dotnet restore %APP_NAME% --ignore-failed-sources 
 dotnet restore %APP_NAME%.Abstractions --ignore-failed-sources 
 popd
+
+:goto eof
+
+
+
+:update_config
+find "DOT_PUBLISH_PROJECTS=" ..\.dotconfig >nul
+if %ERRORLEVEL% equ 0 goto :eof
+
+echo # Semicolon delimited project names to be published>>..\.dotconfig
+echo DOT_PUBLISH_PROJECTS=%APP_NAME%>>..\.dotconfig
+goto :eof
+

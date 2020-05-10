@@ -1,5 +1,16 @@
-# Semicolon delimited solution names
-BUILD_SLN=Dot.Solution
-
-# Workaround for dotnet build, pack or publish
+# Workaround to fix build errors
 MSBUILDSINGLELOADCONTEXT=1
+
+# Path to local nuget feed
+DOT_LOCAL_NUGET_FEED=%LOCAL_NUGET_FEED%
+
+# Semicolon delimited solution names to be build
+DOT_BUILD_SOLUTIONS=Dot.Solution
+
+# Semicolon delimited list of RIDs to be published e.g. win-x64,osx-x64,linux-x64
+DOT_RUNTIME_IDENTIFIERS=win-x64
+
+# Add publish arguments e.g. -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true
+DOT_PUBLISH_ARGUMENTS=-c Release
+
+

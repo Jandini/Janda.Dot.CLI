@@ -1,4 +1,4 @@
-@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all BUILD_SLN defined in .dotconfig file" "<pack|build|restore> [.|all]" "d 1" %1 %2 %3
+@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all DOT_BUILD_SOLUTIONS defined in .dotconfig file" "<pack|build|restore> [.|all]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 if /i "%2" equ "." goto this
@@ -27,7 +27,8 @@ goto foreach
 set DISPLAY_NAME=%SLN_NAME%
 
 :execute
-set LOCAL_NUGET_FEED=%USERPROFILE%\.nuget\local
+
+if not defined DOT_LOCAL_NUGET_FEED set DOT_LOCAL_NUGET_FEED=%USERPROFILE%\.nuget\local
 if /i "%1" equ "pack" goto pack 
 if /i "%1" equ "build" goto build
 if /i "%1" equ "restore" goto restore
@@ -36,7 +37,7 @@ goto exit
 
 :pack
 echo Packing %DISPLAY_NAME%...
-dotnet pack %SLN_NAME% --configuration Release --ignore-failed-sources /p:ApplyVersioning=true /p:PackageTargetFeed=%LOCAL_NUGET_FEED%
+dotnet pack %SLN_NAME% --configuration Release --ignore-failed-sources /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED%
 goto exit
 
 :build 
@@ -46,13 +47,13 @@ goto exit
 
 :restore
 echo Restoring %DISPLAY_NAME%...
-dotnet restore %SLN_NAME% --ignore-failed-sources /p:PackageTargetFeed=%LOCAL_NUGET_FEED%
+dotnet restore %SLN_NAME% --ignore-failed-sources /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED%
 goto exit
 
 :foreach
-if "%BUILD_SLN%" equ "" echo %%BUILD_SLN%% is not defined.&&goto exit
+if "%DOT_BUILD_SOLUTIONS%" equ "" echo %%DOT_BUILD_SOLUTIONS%% is not defined.&&goto exit
 
-for %%S in ("%BUILD_SLN:;=" "%") do if "%%S" neq "" call %~n0 %1 sln %%S 
+for %%S in ("%DOT_BUILD_SOLUTIONS:;=" "%") do if "%%S" neq "" call %~n0 %1 sln %%S 
 
 :exit
 
