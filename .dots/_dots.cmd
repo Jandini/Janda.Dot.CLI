@@ -89,20 +89,21 @@ rem set base name to current folder if .dotconfig file not found
 if "%DOT_BASE_NAME%" equ "" for %%I in (.) do set DOT_BASE_NAME=%%~nI%%~xI
 
 
-rem dotset file is required but file is not found
+rem dotconfig file is required but file is not found
 if "%FLAG_SKIP_DOTSET_CHECK%" equ "1" goto skip_dotconfig
 echo %DOTS_CONFIG% not found 
 exit /b 1
 
 
 :parse_dotconfig
-cd %DOT_BASE_PATH%
-rem .dotconfig file consist of set statements VARIABLE=value(s)
-rem read all lines and apply as sets
-rem this file can be used to override e.g. DOT_BASE_NAME
-for /F "tokens=*" %%A in (%DOTS_CONFIG%) do set %%A
+cd "%DOT_BASE_PATH%"
+call :parse_config_file %DOTS_CONFIG%
 
-if exist %DOTS_CONFIG_LOCAL% (for /F "tokens=*" %%A in (%DOTS_CONFIG_LOCAL%) do set %%A)
+rem parse local config .dotlocal file if exists
+if exist %DOTS_CONFIG_LOCAL% call :parse_config_file %DOTS_CONFIG_LOCAL%
+rem this is only a test echo
+if "%ECHO_LOCAL_CONFIG%" neq "" echo %ECHO_LOCAL_CONFIG%
+
 
 :skip_dotconfig
 if "%FLAG_SKIP_NO_GITREPO_ONLY%" equ "1" goto check_gitrepo
@@ -117,6 +118,27 @@ if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository.& exit /b 1
 
 rem get the current git branch name only if git is available
 for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set DOT_GIT_BRANCH=%%F
-
 :skip_gitrepo
 
+
+
+
+
+goto :eof
+
+
+
+:parse_config_file
+rem .dotconfig or .dotlocal file consist of set statements VARIABLE=value(s)
+rem this file can be used to override e.g. DOT_BASE_NAME
+rem use # as first character to comment line out
+for /F "tokens=*" %%A in (%1) do call :parse_config_line "%%A"
+goto :eof
+
+
+:parse_config_line
+set DOT_CONFIG_LINE=%~1
+rem skip line if first character is # 
+if "%DOT_CONFIG_LINE:~0,1%" equ "#" goto :eof
+set %DOT_CONFIG_LINE%
+goto :eof
