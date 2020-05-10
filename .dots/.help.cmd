@@ -25,7 +25,8 @@ goto help_show_all_commands
 :help_show_signle_command
 if not exist %DOT_PATH%%DOT_CMD_NAME%.cmd echo %DOT_CMD_NAME% script is missing && exit /b 2 
 call %DOT_CMD_NAME% --help
-call %DOT_CMD_NAME% --usage
+rem messed up here too
+rem call %DOT_CMD_NAME% --usage
 goto exit
 
 :help_show_all_commands

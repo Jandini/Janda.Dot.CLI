@@ -74,7 +74,8 @@ if /i "%DOT_FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotconfig
 if /i "%~5" neq "" goto find_dotconfig
 
 call _help --help %~1
-call _help --usage %~1 
+rem messed up here
+rem call _help --usage %~1 
 exit /b 1
 
 
