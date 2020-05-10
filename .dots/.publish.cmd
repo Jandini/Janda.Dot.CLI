@@ -1,4 +1,4 @@
-@call _dots %~n0 "Run dotnet publish all projects defined in .dotconfig file under DOT_PUBLISH_PROJECTS for every runtime defined in DOT_RUNTIME_IDENTIFIERS" "" "d" %1 %2 %3
+@call _dots %~n0 "Run dotnet publish all projects defined in %DOT_CONFIG% file under DOT_PUBLISH_PROJECTS for every runtime defined in DOT_RUNTIME_IDENTIFIERS" "" "d" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 if /i "%DOT_PUBLISH_PROJECTS%" equ "" echo No projects defined in %%DOT_PUBLISH_PROJECTS%% && exit /b

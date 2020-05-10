@@ -27,11 +27,11 @@ call :configure_output
 if /i "%~1" equ "" exit
 
 rem get properties only once
-if defined TIME_STAMP goto already_defined
+if defined DOT_TIME_STAMP goto already_defined
 
 rem get timestamp
-for /f "skip=1" %%x in ('wmic os get localdatetime') do if not defined TIME_STAMP set TIME_STAMP=%%x
-set DATE_STAMP=%TIME_STAMP:~0,8%
+for /f "skip=1" %%x in ('wmic os get localdatetime') do if not defined DOT_TIME_STAMP set DOT_TIME_STAMP=%%x
+set DOT_DATE_STAMP=%DOT_TIME_STAMP:~0,8%
 
 rem get directory where script was executed
 for %%I in (.) do set DOT_CURRENT_DIR_NAME=%%~nxI
@@ -40,37 +40,37 @@ set DOT_CURRENT_DIR_PATH=%cd%
 :already_defined
 
 rem always update flags as the script may call another where requirements are different
-set DOTS_FLAGS=%~4
-set FLAG_SKIP_DOTSET_CHECK=
-set FLAG_SKIP_GITREPO_CHECK=
-set FLAG_SKIP_PARAM_CHECK=
-set FLAG_NO_GITREPO_ONLY=
+set DOT_CMD_FLAGS=%~4
+set DOT_FLAG_SKIP_CONFIG_CHECK=
+set DOT_FLAG_SKIP_GITREPO_CHECK=
+set DOT_FLAG_SKIP_PARAM_CHECK=
+set DOT_FLAG_SKIP_NO_GITREPO_ONLY=
 
-if "%DOTS_FLAGS:~0,1%" neq "d" set FLAG_SKIP_DOTSET_CHECK=1
-if "%DOTS_FLAGS:~1,1%" neq "g" set FLAG_SKIP_GITREPO_CHECK=1
-if "%DOTS_FLAGS:~1,1%" neq "G" set FLAG_SKIP_NO_GITREPO_ONLY=1
-if "%DOTS_FLAGS:~2,1%" neq "1" set FLAG_SKIP_PARAM_CHECK=1
+if "%DOT_CMD_FLAGS:~0,1%" neq "d" set DOT_FLAG_SKIP_CONFIG_CHECK=1
+if "%DOT_CMD_FLAGS:~1,1%" neq "g" set DOT_FLAG_SKIP_GITREPO_CHECK=1
+if "%DOT_CMD_FLAGS:~1,1%" neq "G" set DOT_FLAG_SKIP_NO_GITREPO_ONLY=1
+if "%DOT_CMD_FLAGS:~2,1%" neq "1" set DOT_FLAG_SKIP_PARAM_CHECK=1
 
 
-set DOTS_CONFIG=.dotconfig
-set DOTS_CONFIG_LOCAL=.dotlocal
-set DOTS_PATH=%~dp0
-set DOTS_TYPE=local
-set DOTS_GLOBAL=%USERPROFILE%\.dots\
-if "%DOTS_PATH%" equ "%DOTS_GLOBAL%" set DOTS_TYPE=global
+set DOT_CONFIG=.dotconfig
+set DOT_CONFIG_LOCAL=.dotlocal
+set DOT_PATH=%~dp0
+set DOT_PATH_GLOBAL=%USERPROFILE%\.dots\
+set DOT_TYPE=local
+if "%DOT_PATH%" equ "%DOT_PATH_GLOBAL%" set DOT_TYPE=global
 
 set DOT_BASE_PATH=.
 set DOT_BASE_NAME=
 
-set HELP_TEXT=%~2
-set HELP_USAGE=%3
+set DOT_HELP_TEXT=%~2
+set DOT_HELP_USAGE=%3
 
 rem call help and exit script if help was requested
 call _help %~5 %~1 
 if %ERRORLEVEL% equ 1 exit /b
 
 rem skip parameter check if it is not required  
-if /i "%FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotconfig
+if /i "%DOT_FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotconfig
 if /i "%~5" neq "" goto find_dotconfig
 
 call _help --help %~1
@@ -80,7 +80,7 @@ exit /b 1
 
 :find_dotconfig
 for %%I in (%DOT_BASE_PATH%) do set DOT_BASE_NAME=%%~nI%%~xI
-if exist %DOT_BASE_PATH%\%DOTS_CONFIG% goto parse_dotconfig
+if exist %DOT_BASE_PATH%\%DOT_CONFIG% goto parse_dotconfig
 set DOT_BASE_PATH=%DOT_BASE_PATH%\..
 rem goto parent
 if "%DOT_BASE_NAME%" neq "" goto find_dotconfig
@@ -90,29 +90,29 @@ if "%DOT_BASE_NAME%" equ "" for %%I in (.) do set DOT_BASE_NAME=%%~nI%%~xI
 
 
 rem dotconfig file is required but file is not found
-if "%FLAG_SKIP_DOTSET_CHECK%" equ "1" goto skip_dotconfig
-echo %DOTS_CONFIG% not found 
+if "%DOT_FLAG_SKIP_CONFIG_CHECK%" equ "1" goto skip_dotconfig
+echo %DOT_CONFIG% not found 
 exit /b 1
 
 
 :parse_dotconfig
 cd "%DOT_BASE_PATH%"
-call :parse_config_file %DOTS_CONFIG%
+call :parse_config_file %DOT_CONFIG%
 
 rem parse local config .dotlocal file if exists
-if exist %DOTS_CONFIG_LOCAL% call :parse_config_file %DOTS_CONFIG_LOCAL%
+if exist %DOT_CONFIG_LOCAL% call :parse_config_file %DOT_CONFIG_LOCAL%
 rem this is only a test echo
 if "%ECHO_LOCAL_CONFIG%" neq "" echo %ECHO_LOCAL_CONFIG%
 
 
 :skip_dotconfig
-if "%FLAG_SKIP_NO_GITREPO_ONLY%" equ "1" goto check_gitrepo
+if "%DOT_FLAG_SKIP_NO_GITREPO_ONLY%" equ "1" goto check_gitrepo
 git rev-parse --is-inside-work-tree 1>nul 2>nul
 if %ERRORLEVEL% equ 0 echo %~1 cannot run inside existing git repository.&exit /b 1
 
 
 :check_gitrepo
-if "%FLAG_SKIP_GITREPO_CHECK%" equ "1" goto skip_gitrepo
+if "%DOT_FLAG_SKIP_GITREPO_CHECK%" equ "1" goto skip_gitrepo
 git rev-parse --is-inside-work-tree 1>nul 2>nul
 if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository.& exit /b 1
 

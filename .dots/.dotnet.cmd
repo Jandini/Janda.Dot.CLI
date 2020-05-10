@@ -1,4 +1,4 @@
-@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all DOT_BUILD_SOLUTIONS defined in .dotconfig file" "<pack|build|restore> [.|all]" "d 1" %1 %2 %3
+@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file" "<pack|build|restore> [.|all]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 if /i "%2" equ "." goto this
@@ -20,7 +20,7 @@ if exist %SLN_NAME% goto use_default
 rem if running through foreach already exit the call
 if /i "%2" equ "sln" exit /b
 
-echo Default solution %SLN_NAME% not found. Running all solutions defined in .dotconfig file... 
+echo Default solution %SLN_NAME% not found. Running all solutions defined in %DOT_CONFIG% file... 
 goto foreach
 
 :use_default
