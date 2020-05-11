@@ -5,12 +5,14 @@ def updateStatus(String status) {
     updateGitlabCommitStatus(state: status);
 }
 
+
 def dot(String command) {
     bat """
         call .${command}
         exit /b %ERRORLEVEL%
     """
 }
+
 
 def ps(String directory, String command) {
     powershell "./cid/${directory}/${command}"
@@ -24,8 +26,9 @@ def Object getGitVersion() {
 
 
 def String getPackageFtpLinkText(String link, String text) {
-	def ftp = "ftp://nas/builds/dot.solution/" + link
-	return hudson.console.ModelHyperlinkNote.encodeTo(ftp, text);
+	def projectName = env.JOB_NAME.substring(0, env.JOB_NAME.indexOf("/")).toLowerCase() 
+	def ftpUri = "ftp://nas/builds/${projectName}/" + link
+	return hudson.console.ModelHyperlinkNote.encodeTo(ftpUri, text);
 }
 
 
@@ -39,6 +42,8 @@ def void getPackageLinks(Object gitVersion) {
 node("matt10") {
     
     try {
+        
+        
 
         def gitVersion
         updateStatus('running')
