@@ -23,8 +23,10 @@ dotnet new dotcon -n %APP_NAME% %PARAM_ADD_ARGS%
 dotnet new dotprj -n %APP_NAME%.Abstractions
 move "%APP_NAME%\I*.cs" "%APP_NAME%.Abstractions"
 
+rem Add required packages for console app abstractions
 cd "%APP_NAME%.Abstractions"
-dotnet add package Microsoft.Extensions.Logging
+dotnet add package Microsoft.Extensions.Logging -v 3.1.3
+dotnet add package Microsoft.Extensions.Configuration -v 3.1.3  
 cd..
 
 if not exist %SOLUTION_FILE% echo Creating %SOLUTION_FILE% && dotnet new sln -n %SOLUTION_NAME%
@@ -39,7 +41,6 @@ dotnet restore %APP_NAME% --ignore-failed-sources
 dotnet restore %APP_NAME%.Abstractions --ignore-failed-sources 
 popd
 goto :eof
-
 
 
 
