@@ -24,6 +24,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+ - Message "You are about to commit" to .commit command
+ - New .push command
  - Expose new .net core 3 publishing features through DOT_PUBLISH_ARGUMENTS
  - DOT_RUNTIME_IDENTIFIERS to .dotconfig to define runtime targets publish
  - DOT_PUBLISH_ARGUMENTS to .dotconfig file to define list of parameters .e.g. -p:PublishSingleFile=true -p:PublishTrimmed=true

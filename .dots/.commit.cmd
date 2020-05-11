@@ -1,6 +1,6 @@
 @call _dots %~n0 "Add changes and commit" "<comment>" " g1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
-
+echo You are about to commit %1
 git status
 
 set /P CONFIRM=Do you want to add and commit %1 to %DOT_GIT_BRANCH% now (Y/[N])?
