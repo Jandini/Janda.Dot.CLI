@@ -5,28 +5,12 @@ def updateStatus(String status) {
     updateGitlabCommitStatus(state: status);
 }
 
-def dotnet(String commands) {
+def dot(String command) {
     bat """
-        @echo off
-        pushd src
-        dotnet ${commands}
-        set ERRORCODE=%ERRORLEVEL%
-        popd
-        exit /b %ERRORCODE%
+        call .${command}
+        exit /b %ERRORLEVEL%
     """
 }
-
-def cmd(String directory, String command) {
-    bat """
-        @echo off
-        pushd cid\\${directory}
-        ${command}.cmd
-        set ERRORCODE=%ERRORLEVEL%
-        popd
-        exit /b %ERRORCODE%
-    """
-}
-
 
 def ps(String directory, String command) {
     powershell "./cid/${directory}/${command}"
@@ -72,7 +56,7 @@ node("matt10") {
 
         stage('Build') {
             milestone()
-            cmd('win7-x64', 'pack')
+            dot('pack')
         }
                 
         stage('Cleanup') {
