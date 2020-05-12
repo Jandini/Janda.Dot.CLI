@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+ - Smarter update and revert of template version
  - Message "You are about to commit" to .commit command
  - New .push command
  - Expose new .net core 3 publishing features through DOT_PUBLISH_ARGUMENTS

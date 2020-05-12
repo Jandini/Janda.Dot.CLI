@@ -25,11 +25,9 @@ pause
 if %ERRORLEVEL% equ 1 exit /b
  
 call .version
-if "%DOT_GIT_VERSION%" equ "" echo %%DOT_GIT_VERSION%% was not set && goto cleanup
+if "%DOT_GIT_VERSION%" equ "" echo %%DOT_GIT_VERSION%% was not set & goto :eof
 
-echo Updating templates...
-for /f %%f in ('dir /b /s template.json') do move %%f %%f.org > nul && type %%f.org | jq --arg version %DOT_GIT_VERSION% ".classifications += [$version]" > %%f
-
+call :prepare_templates
 set DOTS=.dots\.dots.cmd
 
 rem todo: try to save version in a file and use it so there's no need to generate static file 
@@ -65,19 +63,44 @@ echo :exit >> %DOTS%
 set PACKAGE=%DOT_BASE_NAME%.%DOT_GIT_VERSION%.nupkg
 echo Packing %PACKAGE%...
 nuget pack .nuspec -OutputDirectory %OUTPUT_DIR% -NoDefaultExcludes -Version %DOT_GIT_VERSION% -Properties NoWarn=NU5105
-set LAST_ERRORLEVEL=%ERRORLEVEL%
-if %LAST_ERRORLEVEL% neq 0 goto cleanup
+if %ERRORLEVEL% neq 0 call :revert_templates %ERRORLEVEL% "Nuget pack failed."
 
 echo Checking %PACKAGE% in %OUTPUT_DIR%...
-if not exist %OUTPUT_DIR%\%PACKAGE% echo Cannot find package %PACKAGE% in %OUTPUT_DIR%&&set LAST_ERRORLEVEL=1
+if not exist %OUTPUT_DIR%\%PACKAGE% call :revert_templates -1 "Cannot find package %PACKAGE% in %OUTPUT_DIR%"
+call :revert_templates
 
-:cleanup
-echo Running cleanup...
-for /f %%f in ('dir /b /s template.json') do move %%f.org %%f > nul
-if %LAST_ERRORLEVEL% neq 0 echo Exiting with error %LAST_ERRORLEVEL% && exit /b %LAST_ERRORLEVEL%
 
-if "%1" equ "noinstall" goto exit
+if "%1" equ "noinstall" goto :eof
 
 dotnet new -i %OUTPUT_DIR%\%PACKAGE%
-.dots install noprereq
-:exit
+call .dots install noprereq
+
+goto :eof
+
+
+:revert_templates
+if "%~2" neq "" echo %~2
+
+for /f %%f in ('dir /b /s template.json.org 2^>nul') do set ORG_EXIST=%%f
+if not defined ORG_EXIST goto :eof 
+
+echo Reverting original templates...
+for /f %%f in ('dir /b /s template.json') do if exist %%f.org move %%f.org %%f > nul
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+if "%1" neq "" exit /b %1
+goto :eof
+
+
+:prepare_templates
+call :revert_templates
+echo Preparing templates...
+for /f %%f in ('dir /b /s template.json') do call :update_template %%f
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof
+
+
+:update_template
+move "%~1" "%~1.org" > nul 
+type "%~1.org" | jq --arg version %DOT_GIT_VERSION% ".classifications += [$version]" > "%~1"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof
