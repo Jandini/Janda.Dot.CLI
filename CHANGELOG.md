@@ -47,6 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - .version will retrive version only once if DOT_GIT_VERSION is already defined
  - Changed parameter noGit to noGitVersion. Git is alwasy part of dots. 
  - Update date time variables to use DOT_ prefiex
  - LOCAL_NUGET_FEED replaced with .dotconfig DOT_LOCAL_NUGET_FEED
