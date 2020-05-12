@@ -1,4 +1,4 @@
-﻿namespace _SourceName_
+﻿namespace _NameSpace_
 {
     public interface IApplicationOptions
     {

@@ -19,12 +19,11 @@ if "%APPLICATION_NAME%" equ "." set APP_NAME=%DOT_BASE_NAME%
 
 pushd src
 dotnet new dotcon -n %APP_NAME% %PARAM_ADD_ARGS%
-dotnet new dotconabs -n %APP_NAME%.Abstractions %PARAM_ADD_ARGS%
+dotnet new dotconabs -n %APP_NAME%.Abstractions %PARAM_ADD_ARGS% --nameSpace %APP_NAME%
 
 if not exist %SOLUTION_FILE% echo Creating %SOLUTION_FILE% && dotnet new sln -n %SOLUTION_NAME%
-echo Adding %APP_NAME% application to %SOLUTION_FILE%
-dotnet sln %SOLUTION_FILE% add %APP_NAME%
-dotnet sln %SOLUTION_FILE% add %APP_NAME%.Abstractions
+echo Adding %APP_NAME% to %SOLUTION_FILE%
+dotnet sln %SOLUTION_FILE% add %APP_NAME% %APP_NAME%.Abstractions
 
 call :update_config
 
