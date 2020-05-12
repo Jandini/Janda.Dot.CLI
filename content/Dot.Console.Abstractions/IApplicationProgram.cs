@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
-namespace Dot.Console.Abstractions
+namespace _SourceName_
 {
     public interface IApplicationProgram
     {

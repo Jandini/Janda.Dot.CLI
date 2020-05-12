@@ -1,4 +1,4 @@
-﻿namespace Dot.Console.Abstractions
+﻿namespace _SourceName_
 {
     public interface IApplicationSettings
     {

@@ -12,7 +12,7 @@
   <files> 
 
     <!-- Dot Console Abstractions -->
-    <file src="content\Dot.Console.Abstractions\Dot.Console.Abstractions.csproj" target="content\Dot.Console.Abstractions\Dot.Console.Abstractions.csproj" /> 
+    <file src="content\Dot.Console.Abstractions\_SourceName_.csproj" target="content\Dot.Console.Abstractions\_SourceName_.csproj" /> 
     <file src="content\Dot.Console.Abstractions\IApplicationOptions.cs" target="content\Dot.Console.Abstractions\IApplicationOptions.cs" /> 
     <file src="content\Dot.Console.Abstractions\IApplicationProgram.cs" target="content\Dot.Console.Abstractions\IApplicationProgram.cs" /> 
     <file src="content\Dot.Console.Abstractions\IApplicationService.cs" target="content\Dot.Console.Abstractions\IApplicationService.cs" /> 
