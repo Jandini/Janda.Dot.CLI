@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
- - Content nuspec file create script
+ - .nuspec file builder
  - Dot.Console.Abstraction template
  - The template.json file parser error handling for pack command
  - Smarter update and revert of template version
