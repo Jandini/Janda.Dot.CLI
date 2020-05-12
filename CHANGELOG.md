@@ -4,26 +4,30 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
- * Create installer script that adds .dots to path
+ * Create installer script that adds .dots to path. Download directly from git and install
  * Add optional parameter origin to .init command 
- * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```
- * Perhaps use find insteaad grep
+ * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```  rem usage:, rem desc:
+ * Perhaps use find instead grep
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
  * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
- * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
- * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
  * Command .release should try to checkout branch like feature does
+ * Replace "Jenkins" with repository name inside README.md
+ * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
+ * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
 
- * Update date time variables to use DOT_ prefiex
 
 
 ## [1.3.0]
 
 ### Added
 
+ - Content nuspec file create script
+ - Dot.Console.Abstraction template
+ - The template.json file parser error handling for pack command
+ - Smarter update and revert of template version
  - Message "You are about to commit" to .commit command
  - New .push command
  - Expose new .net core 3 publishing features through DOT_PUBLISH_ARGUMENTS
@@ -43,6 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Update date time variables to use DOT_ prefiex
  - LOCAL_NUGET_FEED replaced with .dotconfig DOT_LOCAL_NUGET_FEED
  - Change BUILD_SLN to DOT_BUILD_SOLUTIONS
  - Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS

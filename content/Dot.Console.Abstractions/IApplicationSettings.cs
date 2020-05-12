@@ -1,4 +1,4 @@
-﻿namespace Dot.Console
+﻿namespace _NameSpace_
 {
     public interface IApplicationSettings
     {

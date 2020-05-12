@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
-namespace Dot.Console
+namespace _NameSpace_
 {
     public interface IApplicationProgram
     {
