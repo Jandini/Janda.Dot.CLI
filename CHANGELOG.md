@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+ - The template.json file parser error handling for pack command
  - Smarter update and revert of template version
  - Message "You are about to commit" to .commit command
  - New .push command

@@ -72,35 +72,40 @@ call :revert_templates
 
 if "%1" equ "noinstall" goto :eof
 
-dotnet new -i %OUTPUT_DIR%\%PACKAGE%
-call .dots install noprereq
 
+echo Installing templates...
+dotnet new -i %OUTPUT_DIR%\%PACKAGE% > nul
+if %ERRORLEVEL% neq 0 echo "Installation failed."
+echo Templates %DOT_GIT_VERSION% installed successfully.
+
+echo Installing dots...
+call .dots install noprereq
+echo Dots installed successfully.
 goto :eof
 
 
 :revert_templates
 if "%~2" neq "" echo %~2
 
-for /f %%f in ('dir /b /s template.json.org 2^>nul') do set ORG_EXIST=%%f
-if not defined ORG_EXIST goto :eof 
-
-echo Reverting original templates...
+rem echo Restoring templates...
 for /f %%f in ('dir /b /s template.json') do if exist %%f.org move %%f.org %%f > nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-if "%1" neq "" exit /b %1
+if "%1" neq "" exit %1
+rem echo Templates reverted.
 goto :eof
 
 
 :prepare_templates
 call :revert_templates
-echo Preparing templates...
+rem echo Preparing templates...
 for /f %%f in ('dir /b /s template.json') do call :update_template %%f
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+rem echo Templates version set to %DOT_GIT_VERSION%
 goto :eof
 
 
 :update_template
 move "%~1" "%~1.org" > nul 
 type "%~1.org" | jq --arg version %DOT_GIT_VERSION% ".classifications += [$version]" > "%~1"
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+if %ERRORLEVEL% neq 0 call :revert_templates -1 "%~1"
 goto :eof
