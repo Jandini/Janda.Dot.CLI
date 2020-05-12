@@ -11,6 +11,14 @@
   </metadata>
   <files> 
 
+    <file src="content\Dot.Console.Abstractions\Console.Abstractions.csproj" target="content\Dot.Console.Abstractions\Console.Abstractions.csproj" /> 
+    <file src="content\Dot.Console.Abstractions\IApplicationOptions.cs" target="content\Dot.Console.Abstractions\IApplicationOptions.cs" /> 
+    <file src="content\Dot.Console.Abstractions\IApplicationProgram.cs" target="content\Dot.Console.Abstractions\IApplicationProgram.cs" /> 
+    <file src="content\Dot.Console.Abstractions\IApplicationService.cs" target="content\Dot.Console.Abstractions\IApplicationService.cs" /> 
+    <file src="content\Dot.Console.Abstractions\IApplicationSettings.cs" target="content\Dot.Console.Abstractions\IApplicationSettings.cs" /> 
+    <file src="content\Dot.Console.Abstractions\.template.config\template.json" target="content\Dot.Console.Abstractions\.template.config\template.json" /> 
+
+
     <!-- Dot Solution -->
     <file src="content\DotSolution-CSharp\.template.config\template.json" target="content\DotSolution-CSharp\.template.config\template.json" />
     <file src="content\DotSolution-CSharp\.gitattributes" target="content\DotSolution-CSharp\.gitattributes" />
@@ -61,6 +69,15 @@
     <file src="content\DotConsole-CSharp\Settings.cs" target="content\DotConsole-CSharp\Settings.cs" />
     <file src="content\DotConsole-CSharp\app.manifest" target="content\DotConsole-CSharp\app.manifest" />
     <file src="content\DotConsole-CSharp\appsettings.json" target="content\DotConsole-CSharp\appsettings.json" />
+
+
+    <!-- Dot Library -->
+    <file src="content\DotLibrary-CSharp\.template.config\template.json" target="content\DotLibrary-CSharp\.template.config\template.json" />
+    <file src="content\DotLibrary-CSharp\obfuscar.xml" target="content\DotLibrary-CSharp\obfuscar.xml" />
+    <file src="content\DotLibrary-CSharp\Dot.Library.csproj" target="content\DotLibrary-CSharp\Dot.Library.csproj" />
+    <file src="content\DotLibrary-CSharp\IClassService.cs" target="content\DotLibrary-CSharp\IClassService.cs" />    
+    <file src="content\DotLibrary-CSharp\ClassService.cs" target="content\DotLibrary-CSharp\ClassService.cs" />    
+    <file src="content\DotLibrary-CSharp\ClassServiceExtensions.cs" target="content\DotLibrary-CSharp\ClassServiceExtensions.cs" />    
 
 
     <!-- Dots -->
