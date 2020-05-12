@@ -34,7 +34,7 @@
       "type": "parameter",
       "replaces": "Dot.Console"
     },
-    "noGit": {
+    "noGitVersion": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false"

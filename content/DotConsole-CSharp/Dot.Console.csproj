@@ -38,7 +38,7 @@
     <ProjectReference Include="..\Dot.Console.Abstractions\Dot.Console.Abstractions.csproj" />
   </ItemGroup>
 
-<!--#if (!noGit)-->
+<!--#if (!noGitVersion)-->
   <Import Project="$(TargetsDir)\GitVersion.targets" />  
 <!--#endif -->
 </Project>

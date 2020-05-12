@@ -47,6 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Changed parameter noGit to noGitVersion. Git is alwasy part of dots. 
  - Update date time variables to use DOT_ prefiex
  - LOCAL_NUGET_FEED replaced with .dotconfig DOT_LOCAL_NUGET_FEED
  - Change BUILD_SLN to DOT_BUILD_SOLUTIONS
