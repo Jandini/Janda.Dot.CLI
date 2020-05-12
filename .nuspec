@@ -11,13 +11,13 @@
   </metadata>
   <files> 
 
-    <file src="content\Dot.Console.Abstractions\Console.Abstractions.csproj" target="content\Dot.Console.Abstractions\Console.Abstractions.csproj" /> 
+    <!-- Dot Console Abstractions -->
+    <file src="content\Dot.Console.Abstractions\Dot.Console.Abstractions.csproj" target="content\Dot.Console.Abstractions\Dot.Console.Abstractions.csproj" /> 
     <file src="content\Dot.Console.Abstractions\IApplicationOptions.cs" target="content\Dot.Console.Abstractions\IApplicationOptions.cs" /> 
     <file src="content\Dot.Console.Abstractions\IApplicationProgram.cs" target="content\Dot.Console.Abstractions\IApplicationProgram.cs" /> 
     <file src="content\Dot.Console.Abstractions\IApplicationService.cs" target="content\Dot.Console.Abstractions\IApplicationService.cs" /> 
     <file src="content\Dot.Console.Abstractions\IApplicationSettings.cs" target="content\Dot.Console.Abstractions\IApplicationSettings.cs" /> 
     <file src="content\Dot.Console.Abstractions\.template.config\template.json" target="content\Dot.Console.Abstractions\.template.config\template.json" /> 
-
 
     <!-- Dot Solution -->
     <file src="content\DotSolution-CSharp\.template.config\template.json" target="content\DotSolution-CSharp\.template.config\template.json" />
@@ -56,20 +56,15 @@
     <file src="content\DotProject-CSharp\Dot.Project.csproj" target="content\DotProject-CSharp\Dot.Project.csproj" />
     
     <!-- Dot Console -->
-    <file src="content\DotConsole-CSharp\.template.config\template.json" target="content\DotConsole-CSharp\.template.config\template.json" />
-    <file src="content\DotConsole-CSharp\Dot.Console.csproj" target="content\DotConsole-CSharp\Dot.Console.csproj" />
-    <file src="content\DotConsole-CSharp\Application.cs" target="content\DotConsole-CSharp\Application.cs" />    
-    <file src="content\DotConsole-CSharp\Service.cs" target="content\DotConsole-CSharp\Service.cs" />    
-    <file src="content\DotConsole-CSharp\IApplicationProgram.cs" target="content\DotConsole-CSharp\IApplicationProgram.cs" />    
-    <file src="content\DotConsole-CSharp\IApplicationService.cs" target="content\DotConsole-CSharp\IApplicationService.cs" />    
-    <file src="content\DotConsole-CSharp\IApplicationOptions.cs" target="content\DotConsole-CSharp\IApplicationOptions.cs" />    
-    <file src="content\DotConsole-CSharp\IApplicationSettings.cs" target="content\DotConsole-CSharp\IApplicationSettings.cs" />    
-    <file src="content\DotConsole-CSharp\Program.cs" target="content\DotConsole-CSharp\Program.cs" />    
-    <file src="content\DotConsole-CSharp\Options.cs" target="content\DotConsole-CSharp\Options.cs" />    
-    <file src="content\DotConsole-CSharp\Settings.cs" target="content\DotConsole-CSharp\Settings.cs" />
-    <file src="content\DotConsole-CSharp\app.manifest" target="content\DotConsole-CSharp\app.manifest" />
-    <file src="content\DotConsole-CSharp\appsettings.json" target="content\DotConsole-CSharp\appsettings.json" />
-
+    <file src="content\DotConsole-CSharp\app.manifest" target="content\DotConsole-CSharp\app.manifest" /> 
+    <file src="content\DotConsole-CSharp\Application.cs" target="content\DotConsole-CSharp\Application.cs" /> 
+    <file src="content\DotConsole-CSharp\appsettings.json" target="content\DotConsole-CSharp\appsettings.json" /> 
+    <file src="content\DotConsole-CSharp\Dot.Console.csproj" target="content\DotConsole-CSharp\Dot.Console.csproj" /> 
+    <file src="content\DotConsole-CSharp\Options.cs" target="content\DotConsole-CSharp\Options.cs" /> 
+    <file src="content\DotConsole-CSharp\Program.cs" target="content\DotConsole-CSharp\Program.cs" /> 
+    <file src="content\DotConsole-CSharp\Service.cs" target="content\DotConsole-CSharp\Service.cs" /> 
+    <file src="content\DotConsole-CSharp\Settings.cs" target="content\DotConsole-CSharp\Settings.cs" /> 
+    <file src="content\DotConsole-CSharp\.template.config\template.json" target="content\DotConsole-CSharp\.template.config\template.json" /> 
 
     <!-- Dot Library -->
     <file src="content\DotLibrary-CSharp\.template.config\template.json" target="content\DotLibrary-CSharp\.template.config\template.json" />

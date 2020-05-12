@@ -38,6 +38,11 @@
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false"
+    },
+    "addArgs": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false"
     }
   }
 }
