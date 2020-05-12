@@ -34,7 +34,7 @@
       "type": "parameter",
       "replaces": "Dot.Project"
     },
-    "noGit": {
+    "noGitVersion": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false"

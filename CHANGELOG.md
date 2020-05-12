@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
- - Content nuspec file create script
+ - .nuspec file builder
  - Dot.Console.Abstraction template
  - The template.json file parser error handling for pack command
  - Smarter update and revert of template version
@@ -47,6 +47,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - .version will retrive version only once if DOT_GIT_VERSION is already defined
+ - Changed parameter noGit to noGitVersion. Git is alwasy part of dots. 
  - Update date time variables to use DOT_ prefiex
  - LOCAL_NUGET_FEED replaced with .dotconfig DOT_LOCAL_NUGET_FEED
  - Change BUILD_SLN to DOT_BUILD_SOLUTIONS

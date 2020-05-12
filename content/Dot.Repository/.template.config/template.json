@@ -27,11 +27,8 @@
           ]
         },
         {
-          "condition": "(noGit)",
+          "condition": "(noGitVersion)",
           "exclude": [
-            ".init.cmd",
-            ".gitattributes",
-            ".gitignore",
             "GitVersion.yml",
             "**/GitVersion.targets"
           ]
@@ -54,7 +51,7 @@
       },
       "replaces": "dot.solution"
     },
-    "noGit": {
+    "noGitVersion": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false"
