@@ -3,8 +3,8 @@ set OUTPUT=.nuspec
 call .\.dots\.version
 
 call :append_header
-call :append_files content %~p0
-call :append_files .dots %~p0.dots .dots content\DotScripts\.dots
+call :append_content content %~p0
+call :append_dots .dots %~p0
 call :append_footer
 goto :eof
 
@@ -30,10 +30,17 @@ echo   ^</files^>>> %OUTPUT%
 echo ^</package^>>> %OUTPUT%
 goto :eof
 
-:append_files
+:append_content
 echo Adding %~1 to %OUTPUT%
-for /R "%~1" %%G in ("*.*") do if %%~nxG neq %~nx0 call :append_file "%%~pG%%~nxG" "%~2" %3 %4
+for /R "%~1" %%G in ("*.*") do if %%~nxG neq %~nx0 call :append_file "%%~pG%%~nxG" "%~2"
 goto :eof
+
+:append_dots
+echo Adding %~1 to %OUTPUT%
+for /R "%~1" %%G in ("*.cmd") do if %%~nxG neq %~nx0 call :append_file "%%~pG%%~nxG" "%~2.dots" .dots content\DotScripts\.dots
+echo     ^<file src=".dots\template.json" target="content\DotScripts\.template.config\template.json" /^>>> %OUTPUT%
+goto :eof
+
 
 :append_file
 set CONTENT_PATH=%~1
