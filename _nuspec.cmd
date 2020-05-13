@@ -4,7 +4,7 @@ call .\.dots\.version
 
 call :append_header
 call :append_files content %~p0
-call :append_files .dots %~p0 content\
+call :append_files .dots %~p0.dots .dots content\DotScripts\.dots
 call :append_footer
 goto :eof
 
@@ -32,7 +32,7 @@ goto :eof
 
 :append_files
 echo Adding %~1 to %OUTPUT%
-for /R "%~1" %%G in ("*.*") do if %%~nxG neq %~nx0 call :append_file "%%~pG%%~nxG" "%~2" %3
+for /R "%~1" %%G in ("*.*") do if %%~nxG neq %~nx0 call :append_file "%%~pG%%~nxG" "%~2" %3 %4
 goto :eof
 
 :append_file
@@ -41,6 +41,6 @@ set SEARCH_FOR=%~2
 set REPLACE_TO=
 call set CONTENT_PATH=%%CONTENT_PATH:%SEARCH_FOR%=%REPLACE_TO%%%
 rem echo Adding %CONTENT_PATH%
-echo     ^<file src="%~3%CONTENT_PATH%" target="%~3%CONTENT_PATH%" /^>>> %OUTPUT%
+echo     ^<file src="%~3%CONTENT_PATH%" target="%~4%CONTENT_PATH%" /^>>> %OUTPUT%
 goto :eof
 
