@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-     <PackageTargetFeed Condition="$(PackageTargetFeed) == '' AND Exists('$(CID_NUGET_FEED)')">$(CID_NUGET_FEED)</PackageTargetFeed>
-     <PackageBuildPath>$(CID_BUILD_PATH)</PackageBuildPath>
+     <PackageTargetFeed Condition="$(PackageTargetFeed) == '' AND Exists('$(DOT_CID_NUGET_FEED)')">$(DOT_CID_NUGET_FEED)</PackageTargetFeed>
+     <PackageBuildPath>$(DOT_CID_BUILD_PATH)</PackageBuildPath>
   </PropertyGroup>
   
   <Target Condition="'$(ApplyVersioning)' == 'true'" Name="GetProperties">
@@ -38,7 +38,7 @@
   </Target>
 
   <Target Condition="'$(ApplyVersioning)' == 'true' AND '$(PackageBuildPath)' == ''" Name="BuildPathWarning" AfterTargets="Pack" >
-    <Message Text="Skipping copy to build repository. The environment variable CID_BUILD_PATH doesn't exist." Importance="high" />
+    <Message Text="Skipping copy to build repository. The environment variable DOT_CID_BUILD_PATH doesn't exist." Importance="high" />
   </Target>
 
 
