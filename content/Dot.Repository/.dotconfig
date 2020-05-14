@@ -2,7 +2,7 @@
 MSBUILDSINGLELOADCONTEXT=1
 
 # Path to local nuget feed
-DOT_LOCAL_NUGET_FEED=%LOCAL_NUGET_FEED%
+DOT_LOCAL_NUGET_FEED=%DOT_CID_NUGET_FEED%
 
 # Semicolon delimited solution names to be build
 DOT_BUILD_SOLUTIONS=Dot.Solution

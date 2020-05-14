@@ -49,7 +49,7 @@ node("matt10") {
             gitVersion = getGitVersion();
             
             packageName = """${env.REPO_NAME}.${gitVersion.InformationalVersion}"""
-            packageOutputPath = """${env.CID_BUILD_PATH}\\${env.REPO_NAME}\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
+            packageOutputPath = """${env.DOT_CID_BUILD_PATH}\\${env.REPO_NAME}\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
         }
         
         stage('Publish') {

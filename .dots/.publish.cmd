@@ -2,6 +2,8 @@
 if %ERRORLEVEL% equ 1 exit /b
 
 if /i "%DOT_PUBLISH_PROJECTS%" equ "" echo No projects defined in %%DOT_PUBLISH_PROJECTS%% && exit /b
+
+rem right now it's only windows
 if defined DOT_LOCAL_NUGET_FEED set DOT_LOCAL_NUGET_FEED_PARAMETER= /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED%
 
 cd src

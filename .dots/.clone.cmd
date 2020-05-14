@@ -11,8 +11,8 @@ if exist %PROJECT_NAME% echo Directory %PROJECT_NAME% already exists. && goto ex
 
 :get_origin
 set ORIGIN_URL=unknown
-if "%CID_GITLAB_URL%%CID_GITLAB_USER%" neq "" set ORIGIN_URL=%CID_GITLAB_URL%/%CID_GITLAB_USER%/%PROJECT_NAME%.git && goto clone_repository
-echo CID_GITLAB_URL and CID_GITLAB_USER are required.
+if "%DOT_CID_GITLAB_URL%%DOT_CID_GITLAB_USER%" neq "" set ORIGIN_URL=%DOT_CID_GITLAB_URL%/%DOT_CID_GITLAB_USER%/%PROJECT_NAME%.git && goto clone_repository
+echo DOT_CID_GITLAB_URL and DOT_CID_GITLAB_USER are required.
 goto exit
 
 :clone_repository

@@ -28,7 +28,11 @@ set DISPLAY_NAME=%SLN_NAME%
 
 :execute
 
+rem if global variable DOT_CID_NUGET_FEED e.g. on build server then make it a local path 
+if defined DOT_CID_NUGET_FEED set DOT_LOCAL_NUGET_FEED=%DOT_CID_NUGET_FEED%
+rem if local path is still not then create one
 if not defined DOT_LOCAL_NUGET_FEED set DOT_LOCAL_NUGET_FEED=%USERPROFILE%\.nuget\local
+
 if /i "%1" equ "pack" goto pack 
 if /i "%1" equ "build" goto build
 if /i "%1" equ "restore" goto restore

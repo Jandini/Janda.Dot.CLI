@@ -14,9 +14,7 @@ All notable changes to this project will be documented in this file.
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
  * Command .release should try to checkout branch like feature does
- * Replace "Jenkins" with repository name inside README.md
- * As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
- * As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
+
 
 
 
@@ -47,6 +45,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Replace "Jenkins" with repository name inside README.md
+ - As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
+ - As user I want to set gitlab user name using DOT_GITLAB_USER environment variable
  - .version will retrive version only once if DOT_GIT_VERSION is already defined
  - Changed parameter noGit to noGitVersion. Git is alwasy part of dots. 
  - Update date time variables to use DOT_ prefiex

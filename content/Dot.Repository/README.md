@@ -1,4 +1,4 @@
-### Jenkins
+### Dot.Solution
 
 | master | develop |
 |:------:|:-----------:|
