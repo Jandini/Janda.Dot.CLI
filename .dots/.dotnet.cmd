@@ -41,17 +41,17 @@ goto exit
 
 :pack
 echo Packing %DISPLAY_NAME%...
-dotnet pack %SLN_NAME% --configuration Release --ignore-failed-sources /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED%
+dotnet pack %SLN_NAME% --configuration Release /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --packages %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources 
 goto exit
 
 :build 
 echo Building %DISPLAY_NAME%...
-dotnet build %SLN_NAME% --ignore-failed-sources 
+dotnet build %SLN_NAME% /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --packages %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources
 goto exit
 
 :restore
 echo Restoring %DISPLAY_NAME%...
-dotnet restore %SLN_NAME% --ignore-failed-sources /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED%
+dotnet restore %SLN_NAME% --ignore-failed-sources --packages %DOT_LOCAL_NUGET_FEED%
 goto exit
 
 :foreach

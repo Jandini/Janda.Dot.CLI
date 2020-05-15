@@ -42,9 +42,7 @@ def void getPackageLinks(Object gitVersion) {
 node("matt10") {
     
     try {
-        
-        
-
+               
         def gitVersion
         updateStatus('running')
 
