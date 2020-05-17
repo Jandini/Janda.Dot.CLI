@@ -1,4 +1,4 @@
-@call _dots %~n0 "Run dotnet for project in current folder [.], repo's default solution or solutions in DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file" "<restore|pack|build|publish|test> [.]" "d 1" %1 %2 %3
+@call _dots %~n0 "Run dotnet for project in current folder, repo's default solution or solutions in DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file" "<restore|pack|build|publish|test> [.]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: This is dot wrapper over the dotnet command. 
@@ -56,33 +56,25 @@ goto :eof
 rem configure-nugets
 rem ----------------
 :configure-nugets
-rem Configure .dot nuget source and feed. .dot's local nuget feed is %USERPROFILE%\.nuget\local
-rem This can be overriden by %DOT_CID_NUGET_FEED% environment variable and redirected to any folder. 
-set DOT_DEFAULT_NUGET_FEED=%USERPROFILE%\.nuget\local
-
-rem if global variable DOT_CID_NUGET_FEED e.g. on build server then make it a local path 
-if defined DOT_CID_NUGET_FEED set DOT_LOCAL_NUGET_FEED=%DOT_CID_NUGET_FEED%
-
-rem if local path is still not then create one
-if not defined DOT_LOCAL_NUGET_FEED set DOT_LOCAL_NUGET_FEED=%DOT_DEFAULT_NUGET_FEED%
+call _nugets
 goto :eof
 
 
 
 :pack
 echo Packing %~2...
-dotnet pack "%~1" --configuration Release /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --packages %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources 
+dotnet pack "%~1" --configuration Release /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --source %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources 
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
 :build 
 echo Building %~2...
-dotnet build "%~1" /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --packages %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources
+dotnet build "%~1" /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --source %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
 :restore
 echo Restoring %~2...
-dotnet restore "%~1" --ignore-failed-sources --packages %DOT_LOCAL_NUGET_FEED%
+dotnet restore "%~1" --ignore-failed-sources --source %DOT_LOCAL_NUGET_FEED%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof

@@ -6,11 +6,12 @@ call :append_header
 call :append_content content %~p0
 call :append_dots .dots %~p0
 call :append_footer
+echo The file %OUTPUT% created successfully.
 goto :eof
 
 
 :append_header
-echo Creating %OUTPUT%
+echo Creating %OUTPUT% file...
 echo ^<?xml version="1.0" encoding="utf-8"?^>> %OUTPUT%
 echo ^<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"^>>> %OUTPUT%
 echo   ^<metadata^>>> %OUTPUT%
@@ -31,12 +32,12 @@ echo ^</package^>>> %OUTPUT%
 goto :eof
 
 :append_content
-echo Adding %~1 to %OUTPUT%
+echo Adding %~1 to %OUTPUT% file...
 for /R "%~1" %%G in ("*.*") do if %%~nxG neq %~nx0 call :append_file "%%~pG%%~nxG" "%~2"
 goto :eof
 
 :append_dots
-echo Adding %~1 to %OUTPUT%
+echo Adding %~1 to %OUTPUT% file...
 for /R "%~1" %%G in ("*.cmd") do if %%~nxG neq %~nx0 call :append_file "%%~pG%%~nxG" "%~2.dots" .dots content\DotScripts\.dots
 echo     ^<file src=".dots\template.json" target="content\DotScripts\.template.config\template.json" /^>>> %OUTPUT%
 goto :eof
