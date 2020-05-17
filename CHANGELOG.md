@@ -47,6 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - GitVersion 5.3.3
  - Simplified .dotnet command
  - Replace "Jenkins" with repository name inside README.md
  - As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
@@ -58,7 +59,7 @@ All notable changes to this project will be documented in this file.
  - Change BUILD_SLN to DOT_BUILD_SOLUTIONS
  - Change PUBLISH_PRJ to DOT_PUBLISH_PROJECTS
  - Renamed .dotset to .dotconfig
- - Upgraded project templates to .NET Core 3.1.3
+ - Upgraded project templates to .NET Core 3.1.4
  - Changed TargetFramework to netcoreapp3.1
  - Missing dotnet template causes odd behaviour in .newdot
  - Changed diff to output only statistics
