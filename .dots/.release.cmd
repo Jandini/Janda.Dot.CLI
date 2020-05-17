@@ -56,7 +56,7 @@ goto release
 set NO_CONFIRM=Y
 
 :release
-git flow release finish -m "%DOT_GIT_VERSION%"
+git flow release finish -m "Released on %DATE% %TIME%"
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
 
 

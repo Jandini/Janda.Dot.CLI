@@ -13,24 +13,17 @@ def dot(String command) {
     """
 }
 
-
-def ps(String directory, String command) {
-    powershell "./cid/${directory}/${command}"
-}
-
 def Object getGitVersion() {
 	jsonText = bat(returnStdout: true, script: '@gitversion')
 	println "${jsonText}"
 	return new JsonSlurperClassic().parseText(jsonText)  			
 }
 
-
 def String getPackageFtpLinkText(String link, String text) {
 	def projectName = env.JOB_NAME.substring(0, env.JOB_NAME.indexOf("/")).toLowerCase() 
 	def ftpUri = "ftp://nas/builds/${projectName}/" + link
 	return hudson.console.ModelHyperlinkNote.encodeTo(ftpUri, text);
 }
-
 
 def void getPackageLinks(Object gitVersion) {
 	branch = getPackageFtpLinkText("${gitVersion.BranchName}", gitVersion.BranchName)
@@ -55,9 +48,25 @@ node("matt10") {
             milestone()
             checkout scm
             gitVersion = getGitVersion();
+            currentBuild.description = gitVersion.InformationalVersion
+        }
+
+        stage('Restore') {
+            milestone()
+            dot('restore')
         }
 
         stage('Build') {
+            milestone()
+            dot('build')
+        }
+
+        stage('Test') {
+            milestone()
+            dot('test')
+        }
+
+        stage('Pack') {
             milestone()
             dot('pack')
         }

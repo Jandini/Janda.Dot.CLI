@@ -14,7 +14,9 @@ All notable changes to this project will be documented in this file.
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
  * Command .release should try to checkout branch like feature does
+
  * Fix release tag comments. It adds the version twice in tags
+ * Make add*.cmd dot parameters common i.e. addtest is the same as addlibrary
 
 
 
@@ -23,7 +25,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
- - _nuget.cmd to configure path to DOT_LOCAL_NUGET_FEED
+ - The .push command pushes all branches followed by tags
+ - Current build to Jenkinsfile
+ - Added XUnit tests support. Added .addtest to add and .test to run tests
+ - _nuget.cmd to configure path to DOT_LOCAL_NUGET_FEED and DOT_NUGET_SOURCES parameters 
  - .nuspec file builder
  - Dot.Console.Abstraction template
  - The template.json file parser error handling for pack command

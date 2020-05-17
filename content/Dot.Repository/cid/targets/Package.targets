@@ -18,7 +18,7 @@
 
     <PropertyGroup>
       <BuildsDir>$(PackageBuildPath)\$(SolutionName.ToLower())\$(GitVersion_BranchName)\$(GitVersion_InformationalVersion)</BuildsDir>
-      <OutputPackageName>$(PackageId).$(PackageVersion)</OutputPackageName>
+      <OutputPackageName>$(PackageId).$(GitVersion_InformationalVersion)</OutputPackageName>
       <OutputPackagePath>$(OutputPath)..\$(OutputPackageName).nupkg</OutputPackagePath>
       <OutputPackagePath Condition="'$(IncludeSymbols)' == 'true'">$(OutputPath)..\$(OutputPackageName).symbols.nupkg</OutputPackagePath>
     </PropertyGroup>
