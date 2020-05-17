@@ -47,7 +47,7 @@ node("matt10") {
             milestone()
             checkout scm
             gitVersion = getGitVersion();
-            
+	    currentBuild.description = gitVersion.InformationalVersion            
             packageName = """${env.REPO_NAME}.${gitVersion.InformationalVersion}"""
             packageOutputPath = """${env.DOT_CID_BUILD_PATH}\\${env.REPO_NAME}\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
         }
