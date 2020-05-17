@@ -3,7 +3,7 @@ rem call dots to receive few variables
 call .dots
 
 rem wip: clone mirror sync undo
-set COMMAND_LIST=help addcon addlib addsln backup branch build commit develop diff dotnet dots feature foreach gitlab init ..master newdot origin pack publish restore status version release
+set COMMAND_LIST=help addcon addlib addsln backup branch build commit diff dotnet dots feature foreach gitlab init ..develop ..master newdot origin pack publish restore status version release
 
 echo Running global dots %USERPROFILE%\.dots folder
 
