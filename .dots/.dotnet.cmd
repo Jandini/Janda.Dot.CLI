@@ -1,4 +1,4 @@
-@call _dots %~n0 "Run dotnet for project in current folder, repo's default solution or solutions in DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file" "<restore|pack|build|publish|test> [.]" "d 1" %1 %2 %3
+@call _dots %~n0 "Run dotnet for project in current folder, repo's default solution or solutions in DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file" "<clean|restore|pack|build|publish|test> [.]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: This is dot wrapper over the dotnet command. 
@@ -27,6 +27,7 @@ if /i "%1" equ "pack" call :pack "%~2" "%~3" & goto :eof
 if /i "%1" equ "build" call :build "%~2" "%~3" & goto :eof
 if /i "%1" equ "restore" call :restore "%~2" "%~3" & goto :eof
 if /i "%1" equ "test" call :test "%~2" "%~3" & goto :eof
+if /i "%1" equ "clean" call :clean "%~2" "%~3" & goto :eof
 
 echo Invalid dotnet command.
 goto :eof
@@ -76,5 +77,12 @@ goto :eof
 :test
 echo Testing %~2...
 dotnet test "%~1"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof
+
+
+:clean
+echo Cleaning %~2...
+dotnet clean "%~1"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
