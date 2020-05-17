@@ -38,8 +38,8 @@ goto :eof
 
 :append_dots
 echo Adding %~1 to %OUTPUT% file...
-for /R "%~1" %%G in ("*.cmd") do if %%~nxG neq %~nx0 call :append_file "%%~pG%%~nxG" "%~2.dots" .dots content\DotScripts\.dots
-echo     ^<file src=".dots\template.json" target="content\DotScripts\.template.config\template.json" /^>>> %OUTPUT%
+for /R "%~1" %%G in ("*.cmd") do if %%~nxG neq %~nx0 call :append_file "%%~pG%%~nxG" "%~2.dots" .dots content\Dot.Scripts\.dots
+echo     ^<file src=".dots\template.json" target="content\Dot.Scripts\.template.config\template.json" /^>>> %OUTPUT%
 goto :eof
 
 

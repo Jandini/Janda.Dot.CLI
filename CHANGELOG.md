@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+ - Git hooks for Semantic Commit Messages https://www.conventionalcommits.org/, https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716, https://github.com/fteem/git-semantic-commits
  - New .clean command
  - The .push command pushes all branches followed by tags
  - Current build to Jenkinsfile
@@ -53,7 +54,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
- = Removed MSBUILDSINGLELOADCONTEXT=1 workaround from .dotconfig
+ - Removed MSBUILDSINGLELOADCONTEXT=1 workaround from .dotconfig
  - GitVersion 5.3.3
  - Simplified .dotnet command
  - Replace "Jenkins" with repository name inside README.md
