@@ -3,8 +3,10 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: This is dot wrapper over the dotnet command. 
 
+rem configure nuget sources
+call _nugets
 
-call :configure-nugets
+rem get solution name
 call :configure-source %2
 if %ERRORLEVEL% equ 1 goto :dotnet-solutions
 
@@ -24,6 +26,7 @@ goto :eof
 if /i "%1" equ "pack" call :pack "%~2" "%~3" & goto :eof
 if /i "%1" equ "build" call :build "%~2" "%~3" & goto :eof
 if /i "%1" equ "restore" call :restore "%~2" "%~3" & goto :eof
+if /i "%1" equ "test" call :test "%~2" "%~3" & goto :eof
 
 echo Invalid dotnet command.
 goto :eof
@@ -31,12 +34,10 @@ goto :eof
 
 
 
-rem configure-source
-rem ----------------
 rem Select source project or default solution
 rem Returns ERRORLEVEL=1 if default solution does not exist
 :configure-source
-if /i "%~1" equ "." goto :this-project
+if /i "%~1" equ "." goto :this
 
 cd src
 rem use default solution
@@ -45,19 +46,12 @@ if not exist %SOURCE_SOLUTION_NAME% exit /b 1
 set SOURCE_DISPLAY_NAME=%SOURCE_SOLUTION_NAME%
 goto :eof
 
-:this-project
+:this
 cd %DOT_CURRENT_DIR_PATH%
 set SOURCE_SOLUTION_NAME=
 set SOURCE_DISPLAY_NAME=%DOT_CURRENT_DIR_NAME%
 goto :eof
 
-
-
-rem configure-nugets
-rem ----------------
-:configure-nugets
-call _nugets
-goto :eof
 
 
 
@@ -76,5 +70,11 @@ goto :eof
 :restore
 echo Restoring %~2...
 dotnet restore "%~1" --ignore-failed-sources --source %DOT_LOCAL_NUGET_FEED%
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof
+
+:test
+echo Testing %~2...
+dotnet test "%~1"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof

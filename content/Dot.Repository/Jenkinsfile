@@ -59,6 +59,16 @@ node("matt10") {
 
         stage('Build') {
             milestone()
+            dot('build')
+        }
+
+        stage('Test') {
+            milestone()
+            dot('test')
+        }
+
+        stage('Pack') {
+            milestone()
             dot('pack')
         }
                 
