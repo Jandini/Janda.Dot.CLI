@@ -16,18 +16,20 @@ goto init
 if exist %1 echo %1 already exist.&exit /b 1 
 echo Creating %1...
 dotnet new dotrepo -n %1
-if %ERRORLEVEL% neq 0 goto template_error
+if %ERRORLEVEL% neq 0 call :template_error
 cd %1
 
 :init
-call .init
+git init
 git add .
-git commit -m "Create repository"
-goto exit
+git commit -m "chore: Create repository"
+call .init
+dotnet new dotgithooks -n .git
+goto :eof
+
+
 
 :template_error
 echo.
 echo Creating dotrepo template failed. Make sure dots-cli templates are installed. 
 exit /b 1
-
-:exit

@@ -1,0 +1,47 @@
+#!/bin/sh
+#
+
+# Format: <type>([scope]): <subject>
+# [scope] is optional
+
+# Example
+# feat: add hat wobble
+# ^--^  ^------------^
+# |     |
+# |     +-> Summary in present tense.
+# |
+# +-------> Type: chore, docs, feat, fix, refactor, style, test, ci, build, wip or revert
+
+
+# feat     - A new feature
+# fix      - A bug fix
+# docs     - Documentation only changes
+# style    - Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+# refactor - A code change that neither fixes a bug nor adds a feature
+# perf     - A code change that improves performance
+# test     - Adding missing tests or correcting existing tests
+# build    - Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm, msbuild)
+# ci       - Changes to our CI configuration files and scripts (example scopes: Jenkins, Travis, Circle, BrowserStack, SauceLabs)
+# chore    - Other changes that don't modify src or test files
+# revert   - Reverts a previous commit
+# wip      - Work in progress
+
+branch="$(git rev-parse --abbrev-ref HEAD)";
+commit_regex='(feat|fix|chore|refactor|style|test|docs|ci|build|revert|perf|wip)(\(\w{0,15}\))?(: .*)';
+error_msg="Aborting commit. Your commit message format is invalid, please check the references."
+commit_message="$1";
+
+if ! grep -iqE "$commit_regex" "${commit_message}"; then
+echo "$error_msg" >&2
+exit 1
+fi
+
+if [ "$branch" = "master" ]; then
+echo "You can't commit directly to master branch"
+exit 1
+fi
+
+if [ "$branch" = "develop" ]; then
+echo "You can't commit directly to develop branch"
+exit 1
+fi
