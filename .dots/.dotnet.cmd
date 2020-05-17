@@ -1,6 +1,9 @@
 @call _dots %~n0 "Run dotnet for project in current folder [.], repo's default solution or solutions in DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file" "<restore|pack|build|publish|test> [.]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
+rem ::: This is dot wrapper over the dotnet command. 
+
+
 call :configure-nugets
 call :configure-source %2
 if %ERRORLEVEL% equ 1 goto :dotnet-solutions
@@ -83,7 +86,3 @@ echo Restoring %~2...
 dotnet restore "%~1" --ignore-failed-sources --packages %DOT_LOCAL_NUGET_FEED%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
-
-
-
-
