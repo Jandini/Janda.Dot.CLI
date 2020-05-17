@@ -25,9 +25,8 @@ if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 :origin
 set ORIGIN_URL=unknown
-if "%CID_GITLAB_URL%%CID_GITLAB_USER%" neq "" set ORIGIN_URL=%CID_GITLAB_URL%/%CID_GITLAB_USER%/%PROJECT_NAME%.git && echo Remote origin will be configured. Run ".gitlab" to setup gitlab and jenkins.  
+if "%DOT_CID_GITLAB_URL%%DOT_CID_GITLAB_USER%" neq "" set ORIGIN_URL=%DOT_CID_GITLAB_URL%/%DOT_CID_GITLAB_USER%/%PROJECT_NAME%.git && echo Remote origin will be configured. Run ".gitlab" to setup gitlab and jenkins.  
 echo Adding remote %ORIGIN_URL%
 git remote add origin %ORIGIN_URL%
-
 
 :exit

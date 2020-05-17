@@ -15,7 +15,7 @@ goto :eof
 :dotnet-solutions
 echo Default solution %SOURCE_SOLUTION_NAME% not found. Running all solutions defined in %DOT_CONFIG% file... 
 if "%DOT_BUILD_SOLUTIONS%" equ "" echo %%DOT_BUILD_SOLUTIONS%% is not defined.&&goto :eof
-for %%S in ("%DOT_BUILD_SOLUTIONS:;=" "%") do if "%%S" neq "" call :dotnet-execute %1 %%S %%S
+for %%S in ("%DOT_BUILD_SOLUTIONS:;=" "%") do if "%%S" neq "" call :dotnet-execute %1 "%%S.sln" "%%S"
 goto :eof
 
 
