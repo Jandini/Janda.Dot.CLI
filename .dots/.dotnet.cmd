@@ -1,63 +1,80 @@
-@call _dots %~n0 "Run dotnet command for project in current folder, repo's default solution or all DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file" "<pack|build|restore> [.|all]" "d 1" %1 %2 %3
+@call _dots %~n0 "Run dotnet for project in current folder, repo's default solution or solutions in DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file" "<restore|pack|build|publish|test> [.]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-if /i "%2" equ "." goto this
-if /i "%2" equ "all" goto foreach
-if /i "%2" equ "sln" set SLN_NAME=%~3.sln&& goto dotnet
-set SLN_NAME=%DOT_BASE_NAME%.sln
-goto dotnet
-
-:this
-set SLN_NAME=
-set DISPLAY_NAME=%DOT_CURRENT_DIR_NAME%
-cd %DOT_CURRENT_DIR_PATH%
-goto execute
+rem ::: This is dot wrapper over the dotnet command. 
 
 
-:dotnet
+call :configure-nugets
+call :configure-source %2
+if %ERRORLEVEL% equ 1 goto :dotnet-solutions
+
+call :dotnet-execute %1 "%SOURCE_SOLUTION_NAME%" "%SOURCE_DISPLAY_NAME%" 
+goto :eof
+
+
+:dotnet-solutions
+echo Default solution %SOURCE_SOLUTION_NAME% not found. Running all solutions defined in %DOT_CONFIG% file... 
+if "%DOT_BUILD_SOLUTIONS%" equ "" echo %%DOT_BUILD_SOLUTIONS%% is not defined.&&goto :eof
+for %%S in ("%DOT_BUILD_SOLUTIONS:;=" "%") do if "%%S" neq "" call :dotnet-execute %1 %%S %%S
+goto :eof
+
+
+
+:dotnet-execute
+if /i "%1" equ "pack" call :pack "%~2" "%~3" & goto :eof
+if /i "%1" equ "build" call :build "%~2" "%~3" & goto :eof
+if /i "%1" equ "restore" call :restore "%~2" "%~3" & goto :eof
+
+echo Invalid dotnet command.
+goto :eof
+
+
+
+
+rem configure-source
+rem ----------------
+rem Select source project or default solution
+rem Returns ERRORLEVEL=1 if default solution does not exist
+:configure-source
+if /i "%~1" equ "." goto :this-project
+
 cd src
-if exist %SLN_NAME% goto use_default 
-rem if running through foreach already exit the call
-if /i "%2" equ "sln" exit /b
+rem use default solution
+set SOURCE_SOLUTION_NAME=%DOT_BASE_NAME%.sln
+if not exist %SOURCE_SOLUTION_NAME% exit /b 1
+set SOURCE_DISPLAY_NAME=%SOURCE_SOLUTION_NAME%
+goto :eof
 
-echo Default solution %SLN_NAME% not found. Running all solutions defined in %DOT_CONFIG% file... 
-goto foreach
+:this-project
+cd %DOT_CURRENT_DIR_PATH%
+set SOURCE_SOLUTION_NAME=
+set SOURCE_DISPLAY_NAME=%DOT_CURRENT_DIR_NAME%
+goto :eof
 
-:use_default
-set DISPLAY_NAME=%SLN_NAME%
 
-:execute
 
-rem if global variable DOT_CID_NUGET_FEED e.g. on build server then make it a local path 
-if defined DOT_CID_NUGET_FEED set DOT_LOCAL_NUGET_FEED=%DOT_CID_NUGET_FEED%
-rem if local path is still not then create one
-if not defined DOT_LOCAL_NUGET_FEED set DOT_LOCAL_NUGET_FEED=%USERPROFILE%\.nuget\local
+rem configure-nugets
+rem ----------------
+:configure-nugets
+call _nugets
+goto :eof
 
-if /i "%1" equ "pack" goto pack 
-if /i "%1" equ "build" goto build
-if /i "%1" equ "restore" goto restore
 
-goto exit
 
 :pack
-echo Packing %DISPLAY_NAME%...
-dotnet pack %SLN_NAME% --configuration Release /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --packages %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources 
-goto exit
+echo Packing %~2...
+dotnet pack "%~1" --configuration Release /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --source %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources 
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof
 
 :build 
-echo Building %DISPLAY_NAME%...
-dotnet build %SLN_NAME% /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --packages %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources
-goto exit
+echo Building %~2...
+dotnet build "%~1" /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --source %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof
 
 :restore
-echo Restoring %DISPLAY_NAME%...
-dotnet restore %SLN_NAME% --ignore-failed-sources --packages %DOT_LOCAL_NUGET_FEED%
-goto exit
-
-:foreach
-if "%DOT_BUILD_SOLUTIONS%" equ "" echo %%DOT_BUILD_SOLUTIONS%% is not defined.&&goto exit
-
-for %%S in ("%DOT_BUILD_SOLUTIONS:;=" "%") do if "%%S" neq "" call %~n0 %1 sln %%S 
-
-:exit
-
+echo Restoring %~2...
+dotnet restore "%~1" --ignore-failed-sources --source %DOT_LOCAL_NUGET_FEED%
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof

@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
  * Command .release should try to checkout branch like feature does
+ * Fix release tag comments. It adds the version twice in tags
 
 
 
@@ -22,6 +23,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+ - _nuget.cmd to configure path to DOT_LOCAL_NUGET_FEED
  - .nuspec file builder
  - Dot.Console.Abstraction template
  - The template.json file parser error handling for pack command
@@ -29,7 +31,7 @@ All notable changes to this project will be documented in this file.
  - Message "You are about to commit" to .commit command
  - New .push command
  - Expose new .net core 3 publishing features through DOT_PUBLISH_ARGUMENTS
- - DOT_RUNTIME_IDENTIFIERS to .dotconfig to define runtime targets publish
+ - DOT_PUBLISH_RUNTIMES to .dotconfig to define runtime targets publish
  - DOT_PUBLISH_ARGUMENTS to .dotconfig file to define list of parameters .e.g. -p:PublishSingleFile=true -p:PublishTrimmed=true
  - DOT_DEBUG environment variable
  - Added CHANGELOG.md file to dot repository
@@ -45,6 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Simplified .dotnet command
  - Replace "Jenkins" with repository name inside README.md
  - As user I want to set gitlab base url through DOT_GITLAB_URL environment variable
  - As user I want to set gitlab user name using DOT_GITLAB_USER environment variable

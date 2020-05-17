@@ -4,6 +4,7 @@ if %ERRORLEVEL% equ 1 exit /b
 if "%1" equ "*" goto foreach 
 
 .dotnet build %1
+goto :eof
 
 :foreach
 .foreach dotnet build %2

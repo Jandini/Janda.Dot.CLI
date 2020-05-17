@@ -3,7 +3,8 @@ if %ERRORLEVEL% equ 1 exit /b
 
 if "%1" equ "*" goto foreach 
 
-dotnet restore %1
+.dotnet restore %1
+goto :eof
 
 :foreach
 .foreach dotnet restore %2
