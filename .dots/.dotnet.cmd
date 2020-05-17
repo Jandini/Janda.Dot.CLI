@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: This is dot wrapper over the dotnet command. 
 
-rem configure nuget sources
+rem configure nuget sources DOT_NUGET_SOURCES
 call _nugets
 
 rem get solution name
@@ -57,19 +57,19 @@ goto :eof
 
 :pack
 echo Packing %~2...
-dotnet pack "%~1" --configuration Release /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --source %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources 
+dotnet pack "%~1" --configuration Release /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
 :build 
 echo Building %~2...
-dotnet build "%~1" /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% --source %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources
+dotnet build "%~1" /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
 :restore
 echo Restoring %~2...
-dotnet restore "%~1" --ignore-failed-sources --source %DOT_LOCAL_NUGET_FEED%
+dotnet restore "%~1" %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 

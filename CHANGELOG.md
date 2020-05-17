@@ -26,7 +26,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
  - Added XUnit tests support. Added .addtest to add and .test to run tests
- - _nuget.cmd to configure path to DOT_LOCAL_NUGET_FEED
+ - _nuget.cmd to configure path to DOT_LOCAL_NUGET_FEED and DOT_NUGET_SOURCES parameters 
  - .nuspec file builder
  - Dot.Console.Abstraction template
  - The template.json file parser error handling for pack command

@@ -9,3 +9,6 @@ if defined DOT_CID_NUGET_FEED set DOT_LOCAL_NUGET_FEED=%DOT_CID_NUGET_FEED%
 rem if local path is still not then create one
 if not defined DOT_LOCAL_NUGET_FEED set DOT_LOCAL_NUGET_FEED=%DOT_DEFAULT_NUGET_FEED%
 
+rem this parameters are used in dotnet wrapper 
+SET DOT_NUGET_SOURCES=--ignore-failed-sources --source %DOT_LOCAL_NUGET_FEED% --source https://api.nuget.org/v3/index.json 
+
