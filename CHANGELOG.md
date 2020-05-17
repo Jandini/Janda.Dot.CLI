@@ -47,6 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ = Removed MSBUILDSINGLELOADCONTEXT=1 workaround from .dotconfig
  - GitVersion 5.3.3
  - Simplified .dotnet command
  - Replace "Jenkins" with repository name inside README.md
