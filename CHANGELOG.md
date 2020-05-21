@@ -5,25 +5,32 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
  * Create installer script that adds .dots to path. Download directly from git and install
+
  * Add optional parameter origin to .init command 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```  rem usage:, rem desc:
  * Perhaps use find instead grep
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
+
  * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
+
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * As user I don't want .build * to endup in endless loop
- * Command .release should try to checkout branch like feature does
+ * Command .release should try to checkout branch like feature does 
 
- * Fix release tag comments. It adds the version twice in tags
- * Make add*.cmd dot parameters common i.e. addtest is the same as addlibrary
+ * Add .newlib command
+ * Make add *.cmd dot parameters common i.e. addtest is the same as addlib
+ * Add namespace parameter to addlib or addtest commands e.g. .addlib . Janda.Runtime  OR .addlib Janda.Runtime.OS Janda.Runtime
+   This will generate <RootNamespace>Janda.Runtime</RootNamespace> in .csproj
 
+ * double-dots scripts represents flows ? 
 
 
 
 ## [1.3.0]
 
 ### Added
+
 
  - Git hooks for Semantic Commit Messages https://www.conventionalcommits.org/, https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716, https://github.com/fteem/git-semantic-commits
  - New .clean command
@@ -54,6 +61,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Fixed release tag comment. It was adding the version twice in tags.
  - Removed MSBUILDSINGLELOADCONTEXT=1 workaround from .dotconfig
  - GitVersion 5.3.3
  - Simplified .dotnet command
@@ -69,7 +77,7 @@ All notable changes to this project will be documented in this file.
  - Renamed .dotset to .dotconfig
  - Upgraded project templates to .NET Core 3.1.4
  - Changed TargetFramework to netcoreapp3.1
- - Missing dotnet template causes odd behaviour in .newdot
+ - Missing dotnet template causes odd behavior in .newdot
  - Changed diff to output only statistics
  - Replaced jq with gitversion /showvariable in version command
  - Optimized console application template
@@ -78,7 +86,7 @@ All notable changes to this project will be documented in this file.
  - .branch use .checkout if branch not found
 
 
-## [1.2.0] 
+## [1.2.0] - 2019-11-27
 
 ### Issues
 
@@ -119,12 +127,12 @@ All notable changes to this project will be documented in this file.
  - As developer I want to use latest serilog 3.0.1
  - As user I want to use VS2019 solutions so dot cli is up to date 
  - As user I want to see when foreach is scanning the folders so I know the command is foreach syntax
- - As user I want the installer to replace old dots so the depricated commands are removed
+ - As user I want the installer to replace old dots so the deprecated commands are removed
  - As developer I want to access dot repository directory name through DOT_CURRENT_DIR_NAME environment variable so I know what directory name the command was called from
  - As developer I want to access current directory path through DOT_CURRENT_DIR_PATH environment variable so I know what directory path the command was called from
  - As developer I want to access dot repository current branch through DOT_GIT_BRNACH environment variable
- - As developer I want to access dotset default repository path via DOT_BASE_PATH environemnt variable
- - As developer I want to access dotset default repository name via DOT_BASE_NAME environemnt variable
+ - As developer I want to access dotset default repository path via DOT_BASE_PATH environment variable
+ - As developer I want to access dotset default repository name via DOT_BASE_NAME environment variable
  - As developer I want to access current git version through DOT_GIT_VERSION environment variable
  - As user I can see ".dots prerequisites" instead of "Elevating privileges..." when I call .dots install 
  - As user I want dotnet pack|build|restore to complete when default solution file does not exist so it not falls into endless loop
@@ -133,5 +141,14 @@ All notable changes to this project will be documented in this file.
  - As user I cannot execute git based commands outside git repositories 
 
 ### Removed
- 
+
  - As user I don't need .prerequisites as separate command 
+   
+
+## [1.1.0] - 2019-10-20
+
+ - We are walking
+
+## [1.0.0] - 2019-10-18
+
+ - Hello world 
