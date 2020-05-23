@@ -1,6 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 
+<!--#if (nameSpace != "")-->
+namespace Dot.Namespace
+<!--#else -->
 namespace Dot.Library
+<!--#endif -->
 {
     public class ClassService : IClassService
     {
