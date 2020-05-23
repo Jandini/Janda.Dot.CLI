@@ -30,6 +30,11 @@
     }
   ],
   "symbols": {
+    "nameSpace": {
+      "type": "parameter",
+      "defaultValue": "",
+      "replaces": "Dot.Namespace"
+    },
     "sourceName": {
       "type": "parameter",
       "replaces": "Dot.Library"

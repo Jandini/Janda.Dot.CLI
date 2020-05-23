@@ -1,30 +1,29 @@
-@call _dots %~n0 "Add new class library to existing or new solution" "<.|[.]new class library name> [existing or new solution full name]" "d 1" %1 %2 %3
+@call _dots %~n0 "Add new class library to existing or new solution" "<.|[.]new class library name> [--solution <existing or new solution full name>] [--namespace <namespace>]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-rem the . creates class library project with the same as default solution name or indicates that the name should be added to base name
+@call _dotargs %*
+@call _dotname %1 LIBRARY_NAME
 
 rem by default solution name is the current folder
 set SOLUTION_NAME=%DOT_BASE_NAME%
-
-rem if new solution is not provided 
-if "%2" neq "" set SOLUTION_NAME=%2
-
+if defined DOT_ARG_SOLUTION set SOLUTION_NAME=%DOT_ARG_SOLUTION%
 set SOLUTION_FILE=%SOLUTION_NAME%.sln
 
-SET LIBRARY_NAME=%1
-SET LIB_NAME=%LIBRARY_NAME%
-if "%LIBRARY_NAME:~0,1%"=="." set LIB_NAME=%DOT_BASE_NAME%.%LIBRARY_NAME:~1%
-if "%LIBRARY_NAME%" equ "." set LIB_NAME=%DOT_BASE_NAME%
+rem check of optional namespace argument
+if defined DOT_ARG_NAMESPACE set NAMESPACE_ARGUMENT=--nameSpace %DOT_ARG_NAMESPACE%
+
 
 pushd src
 
-dotnet new dotlib -n %LIB_NAME%
+dotnet new dotlib -n %LIBRARY_NAME% %NAMESPACE_ARGUMENT%
 
 if not exist %SOLUTION_FILE% echo Creating %SOLUTION_FILE% && dotnet new sln -n %SOLUTION_NAME%
-echo Adding %LIB_NAME% application to %SOLUTION_FILE%
-dotnet sln %SOLUTION_FILE% add %LIB_NAME%
+echo Adding %LIBRARY_NAME% application to %SOLUTION_FILE%
+dotnet sln %SOLUTION_FILE% add %LIBRARY_NAME%
 
-echo Restoring packages for %LIB_NAME%
-dotnet restore %LIB_NAME% --ignore-failed-sources 
+echo Restoring packages for %LIBRARY_NAME%
+dotnet restore %LIBRARY_NAME% --ignore-failed-sources 
 
 popd
+
+

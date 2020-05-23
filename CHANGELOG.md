@@ -11,14 +11,12 @@ All notable changes to this project will be documented in this file.
  * Perhaps use find instead grep
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
-
  * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
 
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
- * As user I don't want .build * to endup in endless loop
  * Command .release should try to checkout branch like feature does 
 
- * Add .newlib command
+ * Separate .addsvc .addlib. .addlib add simple class 
  * Make add *.cmd dot parameters common i.e. addtest is the same as addlib
  * Add namespace parameter to addlib or addtest commands e.g. .addlib . Janda.Runtime  OR .addlib Janda.Runtime.OS Janda.Runtime
    This will generate <RootNamespace>Janda.Runtime</RootNamespace> in .csproj
@@ -31,7 +29,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-
+ - Add .newlib command
+ - Allow to override .pack command by placing .pack.cmd in root folder.
  - Git hooks for Semantic Commit Messages https://www.conventionalcommits.org/, https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716, https://github.com/fteem/git-semantic-commits
  - New .clean command
  - The .push command pushes all branches followed by tags
@@ -61,6 +60,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Fixed .build * ending up in endless loop
  - Fixed release tag comment. It was adding the version twice in tags.
  - Removed MSBUILDSINGLELOADCONTEXT=1 workaround from .dotconfig
  - GitVersion 5.3.3
