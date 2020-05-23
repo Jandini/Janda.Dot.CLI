@@ -1,16 +1,15 @@
 @echo off
+rem This is batch command line argument parser written on 23rd of May 2020 by Matt Janda
+rem Usage: example.cmd --show-message --message "Hello World" --by "Matt Janda"
+rem 
+rem call _dotargs %*
+rem if %DOT_ARG_SHOW-MESSAGE% neq 1 goto :eof
+rem if defined DOT_ARG_MESSAGE echo %DOT_ARG_MESSAGE%
+rem if defined DOT_ARG_BY echo %DOT_ARG_BY%
 call :parse_arguments %*
 
-rem if defined DOT_ARG_SOLUTION echo %DOT_ARG_SOLUTION%
-rem if defined DOT_ARG_SWITCH echo %DOT_ARG_SWITCH%
-rem if defined DOT_ARG_DUPA echo %DOT_ARG_DUPA%
+
 goto :eof
-
-
-
-
-
-
 
 :parse_arguments
 
