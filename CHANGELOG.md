@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file.
  * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * Command .release should try to checkout branch like feature does 
 
- * Add .newlib command
+ * Separate .addsvc .addlib. .addlib add simple class 
  * Make add *.cmd dot parameters common i.e. addtest is the same as addlib
  * Add namespace parameter to addlib or addtest commands e.g. .addlib . Janda.Runtime  OR .addlib Janda.Runtime.OS Janda.Runtime
    This will generate <RootNamespace>Janda.Runtime</RootNamespace> in .csproj
@@ -29,6 +29,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+ - Add .newlib command
  - Allow to override .pack command by placing .pack.cmd in root folder.
  - Git hooks for Semantic Commit Messages https://www.conventionalcommits.org/, https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716, https://github.com/fteem/git-semantic-commits
  - New .clean command
