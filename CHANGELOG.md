@@ -22,6 +22,20 @@ All notable changes to this project will be documented in this file.
  * Move build version to .dotversion file. Dot's file will read it. 
  * Replace get datetime stamp based on wmic with environment variables
 
+
+
+* Dots in separate nugets... 
+  Janda.Dots.CLI
+  Janda.Dots.Jenkins.GitLab
+  Janda.Dots.Jenkins.GitHub
+
+  Janda.Dot.Jenkins - Add Jenkinsfile to repository
+  Janda.Dot.Obfuscator - Add obfuscar ... ?
+  Janda.Dot.GitVersion - Add gitversion
+  Janda.Dot.Package - Add package target
+
+
+
 ## [1.3.0]
 
 ### Added
