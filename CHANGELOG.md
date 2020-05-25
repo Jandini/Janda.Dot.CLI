@@ -5,7 +5,6 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
  * Create installer script that adds .dots to path. Download directly from git and install
-
  * Add optional parameter origin to .init command 
  * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```  rem usage:, rem desc:
  * Perhaps use find instead grep
@@ -13,22 +12,23 @@ All notable changes to this project will be documented in this file.
  * As user I do not want any of dot commands to close cmd window if execute directly from it
  * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
 
- * As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  * Command .release should try to checkout branch like feature does 
+
+ * Targets as nugets i.e. Janda.Dots.Package Janda.Dots.Obfuscar Janda.Dots.GitVersion so upgrades are possible 
 
  * Separate .addsvc .addlib. .addlib add simple class 
  * Make add *.cmd dot parameters common i.e. addtest is the same as addlib
- * Add namespace parameter to addlib or addtest commands e.g. .addlib . Janda.Runtime  OR .addlib Janda.Runtime.OS Janda.Runtime
-   This will generate <RootNamespace>Janda.Runtime</RootNamespace> in .csproj
-
- * double-dots scripts represents flows ? 
-
-
+ * Workaround warning NU5105: The package version ...
+ * Move build version to .dotversion file. Dot's file will read it. 
+ * Replace get datetime stamp based on wmic with environment variables
 
 ## [1.3.0]
 
 ### Added
 
+ - As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
+ - Added new argument parser .newlib allow --namespace 
+ - Add namespace parameter to addlib that use and generate <RootNamespace>Janda.Runtime</RootNamespace> in .csproj
  - Add .newlib command
  - Allow to override .pack command by placing .pack.cmd in root folder.
  - Git hooks for Semantic Commit Messages https://www.conventionalcommits.org/, https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716, https://github.com/fteem/git-semantic-commits

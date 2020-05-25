@@ -4,8 +4,7 @@ if %ERRORLEVEL% equ 1 exit /b
 set MAX_COUNT=20 
 if /i "%1" neq "" set MAX_COUNT=%1
 
-
-echo You are working on %DOT_GIT_BRANCH%
+if %MAX_COUNT% neq 1 echo You are working on %DOT_GIT_BRANCH%
 git log --pretty=oneline --abbrev-commit --max-count=%MAX_COUNT%
 
 
