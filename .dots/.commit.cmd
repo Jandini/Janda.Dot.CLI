@@ -1,5 +1,16 @@
 @call _dots %~n0 "Add changes and commit" "<comment>" " g1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
+
+rem ::: Stages all changes and prompt user then commit with the given comment.
+rem ::: 
+rem ::: .COMMIT <comment> 
+rem ::: 
+rem :::     comment - comment text
+rem ::: 
+rem ::: Examples: 
+rem :::     .commit "Hello World"
+
+
 echo You are about to commit %1
 git status
 
