@@ -1,6 +1,9 @@
 @call _dots %~n0 "Add new class library to existing or new solution" "<.|[.]new class library name> [--solution <existing or new solution full name>] [--namespace <namespace>]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
+rem ::: Add new class library to existing or new solution
+rem ::: 
+
 @call _dotargs %*
 @call _dotname %1 LIBRARY_NAME
 

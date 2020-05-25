@@ -1,6 +1,10 @@
 @call _dots %~n0 "Start new or finish git flow release in progress" "" " g" %1 %2 %3
+
+rem ::: Start new or finish git flow release in progress
+rem ::: 
+
 rem :.release is parameterless
-rem :Start new or finish git flow release in progress. 
+
 if %ERRORLEVEL% equ 1 exit /b
 
 rem exit if not a git repository

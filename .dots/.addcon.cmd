@@ -1,6 +1,9 @@
 @call _dots %~n0 "Add new console application to existing or new solution" "<.|[.]new application name> [existing or new solution full name] [--addArgs]" "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
+rem ::: Add new console application to new or existing solution
+rem ::: 
+
 set ARGS_FLAG=--addArgs
 
 if "%2" equ "%ARGS_FLAG%" (set PARAM_ADD_ARGS=%2) else (set PARAM_SLN_NAME=%2) 

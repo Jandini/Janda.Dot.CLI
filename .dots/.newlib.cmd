@@ -1,6 +1,9 @@
 @call _dots %~n0 "Create new repository and add new class library" "<.|repository name> [--library-name <library name>]" " G1" %*
 if %ERRORLEVEL% equ 1 call :display_hint %1 & exit /b
 
+rem ::: Create new repository and add new class library
+rem ::: 
+
 @call _dotargs %*
 
 set LIBRARY_NAME=%1

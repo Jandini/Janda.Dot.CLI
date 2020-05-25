@@ -2,6 +2,7 @@
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: A dot wrapper over the dotnet command
+rem ::: 
 
 
 rem configure nuget sources DOT_NUGET_SOURCES
