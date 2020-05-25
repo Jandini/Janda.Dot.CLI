@@ -1,4 +1,5 @@
 @echo off
+if "%~1" equ "" goto :eof
 
 set INPUT_NAME=%~1
 set INPUT_VARIABLE=%~2

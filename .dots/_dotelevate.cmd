@@ -1,6 +1,8 @@
 @echo off
 
+if "%~1" equ "" goto :eof
 setlocal enableextensions
+
 cd /d "%~dp0"
 net session 2> nul 1> nul
 
