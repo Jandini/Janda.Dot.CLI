@@ -22,22 +22,11 @@ rem @call _dots %~n0 "This is a script" "[some|parameter]" "dg1" %1 %2 %3 %4
 
 rem set this .script help text and usage syntax
 
-call :configure_output
-
 if /i "%~1" equ "" exit
 
-rem get properties only once
-if defined DOT_TIME_STAMP goto already_defined
-
-rem get timestamp
-for /f "skip=1" %%x in ('wmic os get localdatetime') do if not defined DOT_TIME_STAMP set DOT_TIME_STAMP=%%x
-set DOT_DATE_STAMP=%DOT_TIME_STAMP:~0,8%
-
-rem get directory where script was executed
-for %%I in (.) do set DOT_CURRENT_DIR_NAME=%%~nxI
-set DOT_CURRENT_DIR_PATH=%cd%
-
-:already_defined
+call :get_time_stamp
+call :get_current_dir
+call :init_dots
 
 rem always update flags as the script may call another where requirements are different
 set DOT_CMD_FLAGS=%~4
@@ -52,15 +41,8 @@ if "%DOT_CMD_FLAGS:~1,1%" neq "G" set DOT_FLAG_SKIP_NO_GITREPO_ONLY=1
 if "%DOT_CMD_FLAGS:~2,1%" neq "1" set DOT_FLAG_SKIP_PARAM_CHECK=1
 
 
-set DOT_CONFIG=.dotconfig
-set DOT_CONFIG_LOCAL=.dotlocal
-set DOT_PATH=%~dp0
-set DOT_PATH_GLOBAL=%USERPROFILE%\.dots\
-set DOT_TYPE=local
-if "%DOT_PATH%" equ "%DOT_PATH_GLOBAL%" set DOT_TYPE=global
 
-set DOT_BASE_PATH=.
-set DOT_BASE_NAME=
+
 
 set DOT_HELP_TEXT=%~2
 set DOT_HELP_USAGE=%3
@@ -124,28 +106,93 @@ for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set DOT
 
 
 
-
 goto :eof
 
 
+:init_dots
+rem Subroutine:  init_dots
+rem Description: Initialize dot environment variables
+rem Output:      DOT_CONFIG - default config is ".dotconfig"
+rem              DOT_CONFIG_LOCAL - default local config is ".dotlocal"
+rem              DOT_PATH - current path
+rem              DOT_PATH_GLOBAL -
+rem              DOT_TYPE - "local" or "global"
+rem              DOT_BASE_PATH - set to current folder .
+rem              DOT_BASE_NAME - clear it 
+set DOT_CONFIG=.dotconfig
+set DOT_CONFIG_LOCAL=.dotlocal
+set DOT_PATH=%~dp0
+set DOT_PATH_GLOBAL=%USERPROFILE%\.dots\
 
-:configure_output
-if defined DOT_OUT goto :eof
-set DOT_OUT=nul
+set DOT_TYPE=local
+if "%DOT_PATH%" equ "%DOT_PATH_GLOBAL%" set DOT_TYPE=global
+
+set DOT_BASE_PATH=.
+set DOT_BASE_NAME=
 goto :eof
+
+
 
 
 :parse_config_file
-rem .dotconfig or .dotlocal file consist of set statements VARIABLE=value(s)
-rem this file can be used to override e.g. DOT_BASE_NAME
-rem use # as first character to comment line out
+rem Subroutine:  parse_config_file
+rem Description: Read config file line by line and execute SET command.
+rem              Comments are supported. Lines starting with # are ignored. 
+rem Notes:       .dotconfig or .dotlocal file consist of set statements VARIABLE=value(s)
+rem              this file can be used to override e.g. DOT_BASE_NAME
+rem Parameters:  %1 - input text/config file 
+rem Output:      GIVEN_VARIABLE=given_value
+rem Returns:     0
+
 for /F "tokens=*" %%A in (%1) do call :parse_config_line "%%A"
 goto :eof
 
 
 :parse_config_line
+rem Subroutine:  parse_config_line
+rem Description: This routine is called for each line in :parse_config_file. 
+rem              Assign value to environment variable unless it  starts  with # then line is ignored. 
+rem Parameters:  %~1 - single line like DOT_BASE_NAME=My.Name 
+rem Output:      GIVEN_VARIABLE=given_value
+rem Returns:     0
+
 set DOT_CONFIG_LINE=%~1
 rem skip line if first character is # 
 if "%DOT_CONFIG_LINE:~0,1%" equ "#" goto :eof
 set %DOT_CONFIG_LINE%
 goto :eof
+
+
+
+:get_time_stamp
+rem Subroutine:  get_time_stamp
+rem Description: Get current date and time and save it in environment variables. 
+rem              Execute once DOT_TIME_STAMP is not defined.
+rem Parameters:  -
+rem Output:      DOT_TIME_STAMP - full date and time (ddMMyyyy_HHmmss) e.g. 25052020_163447
+rem              DOT_DATE_STAMP - date only (ddMMyyyy) e.g. DOT_DATE_STAMP
+rem Returns:     0
+
+if defined DOT_TIME_STAMP goto :eof
+set DOT_TIME_STAMP=%date:/=%_%time::=%
+rem the date comes with .milliseconds so take only 15 first characters
+set DOT_TIME_STAMP=%DOT_TIME_STAMP:~0,15%
+rem get date only
+set DOT_DATE_STAMP=%DOT_TIME_STAMP:~0,8%
+goto :eof
+
+
+:get_current_dir
+rem Subroutine:  get_current_dir
+rem Description: Get the directory path and name where script was executed from.
+rem              Execute once DOT_CURRENT_DIR_PATH is not defined.
+rem Parameters:  -
+rem Output:      DOT_CURRENT_DIR_PATH - directory path
+rem              DOT_CURRENT_DIR_NAME - directory name
+rem Returns:     0
+
+if defined DOT_CURRENT_DIR_PATH goto :eof
+for %%I in (.) do set DOT_CURRENT_DIR_NAME=%%~nxI
+set DOT_CURRENT_DIR_PATH=%cd%
+goto :eof
+
