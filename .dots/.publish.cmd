@@ -4,7 +4,7 @@ if %ERRORLEVEL% equ 1 exit /b
 if /i "%DOT_PUBLISH_PROJECTS%" equ "" echo No projects defined in %%DOT_PUBLISH_PROJECTS%% && exit /b
 
 rem configure %DOT_LOCAL_NUGET_FEED%
-call _nugets
+call _dotnugets
 
 
 cd src

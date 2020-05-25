@@ -4,7 +4,7 @@ if %ERRORLEVEL% equ 1 exit /b
 rem ::: This is dot wrapper over the dotnet command. 
 
 rem configure nuget sources DOT_NUGET_SOURCES
-call _nugets
+call _dotnugets
 
 rem get solution name
 call :configure-source %2

@@ -1,7 +1,7 @@
 @call _dots %~n0 "Install prerequisites" "" "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-cd /d "%~dp0" && echo .dots prerequisites&&call _elevate %~n0 > nul
+cd /d "%~dp0" && echo .dots prerequisites&&call _dotelevate %~n0 > nul
 if %ERRORLEVEL% equ 1 exit /b
 
 echo .dots choco
