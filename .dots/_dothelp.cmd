@@ -1,5 +1,7 @@
 @echo off
 if "%~1" equ "" goto :eof
+if not exist "%~1" echo %~n1 does not exist&exit /b 1
+
 
 setlocal enabledelayedexpansion
 
