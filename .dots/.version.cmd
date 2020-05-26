@@ -1,5 +1,12 @@
-@call _dots %~n0 "Get current version and set DOT_GIT_VERSION variable (InformationalVersion is default)" "[InformationalVersion|AssemblySemFileVer|MajorMinorPatch...]" " g" %1 %2 %3
+@call _dots %~n0 " g" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
+
+rem ::: Get current version and set DOT_GIT_VERSION variable (InformationalVersion is default)
+rem ::: 
+rem ::: .VERSION [InformationalVersion|AssemblySemFileVer|MajorMinorPatch...]
+rem ::: 
+
+
 if defined DOT_GIT_VERSION goto :eof
 
 if "%1" equ "" (set VERSION_NAME=InformationalVersion) else (set VERSION_NAME=%1)

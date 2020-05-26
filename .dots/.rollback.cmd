@@ -1,5 +1,11 @@
-@call _dots %~n0 "Rollback last git commit" "" " g" %1 %2 %3
+@call _dots %~n0 " g" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
+
+rem ::: Rollback last git commit
+rem ::: 
+rem ::: .ROLLBACK
+rem ::: 
+
 
 call .gitlog 1
 echo Rolling back...

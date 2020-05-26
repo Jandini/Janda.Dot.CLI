@@ -29,7 +29,8 @@ call :get_current_dir
 call :init_dots
 
 rem always update flags as the script may call another where requirements are different
-set DOT_CMD_FLAGS=%~4
+set DOT_COMMAND_NAME=%~1
+set DOT_CMD_FLAGS=%~2
 set DOT_FLAG_SKIP_CONFIG_CHECK=
 set DOT_FLAG_SKIP_GITREPO_CHECK=
 set DOT_FLAG_SKIP_PARAM_CHECK=
@@ -41,23 +42,16 @@ if "%DOT_CMD_FLAGS:~1,1%" neq "G" set DOT_FLAG_SKIP_NO_GITREPO_ONLY=1
 if "%DOT_CMD_FLAGS:~2,1%" neq "1" set DOT_FLAG_SKIP_PARAM_CHECK=1
 
 
-
-
-
-set DOT_HELP_TEXT=%~2
-set DOT_HELP_USAGE=%3
-
 rem call help and exit script if help was requested
-call _help %~5 %~1 
-if %ERRORLEVEL% equ 1 exit /b
+rem call _dothelp %~1
+rem if %ERRORLEVEL% equ 1 exit /b
+
 
 rem skip parameter check if it is not required  
 if /i "%DOT_FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotconfig
-if /i "%~5" neq "" goto find_dotconfig
+if /i "%~3" neq "" goto find_dotconfig
 
-call _help --help %~1
-rem messed up here
-rem call _help --usage %~1 
+call _dothelp %DOT_COMMAND_NAME%.cmd
 exit /b 1
 
 

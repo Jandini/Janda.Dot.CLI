@@ -1,5 +1,10 @@
-@call _dots %~n0 "Add new xUnit test project to existing or new solution" "<.|[.]new test project name> [existing or new solution full name]" "d 1" %1 %2 %3
+@call _dots %~n0 "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
+
+rem ::: Add new xUnit test project to existing or new solution
+rem ::: 
+rem ::: .ADDTEST <.|[.]new test project name> [existing or new solution full name]
+rem ::: 
 
 rem the . creates class library project with the same as default solution name or indicates that the name should be added to base name
 

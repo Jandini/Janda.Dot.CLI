@@ -1,5 +1,10 @@
-@call _dots %~n0 "Creates new repository and add new console application" "<.|name> [application name]" " G1" %1 %2 %3
+@call _dots %~n0 " G1" %1 %2 %3
 if %ERRORLEVEL% equ 1 call :display_hint %1 & exit /b
+
+rem ::: Creates new repository and add new console application
+rem ::: 
+rem ::: .NEWCON <.|name> [application name]
+rem ::: 
 
 call .newdot %1
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL% /b

@@ -1,8 +1,16 @@
-@call _dots %~n0 "Add new class library to existing or new solution" "<.|[.]new class library name> [--solution <existing or new solution full name>] [--namespace <namespace>]" "d 1" %1 %2 %3
+@call _dots %~n0 "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-@call _dotargs %*
-@call _dotname %1 LIBRARY_NAME
+rem ::: Add new class library to existing or new solution
+rem ::: 
+rem ::: .ADDLIB <.|[.]new class library name> [--solution <existing or new solution full name>] [--namespace <namespace>]
+rem ::: 
+
+
+
+
+call _dotargs %*
+call _dotname %1 LIBRARY_NAME
 
 rem by default solution name is the current folder
 set SOLUTION_NAME=%DOT_BASE_NAME%

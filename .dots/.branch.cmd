@@ -1,5 +1,10 @@
-@call _dots %~n0 "List git branches or checkout selected branch" "[branch name]" " g" %1 %2 %3
+@call _dots %~n0 " g" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
+
+rem ::: List git branches or checkout selected branch
+rem ::: 
+rem ::: .BRANCH [branch-name]
+rem ::: 
 
 if "%1" neq "" goto checkout_branch
 git branch
