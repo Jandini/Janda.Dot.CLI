@@ -3,7 +3,7 @@ rem call dots to receive few variables
 call .dots
 
 rem wip: clone mirror sync undo
-set COMMAND_LIST=help addcon addlib addsln backup branch build commit diff dotnet dots feature foreach gitlab init ..develop ..master newdot gitorigin pack publish restore status version release
+set COMMAND_LIST=help addcon addlib addsln backup branch build commit diff dotnet feature foreach gitlab init ..develop ..master newdot gitorigin pack publish restore status version release
 
 echo Running global dots %USERPROFILE%\.dots folder
 
@@ -26,7 +26,7 @@ goto :eof
 set COMMAND=%1
 <nul set /p =Running .help %COMMAND%	
 if "%1" equ "" ( call .help > %DOT_OUT% ) else ( call .help %COMMAND% > %DOT_OUT% )
-if %ERRORLEVEL% neq 1 echo [ FAILED ] && echo Expected value is 1. Return value is %ERRORLEVEL% && exit 1 /b
+if %ERRORLEVEL% neq 0 echo [ FAILED ] && echo Expected value is 0. Return value is %ERRORLEVEL% && exit 1 /b
 echo [ OK ]
 goto :eof
 
