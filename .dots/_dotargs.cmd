@@ -6,10 +6,13 @@ rem call _dotargs %*
 rem if %DOT_ARG_SHOW-MESSAGE% neq 1 goto :eof
 rem if defined DOT_ARG_MESSAGE echo %DOT_ARG_MESSAGE%
 rem if defined DOT_ARG_BY echo %DOT_ARG_BY%
+
 call :parse_arguments %*
-
-
 goto :eof
+
+
+
+
 
 :parse_arguments
 
@@ -55,6 +58,5 @@ set DOT_NEXT_ARG_NAME=%~1
 if /i "%DOT_NEXT_ARG_NAME:~0,2%" equ "--" goto :get_switch
 set DOT_ARG_%DOT_ARG_NAME:~2%=%~1
 goto :parse_next
-
 
 
