@@ -1,7 +1,9 @@
-@call _dots %~n0 "Start new or checkout existing feature. Finish current feature. Update current feature from develop branch. Delete current feature." "[-u(pdate)|[-d(elete)] <[feature-branch-name]>" " g" %1 %2 %3
+@call _dots %~n0 " g" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Start new or checkout existing feature. Finish current feature. Update current feature from develop branch. Delete current feature.
+rem ::: 
+rem ::: .FEATURE [-u(pdate)|[-d(elete)] <[feature-branch-name]>
 rem ::: 
 
 rem exit if not a git repository

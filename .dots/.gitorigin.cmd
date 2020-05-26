@@ -1,7 +1,9 @@
-@call _dots %~n0 "Display or set git origin url" "[new origin url]" " g" %1 %2 %3
+@call _dots %~n0 " g" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Display or set git origin url
+rem ::: Display current or set new git origin
+rem ::: 
+rem ::: .GITORIGIN [new origin url]
 rem ::: 
 
 

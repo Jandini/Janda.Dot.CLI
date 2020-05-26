@@ -1,7 +1,9 @@
-@call _dots %~n0 "Create new dot repository with default solution from template" "[.|new repository name]" " G1" %1 %2 %3
+@call _dots %~n0 " G1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Create new dot repository with default solution from template
+rem ::: 
+rem ::: .NEWDOT [.|new repository name]
 rem ::: 
 
 set ERRORM_ESSAGE=

@@ -1,7 +1,9 @@
-@call _dots %~n0 "Run dotnet publish all projects defined in %DOT_CONFIG% file under DOT_PUBLISH_PROJECTS for every runtime defined in DOT_PUBLISH_RUNTIMES" "" "d" %1 %2 %3
+@call _dots %~n0 "d" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Run dotnet publish all projects defined in %DOT_CONFIG% file under DOT_PUBLISH_PROJECTS for every runtime defined in DOT_PUBLISH_RUNTIMES
+rem ::: 
+rem ::: .PUBLISH
 rem ::: 
 
 

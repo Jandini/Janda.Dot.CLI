@@ -1,7 +1,9 @@
-@call _dots %~n0 "Checkout branch by partial name" "<partial-branch-name>" " g1" %1 %2 %3
+@call _dots %~n0 " g1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Checkout branch by partial name
+rem ::: 
+rem ::: .CHECKOUT <partial-branch-name>
 rem ::: 
 
 echo Searching for branch like %1

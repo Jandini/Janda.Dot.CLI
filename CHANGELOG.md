@@ -5,40 +5,38 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
  * Create installer script that adds .dots to path. Download directly from git and install
+
  * Add optional parameter origin to .init command 
- * As developer I want to be able to store help usage within command scripts itself so I can display like ```type _dots.cmd | grep -o -P (?^<=rem).*```  rem usage:, rem desc:
- * Perhaps use find instead grep
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
  * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
 
  * Command .release should try to checkout branch like feature does 
-
  * Targets as nugets i.e. Janda.Dots.Package Janda.Dots.Obfuscar Janda.Dots.GitVersion so upgrades are possible 
 
  * Separate .addsvc .addlib. .addlib add simple class 
+ * .newtestapp .newclasslib .newconsoleapp .newservice .newemptyproject should add or create new repo ?
  * Make add *.cmd dot parameters common i.e. addtest is the same as addlib
  * Workaround warning NU5105: The package version ...
  * Move build version to .dotversion file. Dot's file will read it. 
  * Replace get datetime stamp based on wmic with environment variables
 
 
-
-* Dots in separate nugets... 
-  Janda.Dots.CLI
-  Janda.Dots.Jenkins.GitLab
-  Janda.Dots.Jenkins.GitHub
-
-  Janda.Dot.Jenkins - Add Jenkinsfile to repository
-  Janda.Dot.Obfuscator - Add obfuscar ... ?
-  Janda.Dot.GitVersion - Add gitversion
-  Janda.Dot.Package - Add package target
+ * Dots in separate nugets... 
+   Janda.Dots.CLI
+   Janda.Dots.Jenkins.GitLab
+   Janda.Dots.Jenkins.GitHub
+   Janda.Dot.Jenkins - Add Jenkinsfile to repository
+   Janda.Dot.Obfuscator - Add obfuscar ... ?
+   Janda.Dot.GitVersion - Add gitversion
+   Janda.Dot.Package - Add package target
 
 
 
 ## [1.3.0]
 
 ### Added
+
 
  - As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  - Added new argument parser .newlib allow --namespace 
@@ -74,6 +72,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Help and syntax definition is stored as script comment
  - Fixed .build * ending up in endless loop
  - Fixed release tag comment. It was adding the version twice in tags.
  - Removed MSBUILDSINGLELOADCONTEXT=1 workaround from .dotconfig

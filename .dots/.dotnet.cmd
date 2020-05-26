@@ -1,7 +1,9 @@
-@call _dots %~n0 "Run dotnet for project in current folder, repo's default solution or solutions in DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file" "<clean|restore|pack|build|publish|test> [.]" "d 1" %1 %2 %3
+@call _dots %~n0 "d 1" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: A dot wrapper over the dotnet command
+rem ::: 
+rem ::: .DOTNET <clean|restore|pack|build|publish|test> [.]
 rem ::: 
 
 

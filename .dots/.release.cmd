@@ -1,6 +1,8 @@
-@call _dots %~n0 "Start new or finish git flow release in progress" "" " g" %1 %2 %3
+@call _dots %~n0 " g" %1 %2 %3
 
 rem ::: Start new or finish git flow release in progress
+rem ::: 
+rem ::: .RELEASE
 rem ::: 
 
 rem :.release is parameterless
