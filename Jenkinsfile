@@ -1,8 +1,8 @@
 import groovy.json.JsonSlurperClassic
 properties([[$class: 'GitLabConnectionProperty', gitLabConnection: 'NAS']])
 
-env.REPO_NAME = "dots-cli"
-env.FTP_BASE_URL = "ftp://nas/builds/${env.REPO_NAME}/"
+env.REPO_NAME = "Janda.Dots.CLI"
+env.FTP_BASE_URL = "ftp://nas/builds/dots-cli/"
 
 def updateStatus(String status) {
     updateGitlabCommitStatus(state: status);
@@ -52,14 +52,14 @@ node("matt10") {
             packageOutputPath = """${env.DOT_CID_BUILD_PATH}\\${env.REPO_NAME}\\${env.BRANCH_NAME}\\${gitVersion.InformationalVersion}"""
         }
         
-        stage('Publish') {
+        stage('Pack') {
             milestone()
 
             def installScript = "${packageOutputPath}\\${packageName}.cmd"
 
             bat """
                 set OUTPUT_DIR=${packageOutputPath}
-                call .pack noinstall
+                call .pack
                 if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%      
 
                 echo dotnet new -u ${env.REPO_NAME} > ${installScript}
@@ -67,7 +67,8 @@ node("matt10") {
                 echo pause >> ${installScript}
             """
         }
-    
+
+        /*    
         stage('Install') {
             milestone()
             // remove all templateengine folder in case previous build fails
@@ -82,9 +83,9 @@ node("matt10") {
             milestone()
             // install global .dots
             bat """
-               .dots install	   
+               .install
             """
-        }
+        }*/
 
         stage('Tests') {
             milestone()
