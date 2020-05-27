@@ -1,7 +1,12 @@
 @echo off
 set OUTPUT=.nuspec
-call .\.dots\.version
+set PACKAGE_ID=Janda.Dots.CLI
+set PACKAGE_AUTHORS=Matt Janda
+set PACKAGE_DESCRIPTION=.NET Core templates and scripts
+set PACKAGE_TITLE=
+set PACKAGE_OWNERS=
 
+call .\.dots\.version >nul
 call :append_header
 call :append_content content %~p0
 call :append_dots .dots %~p0
@@ -15,13 +20,13 @@ echo Creating %OUTPUT% file...
 echo ^<?xml version="1.0" encoding="utf-8"?^>> %OUTPUT%
 echo ^<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"^>>> %OUTPUT%
 echo   ^<metadata^>>> %OUTPUT%
-echo     ^<id^>dots-cli^</id^>>> %OUTPUT%
+echo     ^<id^>%PACKAGE_ID%^</id^>>> %OUTPUT%
 echo     ^<version^>%DOT_GIT_VERSION%^</version^>>> %OUTPUT%
-echo     ^<title^>^</title^>>> %OUTPUT%
-echo     ^<authors^>Matt Janda^</authors^>>> %OUTPUT%
-echo     ^<owners^>^</owners^>>> %OUTPUT%
+echo     ^<title^>%PACKAGE_TITLE%^</title^>>> %OUTPUT%
+echo     ^<authors^>%PACKAGE_AUTHORS%^</authors^>>> %OUTPUT%
+echo     ^<owners^>%PACKAGE_OWNERS%^</owners^>>> %OUTPUT%
 echo     ^<requireLicenseAcceptance^>false^</requireLicenseAcceptance^>>> %OUTPUT%
-echo     ^<description^>.NET Core templates and scripts^</description^>>> %OUTPUT%
+echo     ^<description^>%PACKAGE_DESCRIPTION%^</description^>>> %OUTPUT%
 echo   ^</metadata^>>> %OUTPUT%
 echo   ^<files^>>> %OUTPUT%
 goto :eof
@@ -51,4 +56,3 @@ call set CONTENT_PATH=%%CONTENT_PATH:%SEARCH_FOR%=%REPLACE_TO%%%
 rem echo Adding %CONTENT_PATH%
 echo     ^<file src="%~3%CONTENT_PATH%" target="%~4%CONTENT_PATH%" /^>>> %OUTPUT%
 goto :eof
-

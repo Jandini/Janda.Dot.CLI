@@ -4,12 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
- * Create installer script that adds .dots to path. Download directly from git and install
+ * Download directly from git and install
 
  * Add optional parameter origin to .init command 
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
- * As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
 
  * Command .release should try to checkout branch like feature does 
  * Targets as nugets i.e. Janda.Dots.Package Janda.Dots.Obfuscar Janda.Dots.GitVersion so upgrades are possible 
@@ -72,7 +71,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Added  installer script that adds .dots to path
  - Help and syntax definition is stored as script comment
+ - As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
  - Fixed .build * ending up in endless loop
  - Fixed release tag comment. It was adding the version twice in tags.
  - Removed MSBUILDSINGLELOADCONTEXT=1 workaround from .dotconfig

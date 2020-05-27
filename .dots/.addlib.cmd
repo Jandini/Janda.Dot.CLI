@@ -7,8 +7,6 @@ rem ::: .ADDLIB <.|[.]new class library name> [--solution <existing or new solut
 rem ::: 
 
 
-
-
 call _dotargs %*
 call _dotname %1 LIBRARY_NAME
 
