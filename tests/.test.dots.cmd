@@ -7,7 +7,7 @@ pushd %TEST_DIR%
 
 rem wip: clone mirror sync undo
 set COMMAND_LIST=addcon addsln backup branch build commit diff dotnet feature foreach gitlab help init .master .develop newdot gitorigin pack publish release restore status version
-set DOTS_LIST=_dots _dothelp _dotelevate _install
+set DOTS_LIST=_dots _dothelp
 
 
 echo Running dotnet new dots

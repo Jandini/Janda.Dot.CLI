@@ -12,10 +12,10 @@ if %ERRORLEVEL% equ 0 goto :eof
 call :install_prerequisite "gitversion.portable --pre"
 call :install_prerequisite "nuget.commandline"
 call :install_prerequisite "7zip.install" 
-call :install_prerequisite "dotnetcore"
 call :install_prerequisite "git.install" 
 call :install_prerequisite "jq" 
 call :install_prerequisite "curl" 
+call :install_prerequisite "dotnetcore"
 goto :eof
 
 

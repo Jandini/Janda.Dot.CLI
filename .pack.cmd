@@ -1,15 +1,10 @@
 @echo off
+call .\.dots\_dots %~n0 "" %1 %2 %3
+if %ERRORLEVEL% equ 1 exit /b
+
 set LOCAL_DOTS=.\.dots
 set PATH | find "%LOCAL_DOTS%" > nul
 if %ERRORLEVEL% neq 0 set PATH=%LOCAL_DOTS%;%PATH%
-
-call _dots %~n0 "" %1 %2 %3
-if %ERRORLEVEL% equ 1 exit /b
-
-rem ::: Build and install dots nuget package
-rem ::: 
-
-
 
 call _nuspec
 
@@ -19,6 +14,8 @@ if "%OUTPUT_DIR%" equ "" set OUTPUT_DIR=bin
 
 
 call :update_path "%%userprofile%%\.dots"
+
+
 
 rem Add current dot version to template.config files
 call :prepare_templates
