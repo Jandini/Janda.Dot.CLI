@@ -42,25 +42,25 @@ goto :eof
 :check_prerequisites
 title Checking prerequisites...
 
-nuget 1>2>nul
+wher nuget >nul 2>nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-7z 1>2>nul
+where 7z >nul 2>nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-git --version 1>2>nul
+where git >nul 2>nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-jq --help 1>2>nul
+where jq >nul 2>nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-curl --help 1>2>nul
+where curl >nul 2>nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-where gitversion 1>2>nul
+where gitversion >nul 2>nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-grep --help 1>2>nul
+where grep >nul 2>nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 title  

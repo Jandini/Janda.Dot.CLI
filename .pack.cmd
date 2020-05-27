@@ -1,8 +1,15 @@
-@call _dots %~n0 "" %1 %2 %3
+@echo off
+set LOCAL_DOTS=.\.dots
+set PATH | find "%LOCAL_DOTS%" > nul
+if %ERRORLEVEL% neq 0 set PATH=%LOCAL_DOTS%;%PATH%
+
+call _dots %~n0 "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Build and install dots nuget package
 rem ::: 
+
+
 
 call _nuspec
 
@@ -11,8 +18,7 @@ rem output can be overriden by setting OUTPUT_DIR variable
 if "%OUTPUT_DIR%" equ "" set OUTPUT_DIR=bin
 
 
-call :update_env_path ".\.dots"
-call :update_env_path "%%userprofile%%\.dots"
+call :update_path "%%userprofile%%\.dots"
 
 rem Add current dot version to template.config files
 call :prepare_templates
@@ -75,12 +81,12 @@ if %ERRORLEVEL% neq 0 call :revert_templates -1 "%~1"
 goto :eof
 
 
-:update_env_path
+:update_path
 set INSTALL_PATH=%~1
 set PATH | find "%INSTALL_PATH%" > nul
 if %ERRORLEVEL% equ 0 goto :eof
-call :message "Adding %INSTALL_PATH% to PATH environment"
-%PWS% -Command "$path=[Environment]::GetEnvironmentVariable('path', 'user'); if (!$path.contains('%INSTALL_PATH%')) { $path+=';%INSTALL_PATH%'; [Environment]::SetEnvironmentVariable('path', $($path -join ';'), 'user'); }"
+echo Adding %INSTALL_PATH% to PATH environment
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -Command "$path=[Environment]::GetEnvironmentVariable('path', 'user'); if (!$path.contains('%INSTALL_PATH%')) { $path+=';%INSTALL_PATH%'; [Environment]::SetEnvironmentVariable('path', $($path -join ';'), 'user'); }"
 exit /b %ERRORLEVEL%
 
 
