@@ -10,7 +10,7 @@ if %ERRORLEVEL% neq 0 echo Elevating privileges... && goto elevate
 goto exit
 
 :elevate
-mshta "javascript: var shell = new ActiveXObject('shell.application'); shell.ShellExecute('%~1', '%*', '', 'runas', 1);close();"
+mshta "javascript: var shell = new ActiveXObject('shell.application'); shell.ShellExecute('%~1', '%*', '', 'runas', 1); close();"
 exit /b 1
 
 :exit

@@ -2,9 +2,9 @@
 call .\.dots\_dots %~n0 "" %1 %2 %3
 if %ERRORLEVEL% equ 1 exit /b
 
-set LOCAL_DOTS=.\.dots
+set DOT_LOCAL_PATH=.\.dots\
 set PATH | find "%LOCAL_DOTS%" > nul
-if %ERRORLEVEL% neq 0 set PATH=%LOCAL_DOTS%;%PATH%
+if %ERRORLEVEL% neq 0 set PATH=%DOT_LOCAL_PATH%;%PATH%
 
 call _nuspec
 
@@ -21,6 +21,7 @@ rem Add current dot version to template.config files
 call :prepare_templates
 
 set PACKAGE=%DOT_BASE_NAME%.%DOT_GIT_VERSION%.nupkg
+call .version > %DOT_LOCAL_PATH%.dotversion
 echo Packing %PACKAGE%...
 nuget pack .nuspec -OutputDirectory %OUTPUT_DIR% -NoDefaultExcludes -Version %DOT_GIT_VERSION% -Properties NoWarn=NU5105
 if %ERRORLEVEL% neq 0 call :revert_templates %ERRORLEVEL% "Nuget pack failed."

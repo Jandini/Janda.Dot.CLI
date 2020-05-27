@@ -1,8 +1,7 @@
 @echo off
 
-set DOT_PREREQUISITES=7z nuget git jq curl gitversion dotnetcore
+set DOT_PREREQUISITES=7z nuget git jq curl gitversion dotnet
 set DOT_PREREQUISITES_CHOCOS="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore"
-
 
 if "%~1" neq "check" goto :skip_check
 call :check_prerequisites
@@ -13,10 +12,10 @@ exit /b %ERRORLEVEL%
 cd /d "%~dp0" & call _elevate.cmd %~nx0 %* > nul
 if %ERRORLEVEL% equ 1 exit /b
 
+
 call :install_choco
 call :install_prerequisites
 goto :eof
-
 
 
 :install_prerequisites
@@ -24,8 +23,10 @@ for %%p in (%DOT_PREREQUISITES_CHOCOS%) do call :install_prerequisite %%p
 goto :eof
 
 :check_prerequisites
+set DOT_PREREQUISITE_IS_MISSING=0
 for %%p in (%DOT_PREREQUISITES%) do call :check_prerequisite %%p
-goto :eof
+exit /b %DOT_PREREQUISITE_IS_MISSING%
+
 
 
 :install_choco
@@ -45,11 +46,14 @@ goto :eof
 title Choco is installing "%~1"...
 choco install %~1
 if %ERRORLEVEL% neq 0 title Installation failed&pause&exit
+title  
 goto :eof 
 
 :check_prerequisite
 where %~1 >nul 2>nul
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+if %ERRORLEVEL% neq 0 set DOT_PREREQUISITE_IS_MISSING=1&echo %~1 is missing
 goto :eof
+
+
 
 

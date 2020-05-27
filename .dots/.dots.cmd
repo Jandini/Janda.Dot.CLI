@@ -6,5 +6,6 @@ rem :::
 rem ::: .DOTS
 rem ::: 
 
-for /f %%i in ('type %DOT_PATH%.dotversion') do set DOT_VERSION=%%i
+if not exist %DOT_PATH%.dotversion echo .dotversion is missing
+for /f %%i in ('type %DOT_PATH%.dotversion 2^>nul') do set DOT_VERSION=%%i
 echo %DOT_VERSION% %DOT_TYPE%
