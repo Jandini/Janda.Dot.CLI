@@ -7,15 +7,10 @@ rem ::: .VERSION [InformationalVersion|AssemblySemFileVer|MajorMinorPatch...]
 rem ::: 
 
 
-if defined DOT_GIT_VERSION goto :eof
-
 if "%1" equ "" (set VERSION_NAME=InformationalVersion) else (set VERSION_NAME=%1)
-echo Retrieving %VERSION_NAME%...
 call :get_version %VERSION_NAME%
-
-echo %VERSION_NAME% is %DOT_GIT_VERSION%
+echo %DOT_GIT_VERSION%
 goto :eof
-
 
 
 :get_version
