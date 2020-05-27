@@ -6,7 +6,7 @@ set PACKAGE_DESCRIPTION=.NET Core templates and scripts
 set PACKAGE_TITLE=
 set PACKAGE_OWNERS=
 
-call .\.dots\.version
+call .\.dots\.version >nul
 call :append_header
 call :append_content content %~p0
 call :append_dots .dots %~p0
