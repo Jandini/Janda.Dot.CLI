@@ -36,5 +36,5 @@ goto :eof
 
 :template_error
 echo.
-echo Creating dotrepo template failed. Make sure dots-cli templates are installed. 
+echo Creating dotrepo template failed. Make sure Janda.Dots.CLI templates are installed. 
 exit /b 1
