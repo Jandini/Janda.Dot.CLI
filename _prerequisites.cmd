@@ -1,21 +1,30 @@
 @echo off
+
+set DOT_PREREQUISITES=7z nuget git jq curl gitversion dotnetcore
+set DOT_PREREQUISITES_CHOCOS="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore"
+
+
+if "%~1" neq "check" goto :skip_check
+call :check_prerequisites
+exit /b %ERRORLEVEL% 
+
+:skip_check
+
 cd /d "%~dp0" & call _elevate.cmd %~nx0 %* > nul
 if %ERRORLEVEL% equ 1 exit /b
 
 call :install_choco
-if "%2" equ "" goto :skip_check
+call :install_prerequisites
+goto :eof
 
-call :check_prerequisites
-if %ERRORLEVEL% equ 0 goto :eof
 
-:skip_check
-call :install_prerequisite "gitversion.portable --pre"
-call :install_prerequisite "nuget.commandline"
-call :install_prerequisite "7zip.install" 
-call :install_prerequisite "git.install" 
-call :install_prerequisite "jq" 
-call :install_prerequisite "curl" 
-call :install_prerequisite "dotnetcore"
+
+:install_prerequisites
+for %%p in (%DOT_PREREQUISITES_CHOCOS%) do call :install_prerequisite %%p
+goto :eof
+
+:check_prerequisites
+for %%p in (%DOT_PREREQUISITES%) do call :check_prerequisite %%p
 goto :eof
 
 
@@ -34,36 +43,13 @@ goto :eof
 
 :install_prerequisite
 title Choco is installing "%~1"...
-choco install %~1 %~2
+choco install %~1
 if %ERRORLEVEL% neq 0 title Installation failed&pause&exit
 goto :eof 
 
-
-:check_prerequisites
-title Checking prerequisites...
-
-wher nuget >nul 2>nul
+:check_prerequisite
+where %~1 >nul 2>nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-
-where 7z >nul 2>nul
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-
-where git >nul 2>nul
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-
-where jq >nul 2>nul
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-
-where curl >nul 2>nul
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-
-where gitversion >nul 2>nul
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-
-where grep >nul 2>nul
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-
-title  
 goto :eof
 
 

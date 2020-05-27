@@ -1,24 +1,12 @@
 @echo off
-cls
-cd /d "%~dp0"& call _elevate.cmd %~nx0 > nul
-if %ERRORLEVEL% equ 1 exit /b
 
-call :echo_stage "Installing prerequisites..."
-call _prerequisites skip existing
-if %ERRORLEVEL% neq 0 exit /b
+echo Checking prerequisites...
+call _prerequisites check
+if %ERRORLEVEL% neq 0 start /wait "Installing prerequisites..." "cmd /c \"%~dp0\_prerequisites.cmd\""
 
-call :echo_stage "Building dots nuget package..."
+echo Building dots package...
 call .pack
-call :echo_stage "Installation complete."
-timeout 30
 
+echo Installation complete
 goto :eof
-
-
-:echo_stage
-title %~1
-echo %~1
-break;
-
-
 
