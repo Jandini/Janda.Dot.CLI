@@ -10,7 +10,7 @@ if %ERRORLEVEL% neq 0 echo Elevating privileges... && goto elevate
 goto exit
 
 :elevate
-mshta "javascript: var shell = new ActiveXObject('shell.application'); shell.ShellExecute('%~1', '%*', '', 'runas', 1); close();"
+"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoLogo -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "Start-Process -Wait -FilePath 'cmd.exe' -ArgumentList '/c \"%~dp0%~1\" %*' -Verb runAs"
 exit /b 1
 
 :exit

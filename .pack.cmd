@@ -45,7 +45,7 @@ echo Installing dots...
 if exist %DOT_PATH_GLOBAL% del /q %DOT_PATH_GLOBAL%\*.* 
 if not exist %DOT_PATH_GLOBAL% mkdir %DOT_PATH_GLOBAL% 2>nul 
 copy %DOT_PATH%\*.cmd %DOT_PATH_GLOBAL% > nul 
-echo .dots copied to %DOT_PATH_GLOBAL% 
+echo Dots copied to %DOT_PATH_GLOBAL% 
 call .version > %DOT_PATH_GLOBAL%.dotversion
 
 
