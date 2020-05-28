@@ -1,15 +1,17 @@
 @echo off
 
-set DOT_PREREQUISITES=7z nuget git jq curl gitversion dotnet
-set DOT_PREREQUISITES_CHOCOS="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore"
+set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion dotnet
+set DOT_PREREQUISITES_CHOCO="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore"
 
-if "%~1" neq "check" goto :skip_check
+
+
+if "%~1" neq "check" goto :start
 call :check_prerequisites
 exit /b %ERRORLEVEL% 
 
-:skip_check
 
-cd /d "%~dp0" & call _elevate.cmd %~nx0 %* > nul
+:start
+call :elevate_privileges
 if %ERRORLEVEL% equ 1 exit /b
 
 
@@ -19,12 +21,12 @@ goto :eof
 
 
 :install_prerequisites
-for %%p in (%DOT_PREREQUISITES_CHOCOS%) do call :install_prerequisite %%p
+for %%p in (%DOT_PREREQUISITES_CHOCO%) do call :install_prerequisite %%p
 goto :eof
 
 :check_prerequisites
 set DOT_PREREQUISITE_IS_MISSING=0
-for %%p in (%DOT_PREREQUISITES%) do call :check_prerequisite %%p
+for %%p in (%DOT_PREREQUISITES_CHECK%) do call :check_prerequisite %%p
 exit /b %DOT_PREREQUISITE_IS_MISSING%
 
 
@@ -55,5 +57,12 @@ if %ERRORLEVEL% neq 0 set DOT_PREREQUISITE_IS_MISSING=1&echo %~1 is missing
 goto :eof
 
 
+:elevate_privileges
+setlocal enableextensions
+cd /d "%~dp0"
+net session 2> nul 1> nul
+if %ERRORLEVEL% equ 0 goto :eof
+"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoLogo -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "Start-Process -Wait -FilePath 'cmd.exe' -ArgumentList '/c \"%~dp0%~nx0\"' -Verb runAs"
+exit /b 1
 
 
