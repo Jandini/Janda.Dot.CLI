@@ -142,7 +142,7 @@ goto :eof
 
 :nuspec_append_dots
 echo Adding %~1 to %NUSPEC_FILE% file...
-for /R "%~1" %%G in ("*.cmd") do if %%~nxG neq %~nx0 call :nuspec_append_file "%%~pG%%~nxG" "%~2.dots" .dots content\Dot.Scripts\.dots
+for /R "%~1" %%G in ("*.cmd") do call :nuspec_append_file "%%~pG%%~nxG" "%~2.dots" .dots content\Dot.Scripts\.dots
 echo     ^<file src=".dots\template.json" target="content\Dot.Scripts\.template.config\template.json" /^>>> %NUSPEC_FILE%
 goto :eof
 
