@@ -7,6 +7,8 @@ set DOT_LOCAL_PATH=.\.dots\
 set PATH | find "%LOCAL_DOTS%" > nul
 if %ERRORLEVEL% neq 0 set PATH=%DOT_LOCAL_PATH%;%PATH%
 
+call .\.dots\.version > nul
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 call :build_nuspec_file
 
@@ -24,7 +26,8 @@ rem Add current dot version to template.config files
 call :prepare_templates
 
 set PACKAGE=%DOT_BASE_NAME%.%DOT_GIT_VERSION%.nupkg
-call .version > %DOT_LOCAL_PATH%.dotversion
+echo %DOT_GIT_VERSION% > %DOT_LOCAL_PATH%.dotversion
+
 echo Packing %PACKAGE%...
 nuget pack .nuspec -OutputDirectory %OUTPUT_DIR% -NoDefaultExcludes -Version %DOT_GIT_VERSION% -Properties NoWarn=NU5105
 if %ERRORLEVEL% neq 0 call :revert_templates %ERRORLEVEL% "Nuget pack failed."
@@ -51,7 +54,7 @@ echo Copying dots to %DOT_PATH_GLOBAL%
 copy %DOT_PATH%\*.cmd %DOT_PATH_GLOBAL% > nul 
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 echo Adding .dotversion file...
-call .version > %DOT_PATH_GLOBAL%.dotversion
+echo %DOT_GIT_VERSION% > %DOT_PATH_GLOBAL%.dotversion
 echo Build complete.
 goto :eof
 
@@ -93,7 +96,6 @@ exit /b %ERRORLEVEL%
 
 
 :build_nuspec_file
-call .\.dots\.version>nul
 
 set NUSPEC_FILE=.nuspec
 set NUSPEC_PACKAGE_VERSION=%DOT_GIT_VERSION%
@@ -153,5 +155,4 @@ call set CONTENT_PATH=%%CONTENT_PATH:%SEARCH_FOR%=%REPLACE_TO%%%
 rem echo Adding %CONTENT_PATH%
 echo     ^<file src="%~3%CONTENT_PATH%" target="%~4%CONTENT_PATH%" /^>>> %NUSPEC_FILE%
 goto :eof
-
 

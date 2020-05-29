@@ -37,7 +37,7 @@ choco -v 1>2>nul || goto :install
 goto :configure
 :install
 title Installing choco...
-"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command " [System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 :configure
 choco feature enable -n allowGlobalConfirmation > nul
 choco feature enable -n exitOnRebootDetected > nul
@@ -47,7 +47,8 @@ goto :eof
 :install_prerequisite
 title Choco is installing "%~1"...
 choco install %~1
-if %ERRORLEVEL% neq 0 title Installation failed&pause&exit
+set EXITCODE=%ERRORLEVEL%
+if %EXITCODE% neq 0 pause&exit %EXITCODE%
 title  
 goto :eof 
 
