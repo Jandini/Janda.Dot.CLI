@@ -18,8 +18,8 @@ All notable changes to this project will be documented in this file.
  * Make add *.cmd dot parameters common i.e. addtest is the same as addlib
  * Workaround warning NU5105: The package version ...
  * Move build version to .dotversion file. Dot's file will read it. 
- * Replace get datetime stamp based on wmic with environment variables
 
+ * Remove grep 
 
  * Dots in separate nugets... 
    Janda.Dots.CLI
@@ -29,6 +29,17 @@ All notable changes to this project will be documented in this file.
    Janda.Dot.Obfuscator - Add obfuscar ... ?
    Janda.Dot.GitVersion - Add gitversion
    Janda.Dot.Package - Add package target
+
+ * C:\Users\Matt\.nuget\packages\gitversiontask\5.3.3\build\GitVersionTask.targets(10,9): warning : 2020-06-03 07:58:47                WARN [06/03/20 7:58:47:39] Failed to inherit Increment branch configuration, ended up with: develop, origin/develop [C:\Users\Matt\Source\Repos\Janda\Device\Janda.Device.Sequential\src\Janda.Device.Sequential.Abstractions\Janda.Device.Sequential.Abstractions.csproj]                        C:\Users\Matt\.nuget\packages\gitversiontask\5.3.3\build\GitVersionTask.targets(10,9): warning : Falling back to develop branch config [C:\Users\Matt\Source\Repos\Janda\Device\Janda.Device.Sequential\src\Janda.Device.Sequential.Abstractions\Janda.Device.Sequential.Abstractions.csproj]                                                                                                                                         C:\Users\Matt\.nuget\packages\gitversiontask\5.3.3\build\GitVersionTask.targets(10,9): warning :  [C:\Users\Matt\Source\Repos\Janda\Device\Janda.Device.Sequential\src\Janda.Device.Sequential.Abstractions\Janda.Device.Sequential.Abstractions.csproj] 
+
+ * Add .compare .sort commands
+ * .sort should inject -sorted postfix to the file name keeping the extension
+ * .compare shoud have --sort parameter 
+ * Add .sleep command
+ * standard-version --dry-run --skip.tag --skip.commit --skip.bump
+ * Drop nuget packages when feature is closed 
+ * npm install -g standard-version
+
 
 
 
@@ -71,6 +82,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+ - Replace get datetime stamp based on wmic with environment variables
  - Added  installer script that adds .dots to path
  - Help and syntax definition is stored as script comment
  - As developer I want to remove dynamic dots script generation so it is easier to maintain dots command
