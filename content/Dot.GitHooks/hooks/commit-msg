@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 
+# Conventional commits
 # Format: <type>([scope]): <subject>
 # [scope] is optional
 
@@ -31,17 +32,19 @@ commit_regex='(feat|fix|chore|refactor|style|test|docs|ci|build|revert|perf|wip)
 error_msg="Aborting commit. Your commit message format is invalid, please check the references."
 commit_message="$1";
 
-# Commented out until merges are supported
+# Merge commits are not accounted for
 # if ! grep -iqE "$commit_regex" "${commit_message}"; then
 # echo "$error_msg" >&2
 # exit 1
 # fi
 
-if [ "$branch" = "master" ]; then
-echo "You can't commit directly to master branch"
-exit 1
-fi
+# Cannot do this due to git flow releases
+# if [ "$branch" = "master" ]; then
+# echo "You can't commit directly to master branch"
+# exit 1
+# fi
 
+# I work on develop 
 # if [ "$branch" = "develop" ]; then
 # echo "You can't commit directly to develop branch"
 # exit 1
