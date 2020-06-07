@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Stage changes and commit
 rem ::: 
-rem ::: .COMMIT <comment> 
+rem ::: .COMMIT <comment> [chore|fix|feat]
 rem ::: 
 rem ::: Parameters:
 rem :::     comment - comment text
@@ -16,11 +16,20 @@ rem ::: Examples:
 rem :::     .commit "Hello World"
 
 
-echo You are about to commit %1
+echo You are about to stage all and commit "%~2: %~1"
 git status
 
 set /P CONFIRM=Do you want to stage changes and commit "%~1" to %DOT_GIT_BRANCH% now (Y/[N])?
 if /i "%CONFIRM%" neq "Y" goto :eof
 
 git add .
+
+if "%~2" neq "" goto :conventional_commit
 git commit -m %1
+goto :eof
+
+:conventional_commit
+git commit -m "%~2: %~1"
+goto :eof
+
+
