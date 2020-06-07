@@ -3,11 +3,15 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Use standard-version to generate change log
 rem ::: 
-rem ::: .CHANGELOG [append]
+rem ::: .CHANGELOG [dry]
 rem ::: 
 
-set ARGS=--skip.tag --skip.commit --skip.bump
-if "%~1" neq "append" set ARGS=--dry-run %ARGS%
+
+call .version MajorMinorPatch >nul
+
+rem --skip.commit --skip.bump
+set ARGS=--skip.tag --release-as %DOT_GIT_VERSION%
+if "%~1" equ "dry" set ARGS=--dry-run %ARGS%
 
 standard-version %ARGS%
 
