@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: A dot wrapper over the dotnet command
 rem ::: 
-rem ::: .DOTNET <clean|restore|pack|build|publish|test> [.]
+rem ::: .DOTNET <clean|restore|pack|build|publish|test|graph> [.]
 rem ::: 
 
 
@@ -32,6 +32,7 @@ if /i "%1" equ "build" call :build "%~2" "%~3" & goto :eof
 if /i "%1" equ "restore" call :restore "%~2" "%~3" & goto :eof
 if /i "%1" equ "test" call :test "%~2" "%~3" & goto :eof
 if /i "%1" equ "clean" call :clean "%~2" "%~3" & goto :eof
+if /i "%1" equ "graph" call :graph "%~2" "%~3" & goto :eof
 
 echo Invalid dotnet command.
 goto :eof
@@ -84,9 +85,21 @@ dotnet test "%~1"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
-
 :clean
 echo Cleaning %~2...
 dotnet clean "%~1"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
+
+
+:graph
+echo Generating restore graph file for %~2...
+set OUTPUT_FILE=%~n1.dg
+if "%~1" equ "" set OUTPUT_FILE=%~n2.dg
+echo Creating %OUTPUT_FILE%
+dotnet msbuild %~1 /t:GenerateRestoreGraphFile /p:RestoreGraphOutputPath=%OUTPUT_FILE%
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof
+
+
+C:\Users\Matt\Source\Repos\Janda\Format\Janda.Format.Retrospect\src\Janda.Format.Retrospect.sln
