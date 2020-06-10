@@ -1,8 +1,8 @@
 @echo off
 
-set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion dotnet
-set DOT_PREREQUISITES_CHOCO="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore"
-
+set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion dotnet npm standard-version
+set DOT_PREREQUISITES_CHOCO="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore" "nodejs-lts"
+set DOT_PREREQUISITES_NPM=standard-version 
 
 
 if "%~1" neq "check" goto :start
@@ -14,21 +14,38 @@ exit /b %ERRORLEVEL%
 call :elevate_privileges
 if %ERRORLEVEL% equ 1 exit /b
 
-
 call :install_choco
-call :install_prerequisites
+call :choco_prerequisites
+call :npm_prerequisites
 goto :eof
 
 
-:install_prerequisites
-for %%p in (%DOT_PREREQUISITES_CHOCO%) do call :install_prerequisite %%p
+:npm_prerequisites
+
+call :npm_install "standard-version"
+rem for %%p in (%DOT_PREREQUISITES_NPM%) do echo %%p&call :npm_install %%p
 goto :eof
+
+
+:npm_install
+title npm is installing "%~1"...
+start /wait "npm is installing %~1" cmd /c npm -g install %~1
+set EXITCODE=%ERRORLEVEL%
+if %EXITCODE% neq 0 pause&exit %EXITCODE%
+title  
+goto :eof 
+
 
 :check_prerequisites
 set DOT_PREREQUISITE_IS_MISSING=0
 for %%p in (%DOT_PREREQUISITES_CHECK%) do call :check_prerequisite %%p
 exit /b %DOT_PREREQUISITE_IS_MISSING%
 
+
+
+:choco_prerequisites
+for %%p in (%DOT_PREREQUISITES_CHOCO%) do call :choco_install_prerequisite %%p
+goto :eof
 
 
 :install_choco
@@ -44,13 +61,17 @@ choco feature enable -n exitOnRebootDetected > nul
 goto :eof
 
 
-:install_prerequisite
+
+
+:choco_install_prerequisite
 title Choco is installing "%~1"...
 choco install %~1
 set EXITCODE=%ERRORLEVEL%
 if %EXITCODE% neq 0 pause&exit %EXITCODE%
 title  
 goto :eof 
+
+
 
 :check_prerequisite
 where %~1 >nul 2>nul
@@ -65,5 +86,4 @@ net session 2> nul 1> nul
 if %ERRORLEVEL% equ 0 goto :eof
 "%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoLogo -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "Start-Process -Wait -FilePath 'cmd.exe' -ArgumentList '/c \"%~dp0%~nx0\"' -Verb runAs"
 exit /b 1
-
 
