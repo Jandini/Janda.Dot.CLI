@@ -1,7 +1,6 @@
 @if not defined DOT_DEBUG @echo off
 
 rem TODO: add number of required parameters - show help when not match => Usage: call _dots <caller script name> <help text|""> <usage syntax|""> <number of required parameters> <flags string> [parameters]
-rem TODO: help via grep type _dots.cmd | grep -o -P (?^<=rem).* ; or find or findstr 
 
 rem This is a boot strap script. 
 

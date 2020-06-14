@@ -73,8 +73,9 @@ goto script_end
 
 :script_usage
 call .help feature 
+echo Feature branches:
 echo.
-git branch | grep feature/
+git branch | findstr feature/
 
 
 :script_end
