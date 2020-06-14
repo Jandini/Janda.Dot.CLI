@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
  * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
 
- * Command .release should try to checkout branch like feature does 
+ * Command .release must use subroutines instead gotos 
  * Targets as nugets i.e. Janda.Dots.Package Janda.Dots.Obfuscar Janda.Dots.GitVersion so upgrades are possible 
 
  * Separate .addsvc .addlib. .addlib add simple class 
@@ -32,13 +32,13 @@ All notable changes to this project will be documented in this file.
 
  * C:\Users\Matt\.nuget\packages\gitversiontask\5.3.3\build\GitVersionTask.targets(10,9): warning : 2020-06-03 07:58:47                WARN [06/03/20 7:58:47:39] Failed to inherit Increment branch configuration, ended up with: develop, origin/develop [C:\Users\Matt\Source\Repos\Janda\Device\Janda.Device.Sequential\src\Janda.Device.Sequential.Abstractions\Janda.Device.Sequential.Abstractions.csproj]                        C:\Users\Matt\.nuget\packages\gitversiontask\5.3.3\build\GitVersionTask.targets(10,9): warning : Falling back to develop branch config [C:\Users\Matt\Source\Repos\Janda\Device\Janda.Device.Sequential\src\Janda.Device.Sequential.Abstractions\Janda.Device.Sequential.Abstractions.csproj]                                                                                                                                         C:\Users\Matt\.nuget\packages\gitversiontask\5.3.3\build\GitVersionTask.targets(10,9): warning :  [C:\Users\Matt\Source\Repos\Janda\Device\Janda.Device.Sequential\src\Janda.Device.Sequential.Abstractions\Janda.Device.Sequential.Abstractions.csproj] 
 
- * Add .compare .sort commands
+
  * .sort should inject -sorted postfix to the file name keeping the extension
  * .compare shoud have --sort parameter 
- * Add .sleep command
+ 
  * standard-version --dry-run --skip.tag --skip.commit --skip.bump
  * Drop nuget packages when feature is closed 
- * npm install -g standard-version
+ 
 
 
 
@@ -48,6 +48,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 
+ - npm install -g standard-version
  - As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
  - Added new argument parser .newlib allow --namespace 
  - Add namespace parameter to addlib that use and generate <RootNamespace>Janda.Runtime</RootNamespace> in .csproj
