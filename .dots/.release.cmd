@@ -44,7 +44,8 @@ set NO_CONFIRM=Y
 :start
 echo Starting release/%DOT_GIT_VERSION%
 git flow release start %DOT_GIT_VERSION%
-if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
+if %ERRORLEVEL% equ 1 echo Initializing... Run .release again when init is complete...&.init
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 rem get release branch name
 for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set DOT_GIT_BRANCH=%%F
