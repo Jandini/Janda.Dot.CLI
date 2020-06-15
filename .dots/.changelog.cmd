@@ -9,8 +9,9 @@ rem :::
 
 call .version MajorMinorPatch >nul
 
+rem --tag-prefix "" so the version tags can go without "v" letter
 rem --skip.commit --skip.bump
-set ARGS=--skip.tag --release-as %DOT_GIT_VERSION%
+set ARGS=--tag-prefix "" --skip.tag --release-as %DOT_GIT_VERSION% 
 if "%~1" equ "dry" set ARGS=--dry-run %ARGS%
 
 standard-version %ARGS%
