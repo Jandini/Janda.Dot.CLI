@@ -15,17 +15,18 @@ set PARAM_BRANCH=%~1
 if /i "%DOT_GIT_BRANCH:~0,8%" equ "feature/" call :on_feature_branch&exit /b %ERRORLEVEL%
 if /i "%DOT_GIT_BRANCH%" equ "develop" call :on_non_feature_branch&exit /b %ERRORLEVEL%
 if /i "%DOT_GIT_BRANCH%" equ "master" call :on_non_feature_branch&exit /b %ERRORLEVEL%
-if /i "%PARAM_BRANCH:~0,2%" equ "-u" call :update_branch&exit /b %ERRORLEVEL%
-if /i "%PARAM_BRANCH:~0,2%" equ "-d" call :delete_branch&exit /b %ERRORLEVEL%
 
 goto :eof
 
 
 
-
-
 :on_feature_branch
-if "%PARAM_BRANCH%" equ "" (call :finish_feature) else (call :switch_feature)
+if "%PARAM_BRANCH%" equ "" call :finish_feature&exit /b %ERRORLEVEL%
+
+if /i "%PARAM_BRANCH:~0,2%" equ "-u" call :update_branch&exit /b %ERRORLEVEL%
+if /i "%PARAM_BRANCH:~0,2%" equ "-d" call :delete_branch&exit /b %ERRORLEVEL%
+
+call :switch_feature
 exit /b %ERRORLEVEL%
 
 
@@ -93,7 +94,6 @@ goto :eof
 
 :script_usage
 call .help feature 
-echo Feature branches:
 echo.
 git branch | findstr feature/
 exit 0
