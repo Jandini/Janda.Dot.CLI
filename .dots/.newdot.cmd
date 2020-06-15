@@ -29,7 +29,8 @@ git init
 git add .
 git commit -m "chore: Create repository"
 call .init
-dotnet new dotgithooks -n .git
+rem don't use hooks until conventional commits regex supports merge commits
+rem dotnet new dotgithooks -n .git
 goto :eof
 
 
