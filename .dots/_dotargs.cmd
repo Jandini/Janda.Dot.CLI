@@ -1,8 +1,9 @@
 @echo off
 rem This is batch command line argument parser written on 23rd of May 2020 by Matt Janda
-rem Usage: example.cmd --show-message --message "Hello World" --by "Matt Janda"
+rem Usage: example.cmd --show-message --message "Hello World" --by "Matt Janda" "I am default argument"
 rem 
 rem call _dotargs %*
+rem echo %DOT_ARG_DEFAULT% is default value without --
 rem if %DOT_ARG_SHOW-MESSAGE% neq 1 goto :eof
 rem if defined DOT_ARG_MESSAGE echo %DOT_ARG_MESSAGE%
 rem if defined DOT_ARG_BY echo %DOT_ARG_BY%
@@ -18,6 +19,8 @@ goto :eof
 
 rem count number of provided parameters 
 rem the count is required so we can skip empty parameters
+
+set DOT_ARG_DEFAULT=
 set /A DOT_PARAMS_COUNT=0
 for %%x in (%*) do set /A DOT_PARAMS_COUNT+=1
 
@@ -40,6 +43,8 @@ if "%DOT_ARG_NAME%" equ "" goto :parse_next
 rem check if saved parameter is argument i.e. starts with argument prefix
 if /i "%DOT_ARG_NAME:~0,2%" equ "--" goto :parse_value
 rem if saved parameter is not an argument then continue parsing
+rem if not yet default arument was found treat the first as default value
+if not defined DOT_ARG_DEFAULT set DOT_ARG_DEFAULT=%DOT_ARG_NAME%
 goto :parse_next
 
 
