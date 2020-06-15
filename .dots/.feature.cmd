@@ -12,13 +12,9 @@ if "%DOT_GIT_BRANCH%" equ "" exit /b
 set PARAM_BRANCH=%~1
 
 
-rem allow to switch feature branches
-if "%DOT_GIT_BRANCH:~0,8%" equ "feature/" ( if "%PARAM_BRANCH%" neq "" (call :switch_feature&exit /b %ERRORLEVEL%) else (call :finish_feature&exit /b %ERRORLEVEL%)) 
-
-if /i "%DOT_GIT_BRANCH%" equ "develop" (if "%PARAM_BRANCH%" equ "" (call :script_usage) else (call :start_feature "%PARAM_BRANCH%"&exit /b %ERRORLEVEL%)) 
-if /i "%DOT_GIT_BRANCH%" equ "master" (if "%PARAM_BRANCH%" equ "" (call :script_usage) else (call :start_feature "%PARAM_BRANCH%"&exit /b %ERRORLEVEL%)) 
-
-
+if /i "%DOT_GIT_BRANCH:~0,8%" equ "feature/" call :on_feature_branch&exit /b %ERRORLEVEL%
+if /i "%DOT_GIT_BRANCH%" equ "develop" call :on_non_feature_branch&exit /b %ERRORLEVEL%
+if /i "%DOT_GIT_BRANCH%" equ "master" call :on_non_feature_branch&exit /b %ERRORLEVEL%
 if /i "%PARAM_BRANCH:~0,2%" equ "-u" call :update_branch&exit /b %ERRORLEVEL%
 if /i "%PARAM_BRANCH:~0,2%" equ "-d" call :delete_branch&exit /b %ERRORLEVEL%
 
@@ -26,6 +22,16 @@ goto :eof
 
 
 
+
+
+:on_feature_branch
+if "%PARAM_BRANCH%" equ "" (call :finish_feature) else (call :switch_feature)
+exit /b %ERRORLEVEL%
+
+
+:on_non_feature_branch
+if "%PARAM_BRANCH%" equ "" (call :script_usage) else (call :start_feature "%PARAM_BRANCH%")
+exit /b %ERRORLEVEL%
 
 
 
@@ -54,8 +60,9 @@ goto :eof
 
 
 :update_branch
-echo KROWA
-if "%DOT_GIT_BRANCH:~0,8%" neq "feature/" echo Branch %DOT_GIT_BRANCH% is not feature branch.&goto :eof
+call :ensure_feature_branch
+if %ERRORLEVEL% neq 0 goto :eof
+
 set /p CONFIRM=WARNING: You are working on %DOT_GIT_BRANCH%. Do you want to [U]pdate it from develop branch (U/[N])?
 if /i "%CONFIRM%" neq "U" goto :eof
 git merge develop 
@@ -64,7 +71,9 @@ goto :eof
 
 :delete_branch
 rem delete only current feature branch
-if "%DOT_GIT_BRANCH:~0,8%" neq "feature/" echo Branch %DOT_GIT_BRANCH% is not feature branch.&goto :eof
+call :ensure_feature_branch
+if %ERRORLEVEL% neq 0 goto :eof
+
 rem confirm before deleting
 set /p CONFIRM=WARNING: You are working on %DOT_GIT_BRANCH%. Do you want to [D]elete it (D/[N])?
 if /i "%CONFIRM%" neq "D" goto :eof
@@ -74,6 +83,11 @@ git checkout develop
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 echo Deleting %DOT_GIT_BRANCH% 
 git branch -d %DOT_GIT_BRANCH%
+goto :eof
+
+
+:ensure_feature_branch
+if "%DOT_GIT_BRANCH:~0,8%" neq "feature/" echo Branch %DOT_GIT_BRANCH% is not feature branch.&exit /b 1
 goto :eof
 
 
