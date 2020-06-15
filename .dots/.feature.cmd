@@ -3,13 +3,12 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Start new or checkout existing feature. Finish current feature. Update current feature from develop branch. Delete current feature.
 rem ::: 
-rem ::: .FEATURE [-u(pdate)|[-d(elete)] <[feature-branch-name]>
+rem ::: .FEATURE [--update|--delete] <[feature-branch-name]>
 rem ::: 
 
-rem exit if not a git repository
-if "%DOT_GIT_BRANCH%" equ "" exit /b
-
 set PARAM_BRANCH=%~1
+
+@call _dotargs %*
 
 
 if /i "%DOT_GIT_BRANCH:~0,8%" equ "feature/" call :on_feature_branch&exit /b %ERRORLEVEL%
@@ -23,11 +22,14 @@ goto :eof
 :on_feature_branch
 if "%PARAM_BRANCH%" equ "" call :finish_feature&exit /b %ERRORLEVEL%
 
-if /i "%PARAM_BRANCH:~0,2%" equ "-u" call :update_branch&exit /b %ERRORLEVEL%
-if /i "%PARAM_BRANCH:~0,2%" equ "-d" call :delete_branch&exit /b %ERRORLEVEL%
+if defined DOT_ARG_UPDATE call :update_branch&exit /b %ERRORLEVEL%
+if defined DOT_ARG_DELETE call :delete_branch&exit /b %ERRORLEVEL%
 
-call :switch_feature
+set /P CONFIRM=WIP: You are working on %DOT_GIT_BRANCH%. Do you want to start new feature/%PARAM_BRANCH% now (Y/[N])?
+if /i "%CONFIRM%" neq "Y" goto :eof
+call :start_feature %PARAM_BRANCH%
 exit /b %ERRORLEVEL%
+
 
 
 :on_non_feature_branch
@@ -36,7 +38,10 @@ exit /b %ERRORLEVEL%
 
 
 
+
 :start_feature 
+git checkout feature/%PARAM_BRANCH% 2>nul
+if %ERRORLEVEL% equ 0 echo The feature branch was found. You are now working on feature/%PARAM_BRANCH%.&goto :eof
 echo Starting feature/%~1
 git flow feature start %~1
 goto :eof
@@ -46,16 +51,6 @@ goto :eof
 set /p CONFIRM=WIP: Do you want to finish the %DOT_GIT_BRANCH% now (Y/[N])?
 if /i "%CONFIRM%" neq "Y" goto :eof
 git flow feature finish
-goto :eof
-
-
-:switch_feature
-rem make sure we don't switch without confirmation
-set /P CONFIRM=WIP: You are working on %DOT_GIT_BRANCH%. Do you want to start new feature/%PARAM_BRANCH% now (Y/[N])?
-if /i "%CONFIRM%" neq "Y" goto :eof
-
-git checkout feature/%PARAM_BRANCH% 2>nul
-if %ERRORLEVEL% equ 0 echo Checkout existing %CHECKOUT_BRANCH% completed successfully.
 goto :eof
 
 
