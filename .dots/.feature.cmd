@@ -1,12 +1,28 @@
-@call _dots %~n0 " g" %1 %2 %3
+@call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Start new or checkout existing feature. Finish current feature. Update current feature from develop branch. Delete current feature.
+rem ::: Work with feature branches
 rem ::: 
-rem ::: .FEATURE [feature-branch-name] [--update|--delete]
+rem ::: .FEATURE [branch name|--update|--delete]
 rem ::: 
+rem ::: Parameters:
+rem :::     feature branch name - new or existing feature branch name
+rem :::     update - fast forward current feature to match develop branch
+rem :::     delete - delete current feature branch
+rem :::     
+rem ::: Description: 
+rem :::     Start new or checkout existing feature when the branch name is provided. 
+rem :::     Feature branch name is automatically prefixed with feature/.
+rem :::     Finish current feature when called without arguments while working on feature branch. 
+rem :::     Update or Delete current feature branch when the update or delete parameter is provided.
+rem ::: 
+rem ::: Examples: 
+rem :::     .feature great-feature
+rem :::     .feature 
+rem :::     .feature another-feature
+rem :::     .feature --update
+rem :::     .feature --delete
 
-@call _dotargs %*
 set FEATURE_BRANCH_NAME=%DOT_ARG_DEFAULT%
 
 
