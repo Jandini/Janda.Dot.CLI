@@ -1,7 +1,7 @@
-@call _dots %~n0 " g" %1 %2 %3
+@call _dots %~n0 --require-git %*
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Run git log
+rem ::: Show git log
 rem ::: 
 rem ::: .GITLOG [max count]
 rem ::: 
