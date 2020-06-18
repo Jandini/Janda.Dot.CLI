@@ -1,9 +1,12 @@
-@call _dots %~n0 " g" %1 %2 %3
+@call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Undo or redo soft last commit
+rem ::: Git soft reset
 rem ::: 
 rem ::: .UNDO
+rem ::: 
+rem ::: Description: 
+rem :::     Undo or redo of the last commit.
 rem ::: 
 
 
