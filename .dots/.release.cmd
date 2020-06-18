@@ -1,13 +1,16 @@
-@call _dots %~n0 " g" %1 %2 %3
+@call _dots %~n0 %* --require-git
+if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Start new or finish git flow release in progress
+rem ::: Git flow release
 rem ::: 
 rem ::: .RELEASE
 rem ::: 
-
-rem :.release is parameterless
-
-if %ERRORLEVEL% equ 1 exit /b
+rem ::: Description: 
+rem :::     Start new or finish git flow release in progress.
+rem :::     A release branch is created. The first release version is always 1.0.0. The next would be 1.1.0 and so on.
+rem :::     When the release is started he command offers to complete the release process automatically.
+rem :::     The release process consist of finish and pack the libraries into nuget from master branch. 
+rem ::: 
 
 rem exit if not a git repository
 if "%DOT_GIT_BRANCH%" equ "" exit
