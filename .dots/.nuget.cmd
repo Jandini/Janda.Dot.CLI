@@ -1,5 +1,17 @@
-@call _dots %~n0 "   " %1 %2 %3
+@call _dots %~n0 %*
 if %ERRORLEVEL% equ 1 exit /b
+
+rem ::: Dots nuget
+rem ::: 
+rem ::: .NUGET [--delete branch|nonalpha] [--branch name]
+rem ::: 
+rem ::: Parameters: 
+rem :::     delete - Delete nuget packages created within current "branch" or all "nonalpha" packages
+rem :::     branch - Override current branch name 
+rem ::: 
+rem ::: Description: 
+rem :::     ... WIP
+rem ::: 
 
 set DOT_PSCMD="%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoLogo -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command
 
