@@ -154,7 +154,6 @@ revert - Reverts a previous commit
  * Download directly from git and install
 
  * Add optional parameter origin to .init command 
- * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
  * As user I do not want any of dot commands to close cmd window if execute directly from it
 
  * Targets as nugets i.e. Janda.Dots.Package Janda.Dots.Obfuscar Janda.Dots.GitVersion so upgrades are possible 
