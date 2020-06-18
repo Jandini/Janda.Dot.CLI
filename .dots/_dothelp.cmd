@@ -14,7 +14,7 @@ set DOT_COMMAND_FILE_NAME=%~n1
 set DOT_COMMAND_FILE_PATH="%DOT_PATH%%DOT_COMMAND_FILE_NAME%.cmd"
 
 if "%DOT_COMMAND_FILE_NAME%" equ "" echo Make sure [.command] has .cmd extension&goto :eof
-if not exist "%DOT_COMMAND_FILE_PATH%" echo %DOT_COMMAND_FILE_NAME% does not exist&exit /b 1
+if not exist "%DOT_COMMAND_FILE_PATH%" echo %DOT_COMMAND_FILE_NAME% command does not exist&exit /b 1
 
 setlocal enabledelayedexpansion
 

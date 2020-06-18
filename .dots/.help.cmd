@@ -1,21 +1,37 @@
 @call _dots %~n0 %*
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Show available commands with short description
+rem ::: Dots help
 rem ::: 
-rem ::: .HELP [command name]
+rem ::: .HELP [command name|search term]
+rem ::: 
+rem ::: Parameters: 
+rem :::     command name - name of the comand  
+rem :::     search term - keyword search term
 rem ::: 
 rem ::: Description: 
-rem :::     List available commands with short description. 
+rem :::     Show available commands with short description. 
 rem :::     When command name is provided display given command's help.
+rem :::     If command is not found by name then the command name is considered as search term.
+rem :::     Search is performed in  available commands list i.e. command's name and short description.
 rem ::: 
 
 
 call :parse_name %1
 
-if "%COMMAND_NAME%" equ "" (call :show_all) else (call _dothelp %COMMAND_NAME%.cmd)
+if "%COMMAND_NAME%" equ "" (call :show_all) else (call :show_one %1)
 goto :eof
 
+
+:show_one
+call _dothelp %COMMAND_NAME%.cmd
+if %ERRORLEVEL% equ 0 goto :eof
+echo Searching help for %~1...
+call :show_all > "%TEMP%\.help" 
+echo.
+type "%TEMP%\.help" | findstr /i %~1
+
+goto :eof
 
 :show_all
 set DOT_CMD_MASK=.?*.cmd  
