@@ -1,35 +1,31 @@
-@call _dots %~n0 "d 1" %1 %2 %3
+@call _dots %~n0 %* --require-dot --require-param 
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Add new class library to existing or new solution
+rem ::: Dots add library
 rem ::: 
-rem ::: .ADDLIB <.|[.]new class library name> [--solution <existing or new solution full name>] [--namespace <namespace>]
+rem ::: .ADDLIB <.|[.]project name> [--solution <name>] [--namespace <name>]
+rem ::: 
+rem ::: Parameters: 
+rem :::     project name - New project name
+rem :::     solution name - Existing or new solution
+rem :::     namespace name - Project namespace 
+rem ::: 
+rem ::: Description: 
+rem :::     Add new class library.
 rem ::: 
 
+rem Create new library name and SOLUTION
+call _dotname "%~1" LIBRARY_NAME
 
-call _dotargs %*
-call _dotname %1 LIBRARY_NAME
+call _dotsrc
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-rem by default solution name is the current folder
-set SOLUTION_NAME=%DOT_BASE_NAME%
-if defined DOT_ARG_SOLUTION set SOLUTION_NAME=%DOT_ARG_SOLUTION%
-set SOLUTION_FILE=%SOLUTION_NAME%.sln
+call _dotnew dotlib %LIBRARY_NAME% 
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-rem check of optional namespace argument
-if defined DOT_ARG_NAMESPACE set NAMESPACE_ARGUMENT=--nameSpace %DOT_ARG_NAMESPACE%
+call _dotsln %LIBRARY_NAME%
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 
-pushd src
-
-dotnet new dotlib -n %LIBRARY_NAME% %NAMESPACE_ARGUMENT%
-
-if not exist %SOLUTION_FILE% echo Creating %SOLUTION_FILE% && dotnet new sln -n %SOLUTION_NAME%
-echo Adding %LIBRARY_NAME% application to %SOLUTION_FILE%
-dotnet sln %SOLUTION_FILE% add %LIBRARY_NAME%
-
-echo Restoring packages for %LIBRARY_NAME%
-dotnet restore %LIBRARY_NAME% --ignore-failed-sources 
-
-popd
 
 
