@@ -1,10 +1,20 @@
-@call _dots %~n0 " g" %1 %2 %3
+@call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Push git repository into remote DOT_CID_GITLAB_URL using DOT_CID_GITLAB_TOKEN
+rem ::: Gitlab dotflow
 rem ::: 
 rem ::: .GITLAB [project name]
 rem ::: 
+rem ::: Parameters: 
+rem :::     project name - Project name in or to be created in gitlab. Default is current directory name.
+rem ::: 
+rem ::: Description: 
+rem :::     Push git repository into remote DOT_CID_GITLAB_URL using DOT_CID_GITLAB_TOKEN. 
+rem :::     If the project does not exist then Gitlab will create a new one. 
+rem :::     Once project is available in Gitlab the Dots.Jenkins.Seeder build is executed. 
+rem :::     The Dots.Jenkins.Seeder's build is creating multi-branch pipeline for new projects 
+rem :::     and triggers build on develop and master branches.
+rem :::
 
 set PROJECT_NAME=%DOT_BASE_NAME%
 if "%1" neq "" set PROJECT_NAME=%1
