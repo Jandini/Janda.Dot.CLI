@@ -1,7 +1,7 @@
 @call _dots %~n0 %*
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Backup current folder or local nuget packages
+rem ::: File backup
 rem ::: 
 rem ::: .BACKUP [--nugets]
 rem ::: 
