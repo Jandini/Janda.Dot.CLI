@@ -17,7 +17,7 @@ rem :::     and triggers build on develop and master branches.
 rem :::
 
 set PROJECT_NAME=%DOT_BASE_NAME%
-if "%1" neq "" set PROJECT_NAME=%1
+if "%~1" neq "" set PROJECT_NAME=%1
 
 if "%DOT_CID_GITLAB_URL%" == "" ( echo DOT_CID_GITLAB_URL not set && goto exit )
 
