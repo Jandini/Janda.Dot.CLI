@@ -1,15 +1,14 @@
-@call _dots %~n0 "" %1 %2 %3
-if %ERRORLEVEL% equ 1 exit /b
+@_dotnet build %~1
 
-rem ::: Run (*resursively) dotnet build for project in .current folder, repo's default solution or all DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file.
+rem ::: Dotnet build
 rem ::: 
-rem ::: .BUILD [*|.|all]
+rem ::: .BUILD [*|.]
 rem ::: 
-
-if "%1" equ "*" goto foreach 
-
-.dotnet build %1
-goto :eof
-
-:foreach
-.foreach dotnet build %2
+rem ::: Parameters: 
+rem :::     * - Search and run the command for each dot repository found.
+rem :::     . - Run the command for current directory only.
+rem ::: 
+rem ::: Description: 
+rem :::     Run the command for solution(s) found in dot repository.
+rem :::     For more details see .dotnet --help
+rem ::: 
