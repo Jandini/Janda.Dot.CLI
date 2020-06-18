@@ -1,13 +1,21 @@
-@call _dots %~n0 "" %1 %2 %3
+@call _dots %~n0 %*
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Initialize git flow repository
+rem ::: Git flow init
 rem ::: 
 rem ::: .INIT [project name]
 rem ::: 
+rem ::: Parameters: 
+rem :::     project name - optional project name
+rem ::: 
+rem ::: Description: 
+rem :::     Initialize git flow repository and add remote origin based on DOT_CID_GITLAB_URL 
+rem :::     and DOT_CID_GITLAB_USER environment variables. If the variables are not defined 
+rem :::     then remote origin is set to "unknown"
+rem ::: 
 
 set PROJECT_NAME=%DOT_BASE_NAME%
-if "%1" neq "" set PROJECT_NAME=%1
+if "%~1" neq "" set PROJECT_NAME=%~1
 
 echo Initializing git flow for %PROJECT_NAME%...
 git flow init -d
