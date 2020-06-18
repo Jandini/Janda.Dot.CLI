@@ -9,10 +9,10 @@ rem ::: Parameters:
 rem :::     branch name - full or partial branch name
 rem ::: 
 rem ::: Description: 
-rem :::     Show available branches or switch branch. 
-rem :::     When display list of available branches, the current branch is marked with "*".
-rem :::     Checkout branch based on given branch name. If the branch name is partial,
-rem :::     then first matching branch is checked out.
+rem :::     Show available branches or switch current branch. 
+rem :::     When display available branches, the current branch is marked with "*".
+rem :::     The branch name is first considered as full branch name. The branch checkout is performed. 
+rem :::     If the checkout fails then it use .checkout to find and match partial branch name.
 rem :::
 
 set BRANCH_NAME=%DOT_ARG_DEFAULT%
