@@ -1,18 +1,15 @@
-@call _dots %~n0 "" %1 %2 %3
-if %ERRORLEVEL% equ 1 exit /b
+@_dotnet graph %~1
 
-rem ::: Generate restore graph file
+rem ::: Dotnet graph
 rem ::: 
 rem ::: .GRAPH [*|.]
 rem ::: 
-
-
-if "%1" equ "*" goto foreach 
-
-.dotnet graph %1
-goto :eof
-
-:foreach
-.foreach dotnet graph %2
-
+rem ::: Parameters: 
+rem :::     * - Search and run the command for each dot repository found.
+rem :::     . - Run the command for current directory only.
+rem ::: 
+rem ::: Description: 
+rem :::     Run the command for solution(s) found in dot repository.
+rem :::     For more details see .dotnet --help
+rem ::: 
 
