@@ -1,7 +1,7 @@
 @call _dots %~n0 %* --require-param
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Compare text files
+rem ::: File compare
 rem ::: 
 rem ::: .COMPARE <first> <second>
 rem ::: 
@@ -14,6 +14,7 @@ rem :::     Compare two text files using Visual Studio
 rem ::: 
 rem ::: Examples: 
 rem :::     .compare file1.txt file2.txt
+rem ::: 
 
 
 if "%~2" equ "" _dothelp %~n0.cmd
