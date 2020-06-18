@@ -1,13 +1,23 @@
-@call _dots %~n0 " g" %1 %2 %3
+@call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Get current version and set DOT_GIT_VERSION variable (InformationalVersion is default)
+rem ::: Git semantic version
 rem ::: 
-rem ::: .VERSION [InformationalVersion|AssemblySemFileVer|MajorMinorPatch...]
+rem ::: .VERSION [variable name]
+rem ::: 
+rem ::: Parameters: 
+rem :::     variable name - gitversion variable name
+rem ::: 
+rem ::: Description: 
+rem :::     Get current version and set DOT_GIT_VERSION variable (InformationalVersion is default)
+rem :::     Gitversion variable names: InformationalVersion|AssemblySemFileVer|MajorMinorPatch... 
+rem :::     For more variable names run gitversion.
 rem ::: 
 
 
-if "%1" equ "" (set VERSION_NAME=InformationalVersion) else (set VERSION_NAME=%1)
+set VERSION_NAME=InformationalVersion
+
+if "%DOT_ARG_DEFAULT%" neq "" set VERSION_NAME=%DOT_ARG_DEFAULT%
 call :get_version %VERSION_NAME%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 echo %DOT_GIT_VERSION%
