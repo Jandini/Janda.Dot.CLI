@@ -14,7 +14,6 @@ rem ::: Description:
 rem :::     Add new xunit test 
 rem ::: 
 
-rem Create new library name and SOLUTION
 call _dotname "%~1" PROJECT_NAME
 
 call _dotsrc

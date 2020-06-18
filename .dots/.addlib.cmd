@@ -14,16 +14,15 @@ rem ::: Description:
 rem :::     Add new class library.
 rem ::: 
 
-rem Create new library name and SOLUTION
-call _dotname "%~1" LIBRARY_NAME
+call _dotname "%~1" PROJECT_NAME
 
 call _dotsrc
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-call _dotnew dotlib %LIBRARY_NAME% 
+call _dotnew dotlib %PROJECT_NAME% 
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-call _dotsln %LIBRARY_NAME%
+call _dotsln %PROJECT_NAME%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 
