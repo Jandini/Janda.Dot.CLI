@@ -9,6 +9,7 @@ rem ::: Description:
 rem :::     Display current working branch and run "git diff --stat" within git repository.
 rem ::: 
 
+
 echo You are working on %DOT_GIT_BRANCH%
 git diff --stat
 
