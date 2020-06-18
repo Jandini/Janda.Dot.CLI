@@ -6,8 +6,8 @@ rem :::
 rem ::: .FOREACH <command> [arguments]
 rem ::: 
 rem ::: Parameters:
-rem :::     command - command name without dot
-rem :::     arguments - command's arguments
+rem :::     command - Command name without dot
+rem :::     arguments - Command's arguments
 rem ::: 
 rem ::: Description: 
 rem :::     Runs dot command for each repository.
