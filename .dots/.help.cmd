@@ -6,8 +6,8 @@ rem :::
 rem ::: .HELP [command name|search term]
 rem ::: 
 rem ::: Parameters: 
-rem :::     command name - name of the comand  
-rem :::     search term - keyword search term
+rem :::     command name - Name of the comand  
+rem :::     search term - Keyword search term
 rem ::: 
 rem ::: Description: 
 rem :::     Show available commands with short description. 
