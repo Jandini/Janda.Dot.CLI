@@ -1,9 +1,13 @@
-@call _dots %~n0 " g" %1 %2 %3
+@call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Rollback last git commit
+rem ::: Git commit rollback
 rem ::: 
 rem ::: .ROLLBACK
+rem ::: 
+rem ::: Description: 
+rem :::     Rollback previous git commit one by one. 
+rem :::     git reset --soft HEAD~1
 rem ::: 
 
 
