@@ -1,4 +1,3 @@
-@echo off
 rem This is batch command line argument parser written on 23rd of May 2020 by Matt Janda
 rem Argument cleanup added on 16th of June 2020 by Matt Janda
 rem 
