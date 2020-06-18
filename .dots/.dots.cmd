@@ -1,10 +1,14 @@
-@call _dots %~n0 "" %1 %2 %3 
+@call _dots %~n0 %*
 if %ERRORLEVEL% equ 1 exit /b 
 
-rem ::: Display current version and type of the dots 
+rem ::: Dots
 rem ::: 
 rem ::: .DOTS
 rem ::: 
+rem ::: Description: 
+rem :::     Display current version and type of the dots
+rem ::: 
+
 
 if not exist %DOT_PATH%.dotversion echo .dotversion is missing
 for /f %%i in ('type %DOT_PATH%.dotversion 2^>nul') do set DOT_VERSION=%%i
