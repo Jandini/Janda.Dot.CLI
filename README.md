@@ -146,3 +146,37 @@ build - Changes that affect the build system or external dependencies (example s
 ci - Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
 chore - Other changes that don't modify src or test files
 revert - Reverts a previous commit
+
+
+
+## [Unreleased]
+
+ * Download directly from git and install
+
+ * Add optional parameter origin to .init command 
+ * As user I can upstream local branches using .mirror command ```git log @{push}.. &&echo %ERRORLEVEL%```
+ * As user I do not want any of dot commands to close cmd window if execute directly from it
+
+ * Targets as nugets i.e. Janda.Dots.Package Janda.Dots.Obfuscar Janda.Dots.GitVersion so upgrades are possible 
+
+ * Separate .addsvc .addlib. .addlib add simple class 
+ * .newtestapp .newclasslib .newconsoleapp .newservice .newemptyproject should add or create new repo ?
+ * Make add *.cmd dot parameters common i.e. addtest is the same as addlib
+ * Workaround warning NU5105: The package version ...
+
+ * Dots in separate nugets... 
+   Janda.Dots.CLI
+   Janda.Dots.Jenkins.GitLab
+   Janda.Dots.Jenkins.GitHub
+   Janda.Dot.Jenkins - Add Jenkinsfile to repository
+   Janda.Dot.Obfuscator - Add obfuscar ... ?
+   Janda.Dot.GitVersion - Add gitversion
+   Janda.Dot.Package - Add package target
+
+ * C:\Users\Matt\.nuget\packages\gitversiontask\5.3.3\build\GitVersionTask.targets(10,9): warning : 2020-06-03 07:58:47                WARN [06/03/20 7:58:47:39] Failed to inherit Increment branch configuration, ended up with: develop, origin/develop [C:\Users\Matt\Source\Repos\Janda\Device\Janda.Device.Sequential\src\Janda.Device.Sequential.Abstractions\Janda.Device.Sequential.Abstractions.csproj]                        C:\Users\Matt\.nuget\packages\gitversiontask\5.3.3\build\GitVersionTask.targets(10,9): warning : Falling back to develop branch config [C:\Users\Matt\Source\Repos\Janda\Device\Janda.Device.Sequential\src\Janda.Device.Sequential.Abstractions\Janda.Device.Sequential.Abstractions.csproj]                                                                                                                                         C:\Users\Matt\.nuget\packages\gitversiontask\5.3.3\build\GitVersionTask.targets(10,9): warning :  [C:\Users\Matt\Source\Repos\Janda\Device\Janda.Device.Sequential\src\Janda.Device.Sequential.Abstractions\Janda.Device.Sequential.Abstractions.csproj] 
+
+ * .sort should inject -sorted postfix to the file name keeping the extension
+ * .compare shoud have --sort parameter 
+ 
+ * Drop nuget packages when feature is closed 
+ 
