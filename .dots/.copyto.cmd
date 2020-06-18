@@ -1,7 +1,7 @@
 @call _dots %~n0 %* --require-param
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Copy multiple folders into one location
+rem ::: File copy 
 rem ::: 
 rem ::: .copyto <target path> [source path] [... source path]
 rem ::: 
