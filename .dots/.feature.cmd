@@ -1,14 +1,14 @@
 @call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Work with feature branches
+rem ::: Git flow feature
 rem ::: 
 rem ::: .FEATURE [branch name|--update|--delete]
 rem ::: 
 rem ::: Parameters:
-rem :::     feature branch name - new or existing feature branch name
-rem :::     update - fast forward current feature to match develop branch
-rem :::     delete - delete current feature branch
+rem :::     branch name - New or existing feature branch name
+rem :::     update - Fast forward current feature to match develop branch
+rem :::     delete - Delete current feature branch
 rem :::     
 rem ::: Description: 
 rem :::     Start new or checkout existing feature when the branch name is provided. 
