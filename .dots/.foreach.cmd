@@ -1,7 +1,7 @@
 @call _dots %~n0 %* --require-param
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Run command for each repository
+rem ::: Dots foreach call
 rem ::: 
 rem ::: .FOREACH <command> [arguments]
 rem ::: 
@@ -10,6 +10,7 @@ rem :::     command - command name without dot
 rem :::     arguments - command's arguments
 rem ::: 
 rem ::: Description: 
+rem :::     Runs dot command for each repository.
 rem :::     Search for dot repositories and execute given command for each of them.
 rem :::     The DOT_IS_FOREACH varialbe is defined when the command is executed via foreach. 
 rem :::     This way some of the command's actions can be based on this condition.
