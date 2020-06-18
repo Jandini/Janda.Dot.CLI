@@ -1,7 +1,7 @@
 @call _dots %~n0 %* --require-git 
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Show available branches or switch branch
+rem ::: Git branch
 rem ::: 
 rem ::: .BRANCH [branch name]
 rem ::: 
@@ -9,11 +9,11 @@ rem ::: Parameters:
 rem :::     branch name - full or partial branch name
 rem ::: 
 rem ::: Description: 
-rem :::     Display list of available branches. The current branch is marked with "*".
+rem :::     Show available branches or switch branch. 
+rem :::     When display list of available branches, the current branch is marked with "*".
 rem :::     Checkout branch based on given branch name. If the branch name is partial,
 rem :::     then first matching branch is checked out.
-rem ::: 
-
+rem :::
 
 set BRANCH_NAME=%DOT_ARG_DEFAULT%
 if "%BRANCH_NAME%" neq "" goto checkout_branch
