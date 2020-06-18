@@ -1,20 +1,22 @@
-@call _dots %~n0 "d 1" %1 %2 %3
+@call _dots %~n0 %* --require-dot --require-param
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Add new solution to the repository
+rem ::: Dots add solution
 rem ::: 
-rem ::: .ADDSLN <.|[.]new solution name>
+rem ::: .ADDSLN <.|[.]solution name>
+rem ::: 
+rem ::: Parameters: 
+rem :::     solution name - New solution name to be added
+rem ::: 
+rem ::: Description: 
+rem :::     Add new solution to the repository. 
 rem ::: 
 
-SET SOLUTION_NAME=%1
-SET SLN_NAME=%SOLUTION_NAME%
 
-if "%SOLUTION_NAME:~0,1%"=="." set SLN_NAME=%DOT_BASE_NAME%.%SOLUTION_NAME:~1%
-if "%SOLUTION_NAME%" equ "." set SLN_NAME=%DOT_BASE_NAME%
-
-pushd src
+call _dotname "%~1" SLN_NAME
+call _dotsrc
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 echo Adding %SLN_NAME% solution
 dotnet new sln -n %SLN_NAME%
-
-popd
+exit /b %ERRORLEVEL%
