@@ -1,24 +1,23 @@
-@call _dots %~n0 " G1" %*
-if %ERRORLEVEL% equ 1 call :display_hint %1 & exit /b
+@call _dots %~n0 %* --require-nogit --require-param
+if %ERRORLEVEL% equ 1 call :display_hint & exit /b %ERRORLEVEL%
 
-rem ::: Create new repository and add new class library
+rem ::: Dots new library 
 rem ::: 
-rem ::: .NEWLIB <.|repository name> [--library-name <library name>]
+rem ::: .NEWLIB <.|repository name> [--project <name>]
+rem ::: 
+rem ::: Parameters: 
+rem :::     repository name - New repository name or "." = current folder name.
+rem :::     project name - Class library project name. Default = repository name
+rem ::: 
+rem ::: Description: 
+rem :::     Create new repository and add new class library.
 rem ::: 
 
-@call _dotargs %*
 
-set LIBRARY_NAME=%1
-if defined DOT_ARG_LIBRARY-NAME set LIBRARY_NAME=%DOT_ARG_LIBRARY-NAME%
-
-call .newdot %1
-if %ERRORLEVEL% neq 0 exit %ERRORLEVEL% /b
-
-call .addlib %LIBRARY_NAME% %*
+call _dotnew addlib %*
 goto :eof
 
-
 :display_hint
-if "%1" neq "--help" echo Try to use .addlib instead.
+if defined DOT_ARG_INSIDE_GIT_REPO echo Try to use .addlib instead.
 goto :eof
 
