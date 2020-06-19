@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Dots new repository
 rem ::: 
-rem ::: .NEWDOT [repository name|.]
+rem ::: .NEWDOT <repository name|.>
 rem ::: 
 rem ::: Parameters: 
 rem :::     repository name - New repository name
