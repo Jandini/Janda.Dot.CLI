@@ -1,4 +1,4 @@
-@call _dots %~n0 %* --requre-dot --require-param
+@call _dots %~n0 %* --require-dot --require-param
 if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Dots add console
