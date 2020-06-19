@@ -1,4 +1,5 @@
 @_dotnet test %~1
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 rem ::: Dotnet test
 rem ::: 

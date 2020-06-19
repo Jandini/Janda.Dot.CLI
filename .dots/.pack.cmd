@@ -1,4 +1,5 @@
 @_dotnet pack %~1
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 rem ::: Dotnet pack
 rem ::: 

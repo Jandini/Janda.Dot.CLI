@@ -1,4 +1,5 @@
 @_dotnet graph %~1
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 rem ::: Dotnet graph
 rem ::: 
