@@ -43,6 +43,11 @@
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false"
+    },
+    "nameSpace": {
+      "type": "parameter",
+      "defaultValue": "",
+      "replaces": "Dot.Namespace"
     }
   }
 }

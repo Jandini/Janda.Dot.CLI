@@ -1,28 +1,46 @@
-@call _dots %~n0 " G1" %1 %2 %3
+@call _dots %~n0 %* --require-nogit --require-param
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Create new dot repository with default solution from template
+rem ::: Dots new repository
 rem ::: 
-rem ::: .NEWDOT [.|new repository name]
+rem ::: .NEWDOT <repository name|.>
+rem ::: 
+rem ::: Parameters: 
+rem :::     repository name - New repository name
+rem ::: 
+rem ::: Description: 
+rem :::     Create new dot repository. The "." makes the new repository name to be current folder's name.
 rem ::: 
 
-set ERRORM_ESSAGE=
-if "%1" neq "." goto named_solution
+
+if "%~1" neq "." (call :named_solution "%~1") else (call :this_folder)
+goto :eof
+
+
+:this_folder
 
 rem check if there are no git repositories in subolders
 for /d /r . %%i in (.git\index) do if exist %%i echo %~n0 cannot run over git repository in %%i&exit /b 1
 
 echo Creating %DOT_BASE_NAME%...
 dotnet new dotrepo
-if %ERRORLEVEL% neq 0 goto template_error
-goto init
+if %ERRORLEVEL% neq 0 call :error_message %ERRORLEVEL%&exit /b %ERRORLEVEL%
+
+call :init
+goto :eof
+
+
+
 
 :named_solution
 if exist %1 echo %1 already exist.&exit /b 1 
 echo Creating %1...
 dotnet new dotrepo -n %1
-if %ERRORLEVEL% neq 0 call :template_error
+if %ERRORLEVEL% neq 0 call :error_message %ERRORLEVEL%&exit /b %ERRORLEVEL%
 cd %1
+call :init
+goto :eof
+
 
 :init
 git init
@@ -35,7 +53,7 @@ goto :eof
 
 
 
-:template_error
+:error_message
 echo.
-echo Creating dotrepo template failed. Make sure Janda.Dots.CLI templates are installed. 
-exit /b 1
+echo Error %1: Creating dotrepo template failed. Make sure Janda.Dots.CLI templates are installed. 
+exit /b %1

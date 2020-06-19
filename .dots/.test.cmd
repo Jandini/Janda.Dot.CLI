@@ -1,16 +1,14 @@
-@call _dots %~n0 "" %1 %2 %3
-if %ERRORLEVEL% equ 1 exit /b
+@_dotnet test %~1
 
-rem ::: Run (*resursively) dotnet test for project in .current folder, repo's default solution or all DOT_BUILD_SOLUTIONS defined in %DOT_CONFIG% file.
+rem ::: Dotnet test
 rem ::: 
-rem ::: .TEST
+rem ::: .TEST [*|.]
 rem ::: 
-
-
-if "%1" equ "*" goto foreach 
-
-.dotnet test %1
-goto :eof
-
-:foreach
-.foreach dotnet test %2
+rem ::: Parameters: 
+rem :::     * - Search and run the command for each dot repository found.
+rem :::     . - Run the command for current directory only.
+rem ::: 
+rem ::: Description: 
+rem :::     Run the command for solution(s) found in dot repository.
+rem :::     For more details see .dotnet --help
+rem ::: 

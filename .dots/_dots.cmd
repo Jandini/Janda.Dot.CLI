@@ -1,57 +1,46 @@
 @if not defined DOT_DEBUG @echo off
 
-rem TODO: add number of required parameters - show help when not match => Usage: call _dots <caller script name> <help text|""> <usage syntax|""> <number of required parameters> <flags string> [parameters]
+rem This is boot strap script. 
 
-rem This is a boot strap script. 
-
-rem Usage: @call _dots <caller name> <help text|""> <usage syntax|""> <script flags> [parameters %1 %2 %3 %4]
+rem Usage: @call _dots <caller name> [--require-dot] [--require-git|--require-nogit] [--require-param] [parameters]
 rem 
 rem <caller name>  - Calling script name. It should be always set to %~n0
-rem <help text>    - Text to be displayed when help is requested
-rem <usage synax>  - Usage syntax when usage help is requested
-rem <script flags> - Flag string. Each position in string represents one flag. Space character represents the flag as not set.
-rem                  Available flags: "d[g|G]1"
-rem                  d   - command must be run in dot repository (.dotconfig file must be present) 
-rem                  g/G - command must be/cannot run within git repository
-rem                  1   - at least one parameter is required (%~1 checking as unquoted)
-rem [parameters]   - Pass privided parameters %1 %2 %3 %4
+rem 
+rem     --require-dot   - command must be run in dot repository (.dotconfig file must be present) 
+rem     --require-git   - command must run within git repository 
+rem     --require-nogit - command cannot run within git repository
+rem     --require-param - at least one (default) parameter is required 
+rem 
+rem [parameters]   - Pass privided parameters %1 %2 %3 %4 or %* 
 
 rem Example: 
-rem @call _dots %~n0 "This is a script" "[some|parameter]" "dg1" %1 %2 %3 %4
+rem @call _dots %~n0 --require-dot %*
 
-rem set this .script help text and usage syntax
+if /i "%~1" equ "" exit 
 
-if /i "%~1" equ "" exit
+rem boot strap can be nested so the flags must be cleared before parse
 
+
+call _dotargs %*
 call :get_time_stamp
 call :get_current_dir
 call :init_dots
 
-rem always update flags as the script may call another where requirements are different
 set DOT_COMMAND_NAME=%~1
-set DOT_CMD_FLAGS=%~2
-set DOT_FLAG_SKIP_CONFIG_CHECK=
-set DOT_FLAG_SKIP_GITREPO_CHECK=
-set DOT_FLAG_SKIP_PARAM_CHECK=
-set DOT_FLAG_SKIP_NO_GITREPO_ONLY=
+if defined DOT_ARG_HELP call _dothelp %DOT_COMMAND_NAME%.cmd & exit /b 1 
 
-if "%DOT_CMD_FLAGS:~0,1%" neq "d" set DOT_FLAG_SKIP_CONFIG_CHECK=1
-if "%DOT_CMD_FLAGS:~1,1%" neq "g" set DOT_FLAG_SKIP_GITREPO_CHECK=1
-if "%DOT_CMD_FLAGS:~1,1%" neq "G" set DOT_FLAG_SKIP_NO_GITREPO_ONLY=1
-if "%DOT_CMD_FLAGS:~2,1%" neq "1" set DOT_FLAG_SKIP_PARAM_CHECK=1
-
-
-rem call help and exit script if help was requested
-rem call _dothelp %~1
-rem if %ERRORLEVEL% equ 1 exit /b
+if not defined DOT_ARG_REQUIRE-DOT set DOT_FLAG_SKIP_CONFIG_CHECK=1
+if not defined DOT_ARG_REQUIRE-GIT set DOT_FLAG_SKIP_GITREPO_CHECK=1
+if not defined DOT_ARG_REQUIRE-NOGIT set DOT_FLAG_SKIP_NO_GITREPO_ONLY=1
+if not defined DOT_ARG_REQUIRE-PARAM set DOT_FLAG_SKIP_PARAM_CHECK=1
 
 
 rem skip parameter check if it is not required  
 if /i "%DOT_FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotconfig
-if /i "%~3" neq "" goto find_dotconfig
+if /i "%DOT_ARG_DEFAULT%" neq "" goto find_dotconfig
 
 call _dothelp %DOT_COMMAND_NAME%.cmd
-exit /b 1
+exit /b 1 
 
 
 :find_dotconfig
@@ -84,13 +73,13 @@ if "%ECHO_LOCAL_CONFIG%" neq "" echo %ECHO_LOCAL_CONFIG%
 :skip_dotconfig
 if "%DOT_FLAG_SKIP_NO_GITREPO_ONLY%" equ "1" goto check_gitrepo
 git rev-parse --is-inside-work-tree 1>nul 2>nul
-if %ERRORLEVEL% equ 0 echo %~1 cannot run inside existing git repository.&exit /b 1
+if %ERRORLEVEL% equ 0 set DOT_ARG_INSIDE_GIT_REPO=1&echo %~1 cannot run inside existing git repository.&exit /b 1
 
 
 :check_gitrepo
 if "%DOT_FLAG_SKIP_GITREPO_CHECK%" equ "1" goto skip_gitrepo
 git rev-parse --is-inside-work-tree 1>nul 2>nul
-if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository.& exit /b 1
+if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository.&exit /b 1
 
 rem get the current git branch name only if git is available
 for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set DOT_GIT_BRANCH=%%F

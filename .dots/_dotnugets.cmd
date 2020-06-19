@@ -1,4 +1,3 @@
-@echo off
 rem Configure .dot nuget source and feed. .dot's local nuget feed is %USERPROFILE%\.nuget\local
 rem This can be overriden by %DOT_CID_NUGET_FEED% environment variable and redirected to any folder. 
 set DOT_DEFAULT_NUGET_FEED=%USERPROFILE%\.nuget\local

@@ -1,5 +1,6 @@
-@echo off
 rem This is batch command line argument parser written on 23rd of May 2020 by Matt Janda
+rem Argument cleanup added on 16th of June 2020 by Matt Janda
+rem 
 rem Usage: example.cmd --show-message --message "Hello World" --by "Matt Janda" "I am default argument"
 rem 
 rem call _dotargs %*
@@ -8,11 +9,27 @@ rem if %DOT_ARG_SHOW-MESSAGE% neq 1 goto :eof
 rem if defined DOT_ARG_MESSAGE echo %DOT_ARG_MESSAGE%
 rem if defined DOT_ARG_BY echo %DOT_ARG_BY%
 
+rem This script is called from _dots.cmd with the first argument set to the caller. 
+rem It cannot be treated as default argument value
+set IGNORE_FIRST_DEFAULT_ARG=1
+
+call :clear_arguments
 call :parse_arguments %*
 goto :eof
 
 
+:clear_arguments
+rem clear all variables starting with DOT_ARG_
+for /f "tokens=1* delims==" %%x in ('set') do call :clear_argument %%x 
+goto :eof
 
+:clear_argument
+set VAR=%~1
+if "%VAR:~0,8%" neq "DOT_ARG_" goto :eof
+
+rem clear it
+set %VAR%=
+goto :eof
 
 
 :parse_arguments
@@ -43,6 +60,14 @@ if "%DOT_ARG_NAME%" equ "" goto :parse_next
 rem check if saved parameter is argument i.e. starts with argument prefix
 if /i "%DOT_ARG_NAME:~0,2%" equ "--" goto :parse_value
 rem if saved parameter is not an argument then continue parsing
+
+
+rem if not defined IGNORE_FIRST_DEFAULT_ARG goto :parse_default
+rem _dotargs are called from _dots where the caller is givin as first argument
+rem skip argument zero i.e. the caller script
+if not defined DOT_ARG_ZERO set DOT_ARG_ZERO=%DOT_ARG_NAME%&goto :parse_next
+
+:parse_default
 rem if not yet default arument was found treat the first as default value
 if not defined DOT_ARG_DEFAULT set DOT_ARG_DEFAULT=%DOT_ARG_NAME%
 goto :parse_next

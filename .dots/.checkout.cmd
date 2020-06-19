@@ -1,9 +1,15 @@
-@call _dots %~n0 " g1" %1 %2 %3
+@call _dots %~n0 %* --require-git --require-param
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Checkout branch by partial name
+rem ::: Git branch checkout
 rem ::: 
-rem ::: .CHECKOUT <partial-branch-name>
+rem ::: .CHECKOUT <branch name>
+rem ::: 
+rem ::: Parameters: 
+rem :::     branch name - full or partial branch name
+rem ::: 
+rem ::: Description: 
+rem :::     Finds matching branch and check it out. 
 rem ::: 
 
 echo Searching for branch like %1

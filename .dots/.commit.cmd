@@ -1,19 +1,25 @@
-@call _dots %~n0 " g1" %1 %2 %3
+@call _dots %~n0 %* --require-git --require-param 
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Stage changes and commit
+rem ::: Git commit
 rem ::: 
-rem ::: .COMMIT <comment> [chore|fix|feat]
+rem ::: .COMMIT <comment> [prefix]
 rem ::: 
 rem ::: Parameters:
-rem :::     comment - comment text
+rem :::     comment - Comment text
+rem :::     prefix - Conventional commit prefix
 rem ::: 
 rem ::: Description: 
 rem :::     Display all unstaged changes and prompt user before continue. 
 rem :::     When user confirms [Y] it stage the changes and commit with the comment.
+rem :::     The prefix is added to the comment text. e.g. chore|fix|feat
 rem ::: 
 rem ::: Examples: 
 rem :::     .commit "Hello World"
+rem :::     .commit "Add something" chore
+rem :::     .commit "Add great feature" feat
+rem :::     .commit "Name parser miss a letter" fix
+rem ::: 
 
 
 echo You are about to stage all and commit "%~2: %~1"

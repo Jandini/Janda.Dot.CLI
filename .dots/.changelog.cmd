@@ -1,9 +1,20 @@
-@call _dots %~n0 " g" %1 %2 %3
+@call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
 
-rem ::: Use standard-version to generate change log
+rem ::: Dots changelog
 rem ::: 
 rem ::: .CHANGELOG [dry]
+rem ::: 
+rem ::: Parameters: 
+rem :::     dry - dry run to show the actions and the change log
+rem ::: 
+rem ::: Description: 
+rem :::     Automatically update CHANGELOG.md file based on conventional commits. 
+rem :::     Use standard-version to generate change log file. 
+rem :::     It will generate log since the last chore(release): x.x.x commit. 
+rem :::     The generated log is automatically inserted into exisiting CHANGELOG.md or new is created. 
+rem :::     The change is commited with chore(release): y.y.y comment.
+rem :::     This command can be executed after the release is started.
 rem ::: 
 
 
