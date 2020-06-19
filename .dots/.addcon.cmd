@@ -23,13 +23,13 @@ call _dotname "%~1" PROJECT_NAME
 call _dotsrc
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-call _dotnew dotcon %PROJECT_NAME% 
+call _dotadd dotcon %PROJECT_NAME% 
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 rem Make sure the namespace is provided to the abstractions
 if not defined DOT_ARG_NAMESPACE set DOT_ARG_NAMESPACE=%PROJECT_NAME%
 
-call _dotnew dotconabs %PROJECT_NAME%.Abstractions
+call _dotadd dotconabs %PROJECT_NAME%.Abstractions
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 call _dotsln %PROJECT_NAME%
