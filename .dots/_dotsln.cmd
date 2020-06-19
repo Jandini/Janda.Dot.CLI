@@ -18,5 +18,5 @@ rem add the project to solution
 echo Adding %~1 application to %SOLUTION_FILE%
 dotnet sln %SOLUTION_FILE% add "%~1"
 
-echo Restoring packages for %LIBRARY_NAME%
+echo Restoring packages for %~1
 dotnet restore %~1 --ignore-failed-sources 
