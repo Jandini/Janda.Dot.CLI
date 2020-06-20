@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using Microsoft.Extensions.Logging;
 
 namespace Dot.Console
 {
@@ -9,7 +10,10 @@ namespace Dot.Console
         public bool Verbose { get; set; }
 
 #endif
-        [Option("logdir", Required = false, HelpText = "Set log directory and enable logging to file")]
+        [Option("logdir", Hidden = true, Required = false)]
         public string LogDir { get; set; }
+
+        [Option("loglevel", Hidden = true, Default = LogLevel.Information)]
+        public LogLevel LogLevel { get; set; }
     }
 }
