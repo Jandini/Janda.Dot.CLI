@@ -6,43 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-
- - npm install -g standard-version
- - As user I want to be able to undo last commit with keeping changes by default so I can commit the changes again
- - Added new argument parser .newlib allow --namespace 
- - Add namespace parameter to addlib that use and generate <RootNamespace>Janda.Runtime</RootNamespace> in .csproj
- - Add .newlib command
- - Allow to override .pack command by placing .pack.cmd in root folder.
- - Git hooks for Semantic Commit Messages https://www.conventionalcommits.org/, https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716, https://github.com/fteem/git-semantic-commits
- - New .clean command
- - The .push command pushes all branches followed by tags
- - Current build to Jenkinsfile
- - Added XUnit tests support. Added .addtest to add and .test to run tests
- - _nuget.cmd to configure path to DOT_LOCAL_NUGET_FEED and DOT_NUGET_SOURCES parameters 
- - .nuspec file builder
- - Dot.Console.Abstraction template
- - The template.json file parser error handling for pack command
- - Smarter update and revert of template version
- - Message "You are about to commit" to .commit command
- - New .push command
- - Expose new .net core 3 publishing features through DOT_PUBLISH_ARGUMENTS
- - DOT_PUBLISH_RUNTIMES to .dotconfig to define runtime targets publish
- - DOT_PUBLISH_ARGUMENTS to .dotconfig file to define list of parameters .e.g. -p:PublishSingleFile=true -p:PublishTrimmed=true
- - DOT_DEBUG environment variable
- - Added CHANGELOG.md file to dot repository
- - Comments handler for .dotconfig and .dotlocal files.
- - .dotlocal configuration file
- - template error handling for .newdot command.
- - git stash support to .init command. Allow to run init git flow after git clone from any remote and changes were made.
- - gitlog command
- - .newcon command to create new dot repo and add console application
- - .checkout command that allows checkout from partial branch name
- - double dots to avoid extension conflicts. e.g. ..master command will not conflict with .master extension 
-
+ - Add DOT_PUBLISH_RUNTIMES to .dotconfig to define runtime targets publish
+ - Add DOT_PUBLISH_ARGUMENTS to .dotconfig file to define list of parameters .e.g. -p:PublishSingleFile=true -p:PublishTrimmed=true
+ - Add DOT_DEBUG environment variable
+ - Add template error handling for .newdot command.
+ - Add git stash support to .init command. Allow to run init git flow after git clone from any remote and changes were made.
+ - Add .gitlog command
+ - Add .newcon command to create new dot repo and add console application
+ - Add .checkout command that allows checkout from partial branch name
 
 ### Changed
 
- - Remove grep 
  - Move build version to .dotversion file. Dot's file will read it. 
  - Replace get datetime stamp based on wmic with environment variables
  - Added  installer script that adds .dots to path
@@ -78,20 +52,20 @@ All notable changes to this project will be documented in this file.
 
 ### Issues
 
- * GitVersion 5.1.2
- * C:\Users\Administrator\.nuget\packages\gitversiontask\5.1.1\build\GitVersionTask.targets(10,9): error MSB4062: The "WriteVersionInfoToBuildLog" task could not be loaded from the assembly C:\Users\Administrator\.
+ - GitVersion 5.1.2
+ - C:\Users\Administrator\.nuget\packages\gitversiontask\5.1.1\build\GitVersionTask.targets(10,9): error MSB4062: The "WriteVersionInfoToBuildLog" task could not be loaded from the assembly C:\Users\Administrator\.
    nuget\packages\gitversiontask\5.1.1\build\..\tools\netstandard2.0\GitVersionTask.MsBuild.dll. Assembly with same name is already loaded Confirm that the <UsingTask> declaration is correct, that the assembly and
    all its dependencies are available, and that the task contains a public class that implements Microsoft.Build.Framework.ITask. [C:\Users\Administrator\Source\Repos\Common\Common.Extensions\src\Common.Extensions.
    Hosting\Common.Extensions.Hosting.csproj]
 
- * WIP: You are working on feature/remove-watchers. Do you want to SWITCH to feature/philipe-extraction now (Y/[N])?y
+ - WIP: You are working on feature/remove-watchers. Do you want to SWITCH to feature/philipe-extraction now (Y/[N])?y
 
- * C:\Users\Administrator\Source\Repos\Common\Common.Extensions>.restore
+ - C:\Users\Administrator\Source\Repos\Common\Common.Extensions>.restore
    MSBUILD : error MSB1003: Specify a project or solution file. The current working directory does not contain a project or solution file.
    Searching for dotset repositories in Common.Extensions...
    Running dotnet for C:\Users\Administrator\Source\Repos\Common\Common.Extensions\.
 
- * Missing dotnet template causes odd behaviour in .newdot (fixed in 1.3.0)
+ - Missing dotnet template causes odd behaviour in .newdot (fixed in 1.3.0)
 
 
 ### Added
@@ -127,16 +101,11 @@ All notable changes to this project will be documented in this file.
  - As user I can run .pack, .build and .restore commands only within single project by giving '.' parameter. 
  - As user I can use .feature command to checkout feature branch so I can work on it 
  - As user I cannot execute git based commands outside git repositories 
-
-### Removed
-
- - As user I don't need .prerequisites as separate command 
    
-
 ## [1.1.0] - 2019-10-20
 
  - We are walking
 
 ## [1.0.0] - 2019-10-18
 
- - Hello world 
+ - Hello world
