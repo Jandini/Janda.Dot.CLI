@@ -14,8 +14,6 @@ namespace Dot.Console
             return Application.Run<Program, Options>(options => Parser.Default.ParseArguments<Options>(args).WithParsed(options));
         }
 
-        #region IApplicationProgram
-
         public void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
@@ -47,7 +45,5 @@ namespace Dot.Console
                 loggerConfiguration.CreateLogger(),
                 dispose: true);
         }
-
-        #endregion
     }
 }
