@@ -55,8 +55,12 @@ namespace Dot.Console
                 }
                 catch (Exception ex)
                 {
-                    GetService<ILogger<Application>>()?.LogCritical(ex, ex.Message);
-                    throw;
+                    var logger = GetService<ILogger<Application>>();
+                    logger?.LogCritical(ex, ex.Message);
+                    returnCode = ex.HResult;
+
+                    if (logger == null)
+                        throw;
                 }
             });
 
