@@ -1,76 +1,110 @@
-@call _dots %~n0 "Start new or checkout existing feature. Finish current feature. Update current feature from develop branch. Delete current feature." "[-u(pdate)|[-d(elete)] <[feature-branch-name]>" " g" %1 %2 %3
+@call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
 
-rem exit if not a git repository
-if "%DOT_GIT_BRANCH%" equ "" exit /b
+rem ::: Git flow feature
+rem ::: 
+rem ::: .FEATURE [branch name|--update|--delete]
+rem ::: 
+rem ::: Parameters:
+rem :::     branch name - New or existing feature branch name
+rem :::     update - Fast forward current feature to match develop branch
+rem :::     delete - Delete current feature branch
+rem :::     
+rem ::: Description: 
+rem :::     Start new or checkout existing feature when the branch name is provided. 
+rem :::     Feature branch name is automatically prefixed with feature/.
+rem :::     Finish current feature when called without arguments while working on feature branch. 
+rem :::     Update or Delete current feature branch when the update or delete parameter is provided.
+rem ::: 
+rem ::: Examples: 
+rem :::     .feature great-feature
+rem :::     .feature 
+rem :::     .feature another-feature
+rem :::     .feature --update
+rem :::     .feature --delete
 
-set PARAM_BRANCH=%1
+set FEATURE_BRANCH_NAME=%DOT_ARG_DEFAULT%
 
-:parameter_delete
-rem parameter -d(elete) script block
-if /i "%PARAM_BRANCH:~0,2%" neq "-d" goto parameter_update
 
-rem allow to delete only feature branch
-if "%DOT_GIT_BRANCH:~0,8%" neq "feature/" echo Branch %DOT_GIT_BRANCH% is not feature branch. && exit /b
+if /i "%DOT_GIT_BRANCH:~0,8%" equ "feature/" call :on_feature_branch&exit /b %ERRORLEVEL%
+if /i "%DOT_GIT_BRANCH%" equ "develop" call :on_non_feature_branch&exit /b %ERRORLEVEL%
+if /i "%DOT_GIT_BRANCH%" equ "master" call :on_non_feature_branch&exit /b %ERRORLEVEL%
+
+goto :eof
+
+
+
+:on_feature_branch
+if defined DOT_ARG_UPDATE call :update_branch&exit /b %ERRORLEVEL%
+if defined DOT_ARG_DELETE call :delete_branch&exit /b %ERRORLEVEL%
+
+if "%FEATURE_BRANCH_NAME%" equ "" call :finish_feature&exit /b %ERRORLEVEL%
+
+
+set /P CONFIRM=WIP: You are working on %DOT_GIT_BRANCH%. Do you want to start new feature/%FEATURE_BRANCH_NAME% now (Y/[N])?
+if /i "%CONFIRM%" neq "Y" goto :eof
+call :start_feature %FEATURE_BRANCH_NAME%
+exit /b %ERRORLEVEL%
+
+
+
+:on_non_feature_branch
+if "%FEATURE_BRANCH_NAME%" equ "" (call :script_usage) else (call :start_feature "%FEATURE_BRANCH_NAME%")
+exit /b %ERRORLEVEL%
+
+
+
+
+:start_feature 
+git checkout feature/%FEATURE_BRANCH_NAME% 2>nul
+if %ERRORLEVEL% equ 0 echo The feature branch was found. You are now working on feature/%FEATURE_BRANCH_NAME%.&goto :eof
+echo Starting feature/%~1
+git flow feature start %~1
+goto :eof
+
+
+:finish_feature
+set /p CONFIRM=WIP: Do you want to finish the %DOT_GIT_BRANCH% now (Y/[N])?
+if /i "%CONFIRM%" neq "Y" goto :eof
+git flow feature finish
+goto :eof
+
+
+
+:update_branch
+call :ensure_feature_branch
+if %ERRORLEVEL% neq 0 goto :eof
+
+set /p CONFIRM=WARNING: You are working on %DOT_GIT_BRANCH%. Do you want to [U]pdate it from develop branch (U/[N])?
+if /i "%CONFIRM%" neq "U" goto :eof
+git merge develop 
+goto :eof
+
+
+:delete_branch
+rem delete only current feature branch
+call :ensure_feature_branch
+if %ERRORLEVEL% neq 0 goto :eof
+
 rem confirm before deleting
 set /p CONFIRM=WARNING: You are working on %DOT_GIT_BRANCH%. Do you want to [D]elete it (D/[N])?
-if /i "%CONFIRM%" neq "D" goto script_end
+if /i "%CONFIRM%" neq "D" goto :eof
 
 echo Checking out develop branch...
 git checkout develop
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 echo Deleting %DOT_GIT_BRANCH% 
 git branch -d %DOT_GIT_BRANCH%
-goto script_end
+goto :eof
 
 
-:parameter_update
-if /i "%PARAM_BRANCH:~0,2%" neq "-u" goto script_start
-if "%DOT_GIT_BRANCH:~0,8%" neq "feature/" echo Branch %DOT_GIT_BRANCH% is not feature branch. && exit /b
-set /p CONFIRM=WARNING: You are working on %DOT_GIT_BRANCH%. Do you want to [U]pdate it from develop branch (U/[N])?
-if /i "%CONFIRM%" neq "U" goto script_end
-git merge develop 
-goto script_end
-
-
-
-:script_start
-rem if we are on develop or master branch and the new feature branch name was not provided then end the script
-if /i "%DOT_GIT_BRANCH%" equ "develop" (if "%PARAM_BRANCH%" equ "" (goto script_usage) else (goto feature_start)) 
-if /i "%DOT_GIT_BRANCH%" equ "master" (if "%PARAM_BRANCH%" equ "" (goto script_usage) else (goto feature_start)) 
-
-rem allow to switch feature branches
-if "%DOT_GIT_BRANCH:~0,8%" equ "feature/" ( if "%PARAM_BRANCH%" neq "" goto feature_switch ) 
-
-goto feature_finish
-
-:feature_switch
-rem make sure we don't switch without confirmation
-set /P CONFIRM=WIP: You are working on %DOT_GIT_BRANCH%. Do you want to start new feature/%PARAM_BRANCH% now (Y/[N])?
-if /i "%CONFIRM%" neq "Y" goto script_end
-
-
-:feature_start
-set CHECKOUT_BRANCH=feature/%PARAM_BRANCH%
-git checkout %CHECKOUT_BRANCH% 2>nul
-if %ERRORLEVEL% equ 0 echo Checkout existing %CHECKOUT_BRANCH% completed successfully.&& goto script_end
-echo Starting feature/%1
-git flow feature start %PARAM_BRANCH%
-goto script_end
-
-
-:feature_finish
-set /p CONFIRM=WIP: Do you want to finish the %DOT_GIT_BRANCH% now (Y/[N])?
-if /i "%CONFIRM%" neq "Y" goto script_end
-git flow feature finish
-goto script_end
+:ensure_feature_branch
+if "%DOT_GIT_BRANCH:~0,8%" neq "feature/" echo Branch %DOT_GIT_BRANCH% is not feature branch.&exit /b 1
+goto :eof
 
 
 :script_usage
 call .help feature 
 echo.
-git branch | grep feature/
-
-
-:script_end
-exit /b %ERRORLEVEL%
+git branch | findstr feature/
+exit 0

@@ -1,17 +1,33 @@
-@call _dots %~n0 "Get current version and set DOT_GIT_VERSION variable (InformationalVersion is default)" "[InformationalVersion|AssemblySemFileVer|MajorMinorPatch...]" " g" %1 %2 %3
+@call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
 
-if "%1" equ "" (set VERSION_NAME=InformationalVersion) else (set VERSION_NAME=%1)
-echo Retrieving %VERSION_NAME%...
-set setver=%temp%\_dot%RANDOM%version.cmd 
-gitversion | jq -r "\"set DOT_GIT_VERSION=\"+ .%VERSION_NAME%" > %setver% 2>nul
-if %ERRORLEVEL% neq 0 goto fixed_version
-call %setver%
-del /q %setver%
-goto exit
+rem ::: Git semantic version
+rem ::: 
+rem ::: .VERSION [variable name]
+rem ::: 
+rem ::: Parameters: 
+rem :::     variable name - gitversion variable name
+rem ::: 
+rem ::: Description: 
+rem :::     Get current version and set DOT_GIT_VERSION variable (InformationalVersion is default)
+rem :::     Gitversion variable names: InformationalVersion|AssemblySemFileVer|MajorMinorPatch... 
+rem :::     For more variable names run gitversion.
+rem ::: 
 
-:fixed_version
-set DOT_GIT_VERSION=0.0.0
 
-:exit
-echo %VERSION_NAME% is %DOT_GIT_VERSION%
+set VERSION_NAME=InformationalVersion
+
+if "%DOT_ARG_DEFAULT%" neq "" set VERSION_NAME=%DOT_ARG_DEFAULT%
+call :get_version %VERSION_NAME%
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+echo %DOT_GIT_VERSION%
+goto :eof
+
+
+:get_version
+set DOT_GIT_VERSION=
+for /f %%i in ('gitversion /showvariable %1') do set DOT_GIT_VERSION=%%i
+if "%DOT_GIT_VERSION%" neq "" goto :eof
+where gitversion 2>nul
+if %ERRORLEVEL% equ 0 (set DOT_GIT_VERSION=0.0.0) else (exit /b %ERRORLEVEL%)
+goto :eof

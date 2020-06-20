@@ -1,7 +1,16 @@
-@call _dots %~n0 "Start new or finish git flow release in progress" "" " g" %1 %2 %3
-rem :.release is parameterless
-rem :Start new or finish git flow release in progress. 
+@call _dots %~n0 %* --require-git
 if %ERRORLEVEL% equ 1 exit /b
+
+rem ::: Git flow release
+rem ::: 
+rem ::: .RELEASE
+rem ::: 
+rem ::: Description: 
+rem :::     Start new or finish git flow release in progress.
+rem :::     A release branch is created. The first release version is always 1.0.0. The next would be 1.1.0 and so on.
+rem :::     When the release is started he command offers to complete the release process automatically.
+rem :::     The release process consist of finish and pack the libraries into nuget from master branch. 
+rem ::: 
 
 rem exit if not a git repository
 if "%DOT_GIT_BRANCH%" equ "" exit
@@ -38,7 +47,8 @@ set NO_CONFIRM=Y
 :start
 echo Starting release/%DOT_GIT_VERSION%
 git flow release start %DOT_GIT_VERSION%
-if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
+if %ERRORLEVEL% equ 1 echo Initializing... Run .release again when init is complete...&.init
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 rem get release branch name
 for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set DOT_GIT_BRANCH=%%F
@@ -56,7 +66,7 @@ goto release
 set NO_CONFIRM=Y
 
 :release
-git flow release finish -m "%DOT_GIT_VERSION%"
+git flow release finish -m "Released on %DATE% %TIME% version "
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
 
 

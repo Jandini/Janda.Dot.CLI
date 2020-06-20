@@ -1,0 +1,4 @@
+# ECHO_LOCAL_CONFIG=Use local config to override local settings
+
+# Use console instead nul device in tests
+DOT_OUT=con

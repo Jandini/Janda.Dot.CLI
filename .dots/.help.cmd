@@ -1,33 +1,48 @@
-@call _dots %~n0 "List all available scripts or get single command description and syntax" "[command name|--help|--usage]" "" %1 %2 %3
+@call _dots %~n0 %*
 if %ERRORLEVEL% equ 1 exit /b
 
-call .dots
-
-set DOTS_MASK=.*.cmd  
-set DOTS_HELP=--help
-set DOTS_NAME=%1
-
-
-if /i "%DOTS_NAME:~0,1%" equ "." goto already_dotted
-set DOTS_NAME=.%DOTS_NAME%
-
-:already_dotted
-if /i "%DOTS_NAME%" neq "." goto help_show_signle_command
-goto help_show_all_commands
-
-
-:usage_show_all_commands
-set DOTS_HELP=--usage
-goto help_show_all_commands
+rem ::: Dots help
+rem ::: 
+rem ::: .HELP [command name|search term]
+rem ::: 
+rem ::: Parameters: 
+rem :::     command name - Name of the comand  
+rem :::     search term - Keyword search term
+rem ::: 
+rem ::: Description: 
+rem :::     Show available commands with short description. 
+rem :::     When command name is provided display given command's help.
+rem :::     If command is not found by name then the command name is considered as search term.
+rem :::     Search is performed in  available commands list i.e. command's name and short description.
+rem ::: 
 
 
-:help_show_signle_command
-if not exist %DOTS_PATH%%DOTS_NAME%.cmd echo %DOTS_NAME% script is missing && exit /b 2 
-call %DOTS_NAME% --help
-call %DOTS_NAME% --usage
-goto exit
+call :parse_name %1
 
-:help_show_all_commands
-for /f %%f in ('dir /b %DOTS_PATH%%DOTS_MASK%') do if "%%f" neq "%~nx0" call %DOTS_PATH%%%f %DOTS_HELP% 
+if "%COMMAND_NAME%" equ "" (call :show_all) else (call :show_one %1)
+goto :eof
 
-:exit
+
+:show_one
+call _dothelp %COMMAND_NAME%.cmd
+if %ERRORLEVEL% equ 0 goto :eof
+echo Searching help for %~1...
+call :show_all > "%TEMP%\.help" 
+echo.
+type "%TEMP%\.help" | findstr /i %~1
+
+goto :eof
+
+:show_all
+set DOT_CMD_MASK=.?*.cmd  
+for /f %%f in ('dir /b %DOT_PATH%%DOT_CMD_MASK%') do call _dothelp %%f desc
+goto :eof
+
+
+:parse_name
+if "%~1" equ "" goto :eof
+set COMMAND_NAME=%~1
+if /i "%COMMAND_NAME:~0,1%" equ "." goto :eof
+if /i "%COMMAND_NAME:~0,2%" equ "." goto :eof
+set COMMAND_NAME=.%COMMAND_NAME%
+goto :eof

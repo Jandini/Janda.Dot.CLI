@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Matt Janda",
+  "classifications": ["Janda.Dots.CLI"],
+  "name": "dot git hooks",
+  "generatorVersions": "[1.0.0.0-*)",
+  "description": "dot git hooks",
+  "groupIdentity": "dot.githooks",
+  "precedence": "4000",
+  "identity": "dot.githooks",
+  "shortName": "dotgithooks",
+  "tags": {
+    "language": "",
+    "type": "library"
+  },
+  "sourceName": "Dot.GitHooks",
+  "preferNameDirectory": true
+}

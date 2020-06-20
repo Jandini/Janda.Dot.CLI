@@ -1,122 +1,180 @@
-@echo off
-set DOT_NUL=nul
-if /i "%DOT_TRACE%" equ "1" echo on && set DOT_NUL=con
+@if not defined DOT_DEBUG @echo off
 
-rem TODO: add number of required parameters - show help when not match => Usage: call _dots <caller script name> <help text|""> <usage syntax|""> <number of required parameters> <flags string> [parameters]
-rem TODO: add flags "" "dg" "d" " g" "  1" "dg1" 
-rem TODO: help via grep type _dots.cmd | grep -o -P (?^<=rem).*
+rem This is boot strap script. 
 
-rem This is a boot strap script. It will handle 
-
-rem Usage: @call _dots <caller name> <help text|""> <usage syntax|""> <script flags> [parameters %1 %2 %3 %4]
+rem Usage: @call _dots <caller name> [--require-dot] [--require-git|--require-nogit] [--require-param] [parameters]
 rem 
 rem <caller name>  - Calling script name. It should be always set to %~n0
-rem <help text>    - Text to be displayed when help is requested
-rem <usage synax>  - Usage syntax when usage help is requested
-rem <script flags> - Flag string. Each position in string represents one flag. Space character represents the flag as not set.
-rem                  Available flags: "dg"
-rem                  d - command must be run in dot repository (.dotset file must be present) 
-rem                  g - command must be run withing git repository
-rem                  1 - at least one parameter is required (%~1 checking as unquoted)
-rem [parameters]   - Pass privided parameters %1 %2 %3 %4
+rem 
+rem     --require-dot   - command must be run in dot repository (.dotconfig file must be present) 
+rem     --require-git   - command must run within git repository 
+rem     --require-nogit - command cannot run within git repository
+rem     --require-param - at least one (default) parameter is required 
+rem 
+rem [parameters]   - Pass privided parameters %1 %2 %3 %4 or %* 
 
 rem Example: 
-rem @call _dots %~n0 "This is a script" "[some|parameter]" "dg1" %1 %2 %3 %4
+rem @call _dots %~n0 --require-dot %*
 
-rem set this .script help text and usage syntax
+if /i "%~1" equ "" exit 
 
-
-if /i "%~1" equ "" exit
-
-rem get properties only once
-if defined TIME_STAMP goto already_defined
-rem get timestamp
-for /f "skip=1" %%x in ('wmic os get localdatetime') do if not defined TIME_STAMP set TIME_STAMP=%%x
-set DATE_STAMP=%TIME_STAMP:~0,8%
-
-rem get directory where script was executed
-for %%I in (.) do set DOT_CURRENT_DIR_NAME=%%~nxI
-set DOT_CURRENT_DIR_PATH=%cd%
-
-:already_defined
-
-rem always update flags as the script may call another where requirements are different
-set DOTS_FLAGS=%~4
-
-set FLAG_SKIP_DOTSET_CHECK=
-set FLAG_SKIP_GITREPO_CHECK=
-set FLAG_SKIP_PARAM_CHECK=
-
-if /i "%DOTS_FLAGS:~0,1%" neq "d" set FLAG_SKIP_DOTSET_CHECK=1
-if /i "%DOTS_FLAGS:~1,1%" neq "g" set FLAG_SKIP_GITREPO_CHECK=1
-if /i "%DOTS_FLAGS:~2,1%" neq "1" set FLAG_SKIP_PARAM_CHECK=1
+rem boot strap can be nested so the flags must be cleared before parse
 
 
-set DOTS_FILE=.dotset
-set DOTS_PATH=%~dp0
-set DOTS_TYPE=local
-set DOTS_GLOBAL=%USERPROFILE%\.dots\
-if "%DOTS_PATH%" equ "%DOTS_GLOBAL%" set DOTS_TYPE=global
+call _dotargs %*
+call :get_time_stamp
+call :get_current_dir
+call :init_dots
 
-set DOT_BASE_PATH=.
-set DOT_BASE_NAME=
+set DOT_COMMAND_NAME=%~1
+if defined DOT_ARG_HELP call _dothelp %DOT_COMMAND_NAME%.cmd & exit /b 1 
 
-set HELP_TEXT=%~2
-set HELP_USAGE=%3
+if not defined DOT_ARG_REQUIRE-DOT set DOT_FLAG_SKIP_CONFIG_CHECK=1
+if not defined DOT_ARG_REQUIRE-GIT set DOT_FLAG_SKIP_GITREPO_CHECK=1
+if not defined DOT_ARG_REQUIRE-NOGIT set DOT_FLAG_SKIP_NO_GITREPO_ONLY=1
+if not defined DOT_ARG_REQUIRE-PARAM set DOT_FLAG_SKIP_PARAM_CHECK=1
 
-rem call help and exit script if help was requested
-call _help %~5 %~1 
-if %ERRORLEVEL% equ 1 exit /b
 
 rem skip parameter check if it is not required  
-if /i "%FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotset
-if /i "%~5" neq "" goto find_dotset
+if /i "%DOT_FLAG_SKIP_PARAM_CHECK%" equ "1" goto find_dotconfig
+if /i "%DOT_ARG_DEFAULT%" neq "" goto find_dotconfig
 
-call _help --help %~1
-call _help --usage %~1 
-exit /b 1
+call _dothelp %DOT_COMMAND_NAME%.cmd
+exit /b 1 
 
 
-:find_dotset
+:find_dotconfig
 for %%I in (%DOT_BASE_PATH%) do set DOT_BASE_NAME=%%~nI%%~xI
-if exist %DOT_BASE_PATH%\%DOTS_FILE% goto use_dotset
+if exist %DOT_BASE_PATH%\%DOT_CONFIG% goto parse_dotconfig
 set DOT_BASE_PATH=%DOT_BASE_PATH%\..
 rem goto parent
-if "%DOT_BASE_NAME%" neq "" goto find_dotset
+if "%DOT_BASE_NAME%" neq "" goto find_dotconfig
 
-rem set base name to current folder if .dotset file not found
+rem set base name to current folder if .dotconfig file not found
 if "%DOT_BASE_NAME%" equ "" for %%I in (.) do set DOT_BASE_NAME=%%~nI%%~xI
 
 
-rem dotset file is required but file is not found
-if "%FLAG_SKIP_DOTSET_CHECK%" equ "1" goto skip_dotset
-echo %DOTS_FILE% not found 
+rem dotconfig file is required but file is not found
+if "%DOT_FLAG_SKIP_CONFIG_CHECK%" equ "1" goto skip_dotconfig
+echo %DOT_CONFIG% not found 
 exit /b 1
 
 
-:use_dotset
-cd %DOT_BASE_PATH%
-rem .dotset file consist of set statements VARIABLE=value(s)
-rem read all lines and apply as sets
-rem this file can be used to override e.g. DOT_BASE_NAME
-for /F "tokens=*" %%A in (%DOTS_FILE%) do set %%A
-    
+:parse_dotconfig
+cd "%DOT_BASE_PATH%"
+call :parse_config_file %DOT_CONFIG%
 
-:skip_dotset
+rem parse local config .dotlocal file if exists
+if exist %DOT_CONFIG_LOCAL% call :parse_config_file %DOT_CONFIG_LOCAL%
+rem this is only a test echo
+if "%ECHO_LOCAL_CONFIG%" neq "" echo %ECHO_LOCAL_CONFIG%
 
-if "%FLAG_SKIP_GITREPO_CHECK%" equ "1" goto skip_gitrepo
+
+:skip_dotconfig
+if "%DOT_FLAG_SKIP_NO_GITREPO_ONLY%" equ "1" goto check_gitrepo
 git rev-parse --is-inside-work-tree 1>nul 2>nul
-if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository. && exit /b 1
+if %ERRORLEVEL% equ 0 set DOT_ARG_INSIDE_GIT_REPO=1&echo %~1 cannot run inside existing git repository.&exit /b 1
+
+
+:check_gitrepo
+if "%DOT_FLAG_SKIP_GITREPO_CHECK%" equ "1" goto skip_gitrepo
+git rev-parse --is-inside-work-tree 1>nul 2>nul
+if %ERRORLEVEL% neq 0 echo %~1 must be run from a git repository.&exit /b 1
 
 rem get the current git branch name only if git is available
 for /F "tokens=* USEBACKQ" %%F in (`git rev-parse --abbrev-ref HEAD`) do set DOT_GIT_BRANCH=%%F
-
 :skip_gitrepo
 
-rem check if path variable contains local dots location
-rem for %%G in ("%PATH:;=" "%") do if /i %%G equ ".\.dots" goto exit
-rem echo You must add ".\.dots" to PATH variable. 
-rem exit 2
 
-:exit
+
+
+goto :eof
+
+
+:init_dots
+rem Subroutine:  init_dots
+rem Description: Initialize dot environment variables
+rem Output:      DOT_CONFIG - default config is ".dotconfig"
+rem              DOT_CONFIG_LOCAL - default local config is ".dotlocal"
+rem              DOT_PATH - current path
+rem              DOT_PATH_GLOBAL -
+rem              DOT_TYPE - "local" or "global"
+rem              DOT_BASE_PATH - set to current folder .
+rem              DOT_BASE_NAME - clear it 
+set DOT_CONFIG=.dotconfig
+set DOT_CONFIG_LOCAL=.dotlocal
+set DOT_PATH=%~dp0
+set DOT_PATH_GLOBAL=%USERPROFILE%\.dots\
+
+set DOT_TYPE=local
+if "%DOT_PATH%" equ "%DOT_PATH_GLOBAL%" set DOT_TYPE=global
+
+set DOT_BASE_PATH=.
+set DOT_BASE_NAME=
+goto :eof
+
+
+
+
+:parse_config_file
+rem Subroutine:  parse_config_file
+rem Description: Read config file line by line and execute SET command.
+rem              Comments are supported. Lines starting with # are ignored. 
+rem Notes:       .dotconfig or .dotlocal file consist of set statements VARIABLE=value(s)
+rem              this file can be used to override e.g. DOT_BASE_NAME
+rem Parameters:  %1 - input text/config file 
+rem Output:      GIVEN_VARIABLE=given_value
+rem Returns:     0
+
+for /F "tokens=*" %%A in (%1) do call :parse_config_line "%%A"
+goto :eof
+
+
+:parse_config_line
+rem Subroutine:  parse_config_line
+rem Description: This routine is called for each line in :parse_config_file. 
+rem              Assign value to environment variable unless it  starts  with # then line is ignored. 
+rem Parameters:  %~1 - single line like DOT_BASE_NAME=My.Name 
+rem Output:      GIVEN_VARIABLE=given_value
+rem Returns:     0
+
+set DOT_CONFIG_LINE=%~1
+rem skip line if first character is # 
+if "%DOT_CONFIG_LINE:~0,1%" equ "#" goto :eof
+set %DOT_CONFIG_LINE%
+goto :eof
+
+
+
+:get_time_stamp
+rem Subroutine:  get_time_stamp
+rem Description: Get current date and time and save it in environment variables. 
+rem              Execute once DOT_TIME_STAMP is not defined.
+rem Parameters:  -
+rem Output:      DOT_TIME_STAMP - full date and time (ddMMyyyy_HHmmss) e.g. 25052020_163447
+rem              DOT_DATE_STAMP - date only (ddMMyyyy) e.g. DOT_DATE_STAMP
+rem Returns:     0
+
+if defined DOT_TIME_STAMP goto :eof
+set DOT_TIME_STAMP=%date:/=%_%time::=%
+rem the date comes with .milliseconds so take only 15 first characters
+set DOT_TIME_STAMP=%DOT_TIME_STAMP:~0,15%
+rem get date only
+set DOT_DATE_STAMP=%DOT_TIME_STAMP:~0,8%
+goto :eof
+
+
+:get_current_dir
+rem Subroutine:  get_current_dir
+rem Description: Get the directory path and name where script was executed from.
+rem              Execute once DOT_CURRENT_DIR_PATH is not defined.
+rem Parameters:  -
+rem Output:      DOT_CURRENT_DIR_PATH - directory path
+rem              DOT_CURRENT_DIR_NAME - directory name
+rem Returns:     0
+
+if defined DOT_CURRENT_DIR_PATH goto :eof
+for %%I in (.) do set DOT_CURRENT_DIR_NAME=%%~nxI
+set DOT_CURRENT_DIR_PATH=%cd%
+goto :eof
 

@@ -1,11 +1,18 @@
-@call _dots %~n0 "Run (*resursively) dotnet pack for project in .current folder, repo's default solution or all BUILD_SLN defined in .dotset file" "[*|.|all]" "" %1 %2 %3
-if %ERRORLEVEL% equ 1 exit /b
+@_dotnet pack %~1
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-if "%1" equ "*" goto foreach 
+rem ::: Dotnet pack
+rem ::: 
+rem ::: .PACK [*|.]
+rem ::: 
+rem ::: Parameters: 
+rem :::     * - Search and run the command for each dot repository found.
+rem :::     . - Run the command for current directory only.
+rem ::: 
+rem ::: Description: 
+rem :::     Run the command for solution(s) found in dot repository.
+rem :::     For more details see .dotnet --help
+rem ::: 
 
-.dotnet pack %1
-
-:foreach
-.foreach dotnet pack %2
 
 
