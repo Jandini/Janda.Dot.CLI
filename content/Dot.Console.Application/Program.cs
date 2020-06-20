@@ -19,7 +19,7 @@ namespace Dot.Console
         public void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddSingleton<IApplicationService, Service>();
+                .AddSingleton<IApplicationService, ApplicationService>();
         }
 
         public IConfiguration CreateConfiguration()
