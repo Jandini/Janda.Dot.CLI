@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using CommandLine;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Dot.Console
 {
@@ -32,7 +33,7 @@ namespace Dot.Console
         {
             var loggerConfiguration = new LoggerConfiguration()
                 .ReadFrom.Configuration(Application.Configuration)
-                .WriteTo.ColoredConsole();
+                .WriteTo.Console(theme: AnsiConsoleTheme.Code, outputTemplate: "{Message:lj}{NewLine}{Exception}");
 
             var applicationOptions = Application.Options as Options;
 
