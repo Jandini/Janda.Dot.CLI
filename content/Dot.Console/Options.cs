@@ -1,7 +1,11 @@
 ﻿using CommandLine;
 using Microsoft.Extensions.Logging;
 
+<!--#if (nameSpace != "")-->
+namespace Dot.Namespace
+<!--#else -->
 namespace Dot.Console
+<!--#endif -->
 {
     internal class Options : IApplicationOptions
     {
