@@ -20,10 +20,10 @@ namespace Dot.Console
 #if (addArgs)
             if (_options.Verbose)
             {
-		_logger.LogInformation("Running {0} {1} {2}", Application.Name, Application.Version, _settings.Description);
+		_logger.LogInformation("Running {Name} {Version} {Description}", Application.Name, Application.Version, _settings.Description ?? string.Empty);
             }
 #else
-            _logger.LogInformation("Running {0} {1} {2}", Application.Name, Application.Version, _settings.Description);
+            _logger.LogInformation("Running {Name} {Version} {Description}", Application.Name, Application.Version, _settings.Description ?? string.Empty);
 #endif
             return 0;
         }
