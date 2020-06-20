@@ -5,6 +5,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <TargetsDir>$(ProjectDir)..\..\cid\targets</TargetsDir>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+<!--#if (nameSpace != "")-->
+    <RootNamespace>Dot.Namespace</RootNamespace>
+<!--#endif -->
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,9 +37,11 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
   </ItemGroup>
 
+<!--#if (addAbsRef)-->
   <ItemGroup>
     <ProjectReference Include="..\Dot.Console.Abstractions\Dot.Console.Abstractions.csproj" />
   </ItemGroup>
+<!--#endif -->
 
 <!--#if (!noGitVersion)-->
   <Import Project="$(TargetsDir)\GitVersion.targets" />  

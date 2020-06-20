@@ -6,7 +6,11 @@ using CommandLine;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
+<!--#if (nameSpace != "")-->
+namespace Dot.Namespace
+<!--#else -->
 namespace Dot.Console
+<!--#endif -->
 {
     class Program : IApplicationProgram
     {

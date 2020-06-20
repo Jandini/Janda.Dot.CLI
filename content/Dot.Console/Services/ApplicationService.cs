@@ -1,6 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 
+<!--#if (nameSpace != "")-->
+namespace Dot.Namespace
+<!--#else -->
 namespace Dot.Console
+<!--#endif -->
 {
     public class ApplicationService : IApplicationService
     {

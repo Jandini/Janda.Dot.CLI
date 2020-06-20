@@ -2,18 +2,18 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
   "classifications": ["Janda.Dots.CLI"],
-  "name": "dot console",
+  "name": "dot console appsettings",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "dot console application",
-  "groupIdentity": "dot.console",
+  "description": "dot console applications settings",
+  "groupIdentity": "dot.console.settings",
   "precedence": "4000",
-  "identity": "dot.console",
-  "shortName": "dotcon",
+  "identity": "dot.console.settings",
+  "shortName": "dotconset",
   "tags": {
     "language": "",
     "type": "library"
   },
-  "sourceName": "Dot.Console",
+  "sourceName": "Dot.Console.Settings",
   "preferNameDirectory": true,
   "sources": [
     {
@@ -32,17 +32,7 @@
   "symbols": {
     "sourceName": {
       "type": "parameter",
-      "replaces": "Dot.Console"
-    },
-    "noGitVersion": {
-      "type": "parameter",
-      "datatype": "bool",
-      "defaultValue": "false"
-    },
-    "addArgs": {
-      "type": "parameter",
-      "datatype": "bool",
-      "defaultValue": "false"
+      "replaces": "Dot.Console.Settings"
     },
     "nameSpace": {
       "type": "parameter",
