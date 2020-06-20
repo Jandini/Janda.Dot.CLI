@@ -97,8 +97,6 @@ All notable changes to this project will be documented in this file. See [standa
 * Replace grep with findstr ([2cf3fce](http://nas/matt/Janda.Dots.CLI/commit/2cf3fce8853e447702fde536395f222d2de82680))
 * Update Jenkinsfile ([3baa7b2](http://nas/matt/Janda.Dots.CLI/commit/3baa7b2d25477100ea2db9625e1a34f0202050ff))
 
-## [1.3.0]
-
 ### Added
 
  - Add DOT_PUBLISH_RUNTIMES to .dotconfig to define runtime targets publish
@@ -143,7 +141,7 @@ All notable changes to this project will be documented in this file. See [standa
  - .branch use .checkout if branch not found
 
 
-## [1.2.0] - 2019-11-27
+## [1.2.0](http://nas/matt/Janda.Dots.CLI/compare/1.1.0...1.2.0) (2019-11-27)
 
 ### Issues
 
@@ -197,10 +195,10 @@ All notable changes to this project will be documented in this file. See [standa
  - As user I can use .feature command to checkout feature branch so I can work on it 
  - As user I cannot execute git based commands outside git repositories 
    
-## [1.1.0] - 2019-10-20
+## [1.1.0](http://nas/matt/Janda.Dots.CLI/compare/1.0.0...1.1.0) (2019-10-20)
 
  - We are walking
 
-## [1.0.0] - 2019-10-18
+## 1.0.0 (2019-10-18)
 
  - Hello world
