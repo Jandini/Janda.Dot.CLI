@@ -10,14 +10,13 @@ rem :::     variable name - gitversion variable name
 rem ::: 
 rem ::: Description: 
 rem :::     Get current version and set DOT_GIT_VERSION variable (InformationalVersion is default)
-rem :::     Gitversion variable names: InformationalVersion|AssemblySemFileVer|MajorMinorPatch... 
+rem :::     Gitversion variable names: InformationalVersion|AssemblySemFileVer|MajorMinorPatch ...
 rem :::     For more variable names run gitversion.
 rem ::: 
 
-
 set VERSION_NAME=InformationalVersion
 
-if "%DOT_ARG_DEFAULT%" neq "" set VERSION_NAME=%DOT_ARG_DEFAULT%
+if "%~1" neq "" set VERSION_NAME=%~1
 call :get_version %VERSION_NAME%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 echo %DOT_GIT_VERSION%
