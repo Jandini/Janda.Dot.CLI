@@ -13,8 +13,11 @@ rem This script is called from _dots.cmd with the first argument set to the call
 rem It cannot be treated as default argument value
 set IGNORE_FIRST_DEFAULT_ARG=1
 
-call :clear_arguments
+if not defined DOT_KEEP_ARGS call :clear_arguments
+set DOT_KEEP_ARGS=
+
 call :parse_arguments %*
+
 goto :eof
 
 
