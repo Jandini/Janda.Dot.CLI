@@ -14,7 +14,6 @@ rem It cannot be treated as default argument value
 set IGNORE_FIRST_DEFAULT_ARG=1
 
 if not defined DOT_KEEP_ARGS call :clear_arguments
-set DOT_KEEP_ARGS=
 
 call :parse_arguments %*
 
