@@ -54,7 +54,7 @@ goto :eof
 
 :copy_files 
 if not exist "%~1" echo %~1 does not exit.&exit /b 1
-robocopy "%~1" "%~2" /E
+robocopy "%~1" "%~2" /E /R:10
 if %ERRORLEVEL% neq 0 set COPYERROR=%ERRORLEVEL%
 goto :eof
 
