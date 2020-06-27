@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Git flow release
 rem ::: 
-rem ::: .RELEASE [--changelog]
+rem ::: .RELEASE [--changelog [first]]
 rem ::: 
 rem ::: Parameters: 
 rem :::     changelog - Optional switch to automatically update changelog while on release branch
@@ -17,6 +17,9 @@ rem :::
 
 rem this will make sure nested calls to dot scripts will not clear the args
 set DOT_KEEP_ARGS=1
+
+set CHANGELOG_ARGS=--silent --force
+if /i "%DOT_ARG_CHANGELOG%" equ "first" set CHANGELOG_ARGS=%CHANGELOG_ARGS% --first
 
 rem exit if not a git repository
 if "%DOT_GIT_BRANCH%" equ "" exit
@@ -44,6 +47,8 @@ set RELEASE_VERSION=1.0.0
 set NO_CONFIRM=N
 
 if "%DOT_GIT_BRANCH:~0,8%"=="release/" goto finish
+
+
 
 call :changelog_preview
 
@@ -79,7 +84,8 @@ goto release
 set NO_CONFIRM=Y
 
 :release
-if defined DOT_ARG_CHANGELOG echo Updating CHANGELOG.md...&call .changelog --silent --force
+if defined DOT_ARG_CHANGELOG call :changelog_update
+
 
 git flow release finish -m "Released on %DATE% %TIME% version "
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
@@ -103,10 +109,20 @@ git checkout develop
 goto :eof
 
 
+:changelog_update
+echo Updating CHANGELOG.md...
+call .changelog %CHANGELOG_ARGS%
+goto :eof
+
+
 :changelog_preview
 if not defined DOT_ARG_CHANGELOG goto :eof
 echo Creating preview for CHANGELOG.md...
-call .changelog --dry
+
+call .changelog --dry %CHANGELOG_ARGS%
+
+rem make sure we remove dry argument because DOT_KEEP_ARGS is used 
+set DOT_ARG_DRY=
 goto :eof
 
 
