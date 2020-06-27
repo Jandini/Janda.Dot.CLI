@@ -6,7 +6,7 @@ rem :::
 rem ::: .NEWDOT <repository name|.>
 rem ::: 
 rem ::: Parameters: 
-rem :::     repository name - New repository name
+rem :::     repository name - new repository name
 rem ::: 
 rem ::: Description: 
 rem :::     Create new dot repository. The "." makes the new repository name to be current folder's name.

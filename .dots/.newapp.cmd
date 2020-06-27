@@ -3,11 +3,12 @@ if %ERRORLEVEL% equ 1 call :display_hint & exit /b
 
 rem ::: Dots new application
 rem ::: 
-rem ::: .NEWAPP <.|repository name> [--project <name>]
+rem ::: .NEWAPP <.|repository name> [--project <.|[.]name>] [--namespace <.|[.]name>]
 rem ::: 
 rem ::: Parameters: 
 rem :::     repository name - new repository name (. = current folder name)
 rem :::     project name - console application project name (default = repository name)
+rem :::     namespace name - project namespace
 rem ::: 
 rem ::: Description: 
 rem :::     Creates new repository and add new console application with abstractions class library.

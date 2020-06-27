@@ -3,11 +3,12 @@ if %ERRORLEVEL% equ 1 call :display_hint & exit /b %ERRORLEVEL%
 
 rem ::: Dots new library 
 rem ::: 
-rem ::: .NEWLIB <.|repository name> [--project <name>]
+rem ::: .NEWLIB <.|repository name> [--project <.|[.]name>] [--namespace <.|[.]name>]
 rem ::: 
 rem ::: Parameters: 
-rem :::     repository name - New repository name or "." = current folder name.
-rem :::     project name - Class library project name. Default = repository name
+rem :::     repository name - new repository name 
+rem :::     project name - class library project name
+rem :::     namespace name - project namespace
 rem ::: 
 rem ::: Description: 
 rem :::     Create new repository and add new class library.

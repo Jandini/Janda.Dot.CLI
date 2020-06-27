@@ -37,12 +37,11 @@ set RELEASE_VERSION=%DOT_GIT_VERSION%
 
 rem adjust release version to 1.0.0 
 rem this should be removed if version 0.x.0 are to be supported
-if "%RELEASE_VERSION:~0,1%" neq "0" goto skip_bump
 
-echo Bumping version to 1.0.0
-set RELEASE_VERSION=1.0.0
-
-:skip_bump
+rem if "%RELEASE_VERSION:~0,1%" neq "0" goto skip_bump
+rem echo Bumping version to 1.0.0
+rem set RELEASE_VERSION=1.0.0
+rem :skip_bump
 
 set NO_CONFIRM=N
 

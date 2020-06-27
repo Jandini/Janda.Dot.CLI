@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Dots add console
 rem ::: 
-rem ::: .ADDCON <.|[.]project name> [--solution <name>] [--add-args] [--namespace <name>]
+rem ::: .ADDCON <.|[.]project name> [--solution <name>] [--add-args] [--namespace <.|[.]name>]
 rem ::: 
 rem ::: Parameters: 
 rem :::     project name - new project name

@@ -3,18 +3,19 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Dots add application
 rem ::: 
-rem ::: .ADDAPP <.|[.]project name> [--solution <name>] [--add-args] [--namespace <name>]
+rem ::: .ADDAPP <.|[.]project name> [--solution <name>] [--add-args] [--namespace <.|name>]
 rem ::: 
 rem ::: Parameters: 
-rem :::     project name - new project name
+rem :::     project name - new project name 
 rem :::     solution name - existing or new solution
-rem :::     namespace name - project namespace 
+rem :::     namespace name - project namespace
 rem :::
 rem ::: Switches: 
 rem :::     add-args - Add more command line arguments
 rem :::
 rem ::: Description: 
 rem :::     Add new console application with abstractions class library.
+rem :::     Single dot "." represents this repository name. The dot can be followed with any text.
 rem ::: 
 
 
