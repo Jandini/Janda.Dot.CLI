@@ -79,7 +79,7 @@ goto release
 set NO_CONFIRM=Y
 
 :release
-if defined DOT_ARG_CHANGELOG call .changelog
+if defined DOT_ARG_CHANGELOG echo Updating CHANGELOG.md...&call .changelog --silent --force
 
 git flow release finish -m "Released on %DATE% %TIME% version "
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
@@ -106,7 +106,7 @@ goto :eof
 :changelog_preview
 if not defined DOT_ARG_CHANGELOG goto :eof
 echo Creating preview for CHANGELOG.md...
-call .changelog dry
+call .changelog --dry
 goto :eof
 
 
