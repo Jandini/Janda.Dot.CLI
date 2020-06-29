@@ -3,14 +3,14 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Git flow release
 rem ::: 
-rem ::: .RELEASE [--changelog [first]]
+rem ::: .RELEASE [--changelog [first]] [--version <version>]
 rem ::: 
 rem ::: Parameters: 
-rem :::     changelog - Optional switch to automatically update changelog while on release branch
+rem :::     changelog - optional switch to automatically update changelog while on release branch
+rem :::     version - version bump
 rem ::: 
 rem ::: Description: 
-rem :::     Start new or finish git flow release in progress.
-rem :::     A release branch is created. The first release version is always 1.0.0. The next would be 1.1.0 and so on.
+rem :::     Start new or finish git flow release in progress. A release branch is created.
 rem :::     When the release is started he command offers to complete the release process automatically.
 rem :::     The release process consist of finish and pack the libraries into nuget from master branch. 
 rem ::: 
@@ -30,18 +30,20 @@ if /i "%DOT_GIT_BRANCH%" neq "develop" echo You must start release from develop 
 
 :is_release_branch
 
+if not defined DOT_ARG_VERSION goto :git_version
+echo Using provided version %DOT_ARG_VERSION%
 
+set RELEASE_VERSION=%DOT_ARG_VERSION%
+goto :skip_git_version
+
+:git_version
 echo Getting current version...
 call .version MajorMinorPatch
 set RELEASE_VERSION=%DOT_GIT_VERSION%
 
-rem adjust release version to 1.0.0 
-rem this should be removed if version 0.x.0 are to be supported
+:skip_git_version
+set CHANGELOG_ARGS=%CHANGELOG_ARGS% --version %RELEASE_VERSION%
 
-rem if "%RELEASE_VERSION:~0,1%" neq "0" goto skip_bump
-rem echo Bumping version to 1.0.0
-rem set RELEASE_VERSION=1.0.0
-rem :skip_bump
 
 set NO_CONFIRM=N
 
@@ -117,7 +119,6 @@ goto :eof
 :changelog_preview
 if not defined DOT_ARG_CHANGELOG goto :eof
 echo Creating preview for CHANGELOG.md...
-
 call .changelog --dry %CHANGELOG_ARGS%
 
 rem make sure we remove dry argument because DOT_KEEP_ARGS is used 
