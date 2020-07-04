@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
-  "classifications": ["Janda.Dots.CLI"],
+  "classifications": ["Janda.Dot.CLI"],
   "name": "dot class project",
   "generatorVersions": "[1.0.0.0-*)",
   "description": "cot class project",
