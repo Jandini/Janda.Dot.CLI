@@ -44,6 +44,11 @@
 <!--#endif -->
 
 <!--#if (!noGitVersion)-->
-  <Import Project="$(TargetsDir)\GitVersion.targets" />  
+  <ItemGroup>
+    <PackageReference Include="Janda.Dot.GitVersion" Version="0.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 <!--#endif -->
 </Project>
