@@ -31,8 +31,8 @@ goto :eof
 :publish_project
 echo Publishing %1 for runtime %2...
 
-echo Running dotnet publish %1 %DOT_PUBLISH_ARGUMENTS% --runtime %2 /p:ApplyVersioning=true %DOT_NUGET_SOURCES%
-dotnet publish %1 %DOT_PUBLISH_ARGUMENTS% --runtime %2 /p:ApplyVersioning=true %DOT_NUGET_SOURCES%
+echo Running dotnet publish %1 %DOT_PUBLISH_ARGUMENTS% --runtime %2 %DOT_NUGET_SOURCES%
+dotnet publish %1 %DOT_PUBLISH_ARGUMENTS% --runtime %2 %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% equ 0 echo %1 published successfully.
 echo.
 goto :eof

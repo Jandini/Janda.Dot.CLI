@@ -77,7 +77,7 @@ goto :eof
 
 :pack
 echo Packing %~2...
-dotnet pack "%~1" --configuration Release /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
+dotnet pack "%~1" --configuration Release /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
