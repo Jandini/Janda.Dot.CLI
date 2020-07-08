@@ -3,7 +3,7 @@
 <!--#if (nameSpace != "")-->
 namespace Dot.Namespace
 <!--#else -->
-namespace Dot.Console
+namespace Dot.Appname
 <!--#endif -->
 {
     public class ApplicationService : IApplicationService

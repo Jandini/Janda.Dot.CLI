@@ -25,16 +25,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.8.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
-    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Janda.Dot.Console" Version="0.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Janda.Dot.Serilog" Version="0.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
 <!--#if (!noGitVersion)-->
     <PackageReference Include="Janda.Dot.GitVersion" Version="0.2.0">
       <PrivateAssets>all</PrivateAssets>
@@ -45,7 +43,7 @@
 
 <!--#if (addAbsRef)-->
   <ItemGroup>
-    <ProjectReference Include="..\Dot.Console.Abstractions\Dot.Console.Abstractions.csproj" />
+    <ProjectReference Include="..\Dot.Appname.Abstractions\Dot.Appname.Abstractions.csproj" />
   </ItemGroup>
 <!--#endif -->
 </Project>

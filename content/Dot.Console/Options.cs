@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 <!--#if (nameSpace != "")-->
 namespace Dot.Namespace
 <!--#else -->
-namespace Dot.Console
+namespace Dot.Appname
 <!--#endif -->
 {
     internal class Options : IApplicationOptions

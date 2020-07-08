@@ -13,7 +13,7 @@
     "language": "",
     "type": "library"
   },
-  "sourceName": "Dot.Console",
+  "sourceName": "Dot.Appname",
   "preferNameDirectory": true,
   "sources": [
     {
@@ -32,7 +32,7 @@
   "symbols": {
     "sourceName": {
       "type": "parameter",
-      "replaces": "Dot.Console"
+      "replaces": "Dot.Appname"
     },
     "noGitVersion": {
       "type": "parameter",
