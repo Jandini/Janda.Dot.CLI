@@ -25,14 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Janda.Dot.Console" Version="0.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Janda.Dot.Serilog" Version="0.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Janda.Dot.Console" Version="0.2.0" />
+    <PackageReference Include="Janda.Dot.Serilog" Version="0.2.0" />
 <!--#if (!noGitVersion)-->
     <PackageReference Include="Janda.Dot.GitVersion" Version="0.2.0">
       <PrivateAssets>all</PrivateAssets>

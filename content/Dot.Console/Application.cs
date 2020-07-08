@@ -28,7 +28,7 @@ namespace Dot.Appname
         }
 
         public static int Run<TProgram, TOptions>(Action<Action<TOptions>> parseArgs)
-            where TProgram : IApplicationProgram, new()
+            where TProgram : IProgram, new()
             where TOptions : IApplicationOptions
         {
             var applicationProgram = new TProgram();

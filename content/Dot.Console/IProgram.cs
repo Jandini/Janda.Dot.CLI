@@ -2,9 +2,13 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
-namespace _NameSpace_
+<!--#if (nameSpace != "")-->
+namespace Dot.Namespace
+<!--#else -->
+namespace Dot.Appname
+<!--#endif -->
 {
-    public interface IApplicationProgram
+    public interface IProgram
     {
         IConfiguration CreateConfiguration();
         void ConfigureLogging(ILoggingBuilder loggingBuilder);
