@@ -8,7 +8,7 @@ namespace Dot.Namespace
 namespace Dot.Appname
 <!--#endif -->
 {
-    public interface IApplicationProgram
+    public interface IProgram
     {
         IConfiguration CreateConfiguration();
         void ConfigureLogging(ILoggingBuilder loggingBuilder);

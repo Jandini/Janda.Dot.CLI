@@ -12,7 +12,7 @@ namespace Dot.Namespace
 namespace Dot.Appname
 <!--#endif -->
 {
-    class Program : IApplicationProgram
+    class Program : IProgram
     {
         static int Main(string[] args)
         {
