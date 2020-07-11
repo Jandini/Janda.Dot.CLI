@@ -1,5 +1,10 @@
 @echo off
 
+echo Synchronizing system time...
+w32tm /resync
+if %ERRORLEVEL% neq 0 echo Make sure your system time is synchronized. Some packages may not install if the system time is out of sync.&pause
+
+
 echo Checking prerequisites...
 call .prerequisites check
 if %ERRORLEVEL% equ 0 goto build
