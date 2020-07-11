@@ -1,7 +1,7 @@
 @echo off
 
-set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion dotnet npm standard-version
-set DOT_PREREQUISITES_CHOCO="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore" "nodejs-lts"
+set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion dotnetcore-sdk dotnet npm standard-version
+set DOT_PREREQUISITES_CHOCO="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore-sdk" "dotnetcore" "nodejs-lts"
 set DOT_PREREQUISITES_NPM=standard-version 
 
 
