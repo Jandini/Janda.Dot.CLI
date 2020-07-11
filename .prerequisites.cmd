@@ -1,6 +1,6 @@
 @echo off
 
-set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion dotnetcore-sdk dotnet npm standard-version
+set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion "C:\Program Files\dotnet\sdk" dotnet npm standard-version
 set DOT_PREREQUISITES_CHOCO="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore-sdk" "dotnetcore" "nodejs-lts"
 set DOT_PREREQUISITES_NPM=standard-version 
 
@@ -74,6 +74,7 @@ goto :eof
 
 
 :check_prerequisite
+if exist "%~1" goto :eof
 where %~1 >nul 2>nul
 if %ERRORLEVEL% neq 0 set DOT_PREREQUISITE_IS_MISSING=1&echo %~1 is missing
 goto :eof
