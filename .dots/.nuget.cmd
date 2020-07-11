@@ -52,7 +52,7 @@ goto :eof
 :build_nuget
 echo Packing %OUTPUT_PACKAGE%...
 set NUSPEC_FILE=.nuspec
-nuget pack %NUSPEC_FILE% -OutputDirectory %OUTPUT_DIR% -NoDefaultExcludes -Properties "Version=%DOT_GIT_VERSION%;Id=%DOT_BASE_NAME%"
+nuget pack %NUSPEC_FILE% -OutputDirectory %OUTPUT_DIR% -NoDefaultExcludes -Properties "NoWarn=NU5105;Version=%DOT_GIT_VERSION%;Id=%DOT_BASE_NAME%"
 goto :eof
 
 
