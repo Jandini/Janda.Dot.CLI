@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <TargetsDir>$(ProjectDir)..\..\cid\targets</TargetsDir>
 <!--#if (nameSpace != "")-->
     <RootNamespace>Dot.Namespace</RootNamespace>
 <!--#endif -->

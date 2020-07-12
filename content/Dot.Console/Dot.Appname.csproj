@@ -3,7 +3,6 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <TargetsDir>$(ProjectDir)..\..\cid\targets</TargetsDir>
     <ApplicationManifest>app.manifest</ApplicationManifest>
 <!--#if (nameSpace != "")-->
     <RootNamespace>Dot.Namespace</RootNamespace>
