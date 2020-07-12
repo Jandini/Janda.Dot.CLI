@@ -1,3 +1,4 @@
+DOT_BASE_NAME=Dot.Solution
 # Semicolon delimited solution names to be build
 DOT_BUILD_SOLUTIONS=Dot.Solution
 # Semicolon delimited list of RIDs to be published e.g. win-x64;osx-x64;linux-x64
