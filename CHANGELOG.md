@@ -2,6 +2,66 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](http://nas/matt/Janda.Dot.CLI/compare/1.3.0...1.4.0) (2020-07-17)
+
+
+### Features
+
+* Add .gitconfig command ([d013571](http://nas/matt/Janda.Dot.CLI/commit/d0135717b8bdfb1eb3f74a59a9be53b97ca5e78f))
+* Add .gittag command ([4d8c024](http://nas/matt/Janda.Dot.CLI/commit/4d8c02460fe984435fc0f58d4896239a5cecb13f))
+* Add .nuget pack for dot package build ([c1a9042](http://nas/matt/Janda.Dot.CLI/commit/c1a9042de0e31bd1b3181961a5c779e87873d988))
+* Add .pull command ([38643bc](http://nas/matt/Janda.Dot.CLI/commit/38643bca3e1c9c0c4753dd4305592d8b0214e758))
+* Add .run command ([b111ab7](http://nas/matt/Janda.Dot.CLI/commit/b111ab786d5162c4af8d6f90981146e11a9ecc11))
+* Add base name to dot config ([c116bc7](http://nas/matt/Janda.Dot.CLI/commit/c116bc70e80ca411431b6b6f8daee50369153274))
+* Add changelog to release command ([e5d36cf](http://nas/matt/Janda.Dot.CLI/commit/e5d36cfc1b8347ef9d984eb7690e22e797ed9145))
+* Add dot gitversion package ([95b6946](http://nas/matt/Janda.Dot.CLI/commit/95b6946e85f631fde791cec1878c40bf0e3e7a0b))
+* Add dot packages to dot console template ([c24f9b2](http://nas/matt/Janda.Dot.CLI/commit/c24f9b23552676c78709700bbc670aa95703ec24))
+* Add DOT_NUGET_OFFLINE_ONLY switch ([c3617c3](http://nas/matt/Janda.Dot.CLI/commit/c3617c3b5c991f7cb637a85d11b5ca3430a24aea))
+* Add jenkins shared library to jenkins file ([74fa79b](http://nas/matt/Janda.Dot.CLI/commit/74fa79ba7356ff9ac5c60b4311b105b2d072042b))
+* Add keep arguments for nested calls ([9f26fdb](http://nas/matt/Janda.Dot.CLI/commit/9f26fdb44b6c6b58a27e77266c5e979dd6f1fc4e))
+* Add nuget dot package ([70cdaab](http://nas/matt/Janda.Dot.CLI/commit/70cdaab371eb5b1148f3a4e7f90cdbf535a8a553))
+* Add system time synchronization to installer ([0214477](http://nas/matt/Janda.Dot.CLI/commit/02144772d2a446336cbf307a12555648904cd570))
+* Add user nuget config update to the installer ([9694798](http://nas/matt/Janda.Dot.CLI/commit/969479807bafc0544ec9ba62b766bf1f1e5891b5))
+* Bump dot packages version to 0.3.0 ([8a44f86](http://nas/matt/Janda.Dot.CLI/commit/8a44f86b083fb8338b1841f11fa9d9a55f797e22))
+* Improve foreach to skip dotnet templates ([aafc3a5](http://nas/matt/Janda.Dot.CLI/commit/aafc3a50d381bb8f034271b8d2947dde0c1788f3))
+* Move obfuscar to dot package ([64cdd4c](http://nas/matt/Janda.Dot.CLI/commit/64cdd4c3f88c9ddddd9ff86b6abbe73c8123acbc))
+* Remove apply versioning switch ([24f22a2](http://nas/matt/Janda.Dot.CLI/commit/24f22a2a6845d68ea3de32529666cc8ac25f1230))
+* Remove nuget config file from dot repo ([e364d8b](http://nas/matt/Janda.Dot.CLI/commit/e364d8b8f3ef8d5e8d8fbe0487527aeb625479bc))
+* Remove targets dir property ([1c0bc99](http://nas/matt/Janda.Dot.CLI/commit/1c0bc991eae069ca115eac9ecc8e683dccf1b7ca))
+* Reset tag version in develop branch after release ([99aebf1](http://nas/matt/Janda.Dot.CLI/commit/99aebf1dd97da6a9a8de2ef6430212864a765e93))
+* Update .gitlab for gitlab jenkins dot package ([30dc748](http://nas/matt/Janda.Dot.CLI/commit/30dc748ead07558240e4faef6a0b4218db77d238))
+* **_dotadd:** Add _dotname parser to namespace argument ([43663e2](http://nas/matt/Janda.Dot.CLI/commit/43663e26da7f0323c29e5c43975e5156cfeb6195))
+* **_dotadd:** Add extra parameter support ([78690a7](http://nas/matt/Janda.Dot.CLI/commit/78690a744ee6a6805db48f2c7c358645eb3f2ef0))
+* **.release:** Add first option to changelog parameter ([729db95](http://nas/matt/Janda.Dot.CLI/commit/729db9562a80038c385c3ea8cdf6457337ad2809))
+* **.release:** Add silent changelog ([dc149ad](http://nas/matt/Janda.Dot.CLI/commit/dc149adcd655590208359b22f6b90352aeb85edd))
+* **.release:** Add version parameter ([04a1ad5](http://nas/matt/Janda.Dot.CLI/commit/04a1ad55e482bcd207dceedd7e811b3dbeb91fb9))
+* **changelog:** "Add slient and force parameters" ([1cfbaab](http://nas/matt/Janda.Dot.CLI/commit/1cfbaaba629e99dedcee1ac2f9a79469adadc4f8))
+* **changelog:** Add parameter first release ([8a3d724](http://nas/matt/Janda.Dot.CLI/commit/8a3d7248d09cb80e6e6fd3ae953b6943c3a45d5c))
+* **conapp:** Add new commands .addapp and .newapp ([f885c9d](http://nas/matt/Janda.Dot.CLI/commit/f885c9d2edad0dc37f263fb0400d7e67b49f776c))
+* **conventional commits:** Add scope parameter ([f2c0ebc](http://nas/matt/Janda.Dot.CLI/commit/f2c0ebc3f398447fb521f63bd756f47d12a93b08))
+* **copyto:** Add shutdown switch ([deff839](http://nas/matt/Janda.Dot.CLI/commit/deff8390a915b508bc7c3614fc15a873b981ec3f))
+* **copyto:** Stop copy when run out of space ([c01b346](http://nas/matt/Janda.Dot.CLI/commit/c01b3461891a33d48de4c71a102a50684ef92a4a))
+* **dotcon:** Add color console themes ([62196b0](http://nas/matt/Janda.Dot.CLI/commit/62196b0fb0d56d4b0a034d1115aecad62f63ed51))
+* **dotcon:** Add full appsettings template ([c04fbe4](http://nas/matt/Janda.Dot.CLI/commit/c04fbe47839dc1c29695ec78c2313a226fd83097))
+* **dotcon:** Add hidden log command line parameters ([fd104e6](http://nas/matt/Janda.Dot.CLI/commit/fd104e6f37c60037c38f643fbfff85ff3cb0613d))
+* **dotcon:** Add launch settings ([ed23d50](http://nas/matt/Janda.Dot.CLI/commit/ed23d50e89e3807308f502253cf307e854227371))
+* **dotcon:** Add serilog configuration to appsettings ([915cbc4](http://nas/matt/Janda.Dot.CLI/commit/915cbc467e57f58b929ee6bfb5eb27e6515d82e2))
+* **dotcon:** Add shared console template ([f6e2337](http://nas/matt/Janda.Dot.CLI/commit/f6e23372026f9b95dd5b7e32a5997358dc256ce4))
+* **dotcon:** Add simple console via .addcon and .newcon ([de1d4a8](http://nas/matt/Janda.Dot.CLI/commit/de1d4a863020201f52074d409b480d40e2d27594))
+* **dotcon:** Allow nullable description ([c7e8b30](http://nas/matt/Janda.Dot.CLI/commit/c7e8b300d30b10149aa81842a9c4dde72d65243d))
+* **dotcon:** Change unhandled exception handler ([0b4c72c](http://nas/matt/Janda.Dot.CLI/commit/0b4c72cba12d406605e2c2f34c462a168f80f42c))
+* **dotcon:** Remove program region ([14e6b26](http://nas/matt/Janda.Dot.CLI/commit/14e6b26aa521e5a56021063d092be811983e3e10))
+* **dotcon:** Rename application service ([868454c](http://nas/matt/Janda.Dot.CLI/commit/868454c8818b47ebbc07c7a9456db8e2790c45a1))
+* **push:** Allow one optional git parameter ([c8bc941](http://nas/matt/Janda.Dot.CLI/commit/c8bc9411b61fe37215da4d37a3e21f6912bf2492))
+
+
+### Bug Fixes
+
+* Add missing prerequisites ([510119a](http://nas/matt/Janda.Dot.CLI/commit/510119aef7f200df91e07a44ff301bd400e9459e))
+* Default dog arg does not work in .version ([64c5ab1](http://nas/matt/Janda.Dot.CLI/commit/64c5ab143afab6ce6ab8370da78602a1b6933b49))
+* Unable to access _dotargs in dots pack ([74197d2](http://nas/matt/Janda.Dot.CLI/commit/74197d2dcea7438b162b9481ec68544e4baf2c93))
+* **publish:** Use online nugets ([c3f7a29](http://nas/matt/Janda.Dot.CLI/commit/c3f7a291f747333b23c9ac151ea01bd60b64ff01))
+
 ## [1.3.0](http://nas/matt/Janda.Dot.CLI/compare/1.2.0...1.3.0) (2020-06-20)
 
 
