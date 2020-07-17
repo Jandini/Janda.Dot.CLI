@@ -3,12 +3,12 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Dots add library
 rem ::: 
-rem ::: .ADDLIB <.|[.]project name> [--solution <name>] [--namespace <name>]
+rem ::: .ADDLIB <.|[.]project name> [--solution <name>] [--namespace <.|[.]name>]
 rem ::: 
 rem ::: Parameters: 
-rem :::     project name - New project name
-rem :::     solution name - Existing or new solution
-rem :::     namespace name - Project namespace 
+rem :::     project name - new project name
+rem :::     solution name - existing or new solution
+rem :::     namespace name - project namespace 
 rem ::: 
 rem ::: Description: 
 rem :::     Add new class library.

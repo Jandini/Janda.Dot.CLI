@@ -3,11 +3,13 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Git commit
 rem ::: 
-rem ::: .COMMIT <comment> [prefix]
+rem ::: .COMMIT <comment> [--prefix <prefix>] [--scope <scope>] [--force]
 rem ::: 
 rem ::: Parameters:
 rem :::     comment - Comment text
-rem :::     prefix - Conventional commit prefix
+rem :::     prefix - conventional commit prefix
+rem :::     scope - optional commit scope 
+rem :::     force - skip confirmation
 rem ::: 
 rem ::: Description: 
 rem :::     Display all unstaged changes and prompt user before continue. 
@@ -19,23 +21,30 @@ rem :::     .commit "Hello World"
 rem :::     .commit "Add something" chore
 rem :::     .commit "Add great feature" feat
 rem :::     .commit "Name parser miss a letter" fix
+rem :::     .commit "Add great feature" feat --scope world
 rem ::: 
 
 
-echo You are about to stage all and commit "%~2: %~1"
+
+set COMMIT_COMMENT=%DOT_ARG_DEFAULT%
+if defined DOT_ARG_PREFIX call :conventional_commit "%DOT_ARG_DEFAULT%" "%DOT_ARG_PREFIX%"
+
+echo You are about to stage all and commit "%COMMIT_COMMENT%"
 git status
 
-set /P CONFIRM=Do you want to stage changes and commit "%~1" to %DOT_GIT_BRANCH% now (Y/[N])?
+if defined DOT_ARG_FORCE goto :force
+set /P CONFIRM=Do you want to stage changes and commit "%COMMIT_COMMENT%" to %DOT_GIT_BRANCH% now (Y/[N])?
 if /i "%CONFIRM%" neq "Y" goto :eof
+:force
+
 
 git add .
-
-if "%~2" neq "" goto :conventional_commit
-git commit -m %1
+git commit -m "%COMMIT_COMMENT%"
 goto :eof
 
+
 :conventional_commit
-git commit -m "%~2: %~1"
+if defined DOT_ARG_SCOPE (set COMMIT_COMMENT=%~2^(%DOT_ARG_SCOPE%^)^: %~1) else (set COMMIT_COMMENT=%~2: %~1)
 goto :eof
 
 

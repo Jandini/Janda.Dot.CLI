@@ -10,7 +10,7 @@ rem :::     Run git push with tags.
 rem :::     git push --all --follow-tags
 rem ::: 
 
-git push --all --follow-tags
+git push --all --follow-tags %1
 
 
 

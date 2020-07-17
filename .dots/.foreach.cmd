@@ -19,12 +19,19 @@ rem :::
 set DOT_IS_FOREACH=1
 
 echo Searching for dot repositories in %DOT_CURRENT_DIR_NAME%...
-for /R "." %%G in (.) do (
-pushd %%G
-if exist %DOT_CONFIG% echo Running %1 for %%G && call .%1 %2 %3 %4 %5 %6 %8 %9
-popd 
-)
-
+for /R "." %%G in (.) do call :exec "%%G" %1 %2 %3 %4 %5 %6 %8 %9
 set DOT_IS_FOREACH=
+goto :eof
+
+
+:exec
+pushd "%~1"
+if exist .template.config goto next
+if not exist %DOT_CONFIG% goto next
+echo Running %~2 for %~1 
+call .%2 %3 %4 %5 %6 %7 %8 %9
+:next
+popd 
+goto :eof
 
 

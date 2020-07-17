@@ -4,22 +4,25 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using CommandLine;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 
-namespace Dot.Console
+<!--#if (nameSpace != "")-->
+namespace Dot.Namespace
+<!--#else -->
+namespace Dot.Appname
+<!--#endif -->
 {
-    class Program : IApplicationProgram
+    class Program : IProgram
     {
         static int Main(string[] args)
         {
             return Application.Run<Program, Options>(options => Parser.Default.ParseArguments<Options>(args).WithParsed(options));
         }
 
-        #region IApplicationProgram
-
         public void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddSingleton<IApplicationService, Service>();
+                .AddSingleton<IApplicationService, ApplicationService>();
         }
 
         public IConfiguration CreateConfiguration()
@@ -34,7 +37,7 @@ namespace Dot.Console
         {
             var loggerConfiguration = new LoggerConfiguration()
                 .ReadFrom.Configuration(Application.Configuration)
-                .WriteTo.ColoredConsole();
+                .WriteTo.Console(theme: AnsiConsoleTheme.Code, outputTemplate: "{Message:lj}{NewLine}{Exception}");
 
             var applicationOptions = Application.Options as Options;
 
@@ -47,7 +50,5 @@ namespace Dot.Console
                 loggerConfiguration.CreateLogger(),
                 dispose: true);
         }
-
-        #endregion
     }
 }

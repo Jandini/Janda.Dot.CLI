@@ -1,7 +1,7 @@
 import groovy.json.JsonSlurperClassic
 properties([[$class: 'GitLabConnectionProperty', gitLabConnection: 'NAS']])
 
-env.REPO_NAME = "Janda.Dots.CLI"
+env.REPO_NAME = "Janda.Dot.CLI"
 env.FTP_BASE_URL = "ftp://nas/builds/dots-cli/"
 
 def updateStatus(String status) {

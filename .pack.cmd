@@ -1,11 +1,15 @@
 @echo off
-echo Building dots package...
-call .\.dots\_dots %~n0 "" %1 %2 %3
-if %ERRORLEVEL% equ 1 exit /b
 
+rem make sure that _* scripts are available during packing
 set DOT_LOCAL_PATH=.\.dots\
 set PATH | find "%LOCAL_DOTS%" > nul
 if %ERRORLEVEL% neq 0 set PATH=%DOT_LOCAL_PATH%;%PATH%
+
+
+echo Building dots package...
+
+call .\.dots\_dots %~n0 "" %1 %2 %3
+if %ERRORLEVEL% equ 1 exit /b
 
 call .\.dots\.version > nul
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
@@ -99,7 +103,7 @@ exit /b %ERRORLEVEL%
 
 set NUSPEC_FILE=.nuspec
 set NUSPEC_PACKAGE_VERSION=%DOT_GIT_VERSION%
-set NUSPEC_PACKAGE_ID=Janda.Dots.CLI
+set NUSPEC_PACKAGE_ID=Janda.Dot.CLI
 set NUSPEC_PACKAGE_AUTHORS=Matt Janda
 set NUSPEC_PACKAGE_DESCRIPTION=.NET Core templates and scripts
 set NUSPEC_PACKAGE_TITLE=

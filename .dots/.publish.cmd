@@ -11,9 +11,9 @@ rem :::     for every runtime defined in DOT_PUBLISH_RUNTIMES
 rem ::: 
 
 
-if /i "%DOT_PUBLISH_PROJECTS%" equ "" echo No projects defined in %%DOT_PUBLISH_PROJECTS%% && exit /b
+if /i "%DOT_PUBLISH_PROJECTS%" equ "" echo No projects defined in %%DOT_PUBLISH_PROJECTS%%&exit /b 
 
-rem configure %DOT_LOCAL_NUGET_FEED%
+rem configure nuget sources DOT_NUGET_SOURCES
 call _dotnugets
 
 cd src 2>nul
@@ -31,7 +31,8 @@ goto :eof
 :publish_project
 echo Publishing %1 for runtime %2...
 
-dotnet publish %1 %DOT_PUBLISH_ARGUMENTS% --runtime %2 --ignore-failed-sources /p:ApplyVersioning=true --source=%DOT_LOCAL_NUGET_FEED%
+echo Running dotnet publish %1 %DOT_PUBLISH_ARGUMENTS% --runtime %2 %DOT_NUGET_SOURCES%
+dotnet publish %1 %DOT_PUBLISH_ARGUMENTS% --runtime %2 %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% equ 0 echo %1 published successfully.
 echo.
 goto :eof

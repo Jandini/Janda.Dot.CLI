@@ -6,7 +6,7 @@ rem :::
 rem ::: .DOTNET <command> [.]
 rem ::: 
 rem ::: Parameters: 
-rem :::     command - Available commands: clean|restore|pack|build|publish|test|graph
+rem :::     command - available commands are clean|restore|pack|build|run|test|graph
 rem :::     . - Execute the command within current directory. Project or solution must be present in the directory.
 rem ::: 
 rem ::: Description: 
@@ -40,6 +40,7 @@ goto :eof
 
 
 :dotnet-execute
+if /i "%~1" equ "run" call :run "%~2" "%~3" & goto :eof
 if /i "%~1" equ "pack" call :pack "%~2" "%~3" & goto :eof
 if /i "%~1" equ "build" call :build "%~2" "%~3" & goto :eof
 if /i "%~1" equ "restore" call :restore "%~2" "%~3" & goto :eof
@@ -76,7 +77,7 @@ goto :eof
 
 :pack
 echo Packing %~2...
-dotnet pack "%~1" --configuration Release /p:ApplyVersioning=true /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
+dotnet pack "%~1" --configuration Release /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
@@ -97,6 +98,21 @@ echo Testing %~2...
 dotnet test "%~1"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
+
+
+:run
+if /i "%DOT_PUBLISH_PROJECTS%" equ "" echo No projects defined in %%DOT_PUBLISH_PROJECTS%%&goto :eof
+for %%S in ("%DOT_PUBLISH_PROJECTS:;=" "%") do if "%%S" neq "" call :run_project %%S
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof
+
+
+:run_project
+echo Running %~1...
+dotnet run --project "%~1"
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+goto :eof
+
 
 :clean
 echo Cleaning %~2...

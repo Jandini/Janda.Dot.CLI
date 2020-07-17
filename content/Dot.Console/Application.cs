@@ -4,7 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
-namespace Dot.Console
+<!--#if (nameSpace != "")-->
+namespace Dot.Namespace
+<!--#else -->
+namespace Dot.Appname
+<!--#endif -->
 {
     internal class Application
     {
@@ -24,7 +28,7 @@ namespace Dot.Console
         }
 
         public static int Run<TProgram, TOptions>(Action<Action<TOptions>> parseArgs)
-            where TProgram : IApplicationProgram, new()
+            where TProgram : IProgram, new()
             where TOptions : IApplicationOptions
         {
             var applicationProgram = new TProgram();
@@ -55,8 +59,12 @@ namespace Dot.Console
                 }
                 catch (Exception ex)
                 {
-                    GetService<ILogger<Application>>()?.LogCritical(ex, ex.Message);
-                    throw;
+                    var logger = GetService<ILogger<Application>>();
+                    logger?.LogCritical(ex, ex.Message);
+                    returnCode = ex.HResult;
+
+                    if (logger == null)
+                        throw;
                 }
             });
 

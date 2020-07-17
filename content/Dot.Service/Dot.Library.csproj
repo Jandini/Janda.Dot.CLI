@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <TargetsDir>$(ProjectDir)..\..\cid\targets</TargetsDir>
 <!--#if (nameSpace != "")-->
     <RootNamespace>Dot.Namespace</RootNamespace>
 <!--#endif -->
@@ -17,14 +16,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
-  </ItemGroup>
-
+    <PackageReference Include="Janda.Dot.Service" Version="0.3.0" />
+    <PackageReference Include="Janda.Dot.Nuget" Version="0.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
 <!--#if (!noGitVersion)-->
-  <Import Project="$(TargetsDir)\GitVersion.targets" />  
+    <PackageReference Include="Janda.Dot.Version" Version="0.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
 <!--#endif -->
-  <Import Project="$(TargetsDir)\Obfuscar.targets" />  
-  <Import Project="$(TargetsDir)\Package.targets" />  
-
+  </ItemGroup>
 </Project>

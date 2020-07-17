@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
-  "classifications": ["Janda.Dots.CLI"],
+  "classifications": ["Janda.Dot.CLI"],
   "name": "dot console",
   "generatorVersions": "[1.0.0.0-*)",
   "description": "dot console application",
@@ -13,7 +13,7 @@
     "language": "",
     "type": "library"
   },
-  "sourceName": "Dot.Console",
+  "sourceName": "Dot.Appname",
   "preferNameDirectory": true,
   "sources": [
     {
@@ -32,9 +32,14 @@
   "symbols": {
     "sourceName": {
       "type": "parameter",
-      "replaces": "Dot.Console"
+      "replaces": "Dot.Appname"
     },
     "noGitVersion": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false"
+    },
+    "addAbsRef": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false"
