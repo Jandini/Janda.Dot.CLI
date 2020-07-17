@@ -17,7 +17,7 @@
 
   <ItemGroup>
 <!--#if (!noGitVersion)-->
-    <PackageReference Include="Janda.Dot.GitVersion" Version="0.2.0">
+    <PackageReference Include="Janda.Dot.Version" Version="0.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
