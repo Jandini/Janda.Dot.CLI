@@ -48,7 +48,7 @@ curl %CURL_PARAMS% -X GET %DOT_CID_JENKINS_URL% --user %JENKINS_USER% > %CURL_OU
 if %ERRORLEVEL% neq 0 goto exit
 
 echo Running jenkins seeder 
-curl -X POST %JENKINS_JOB%/Janda.Dot.GitLabJenkins/job/master/build?delay=0 --user %JENKINS_USER% 
+curl -X POST %JENKINS_JOB%/Janda.Dot.Jenkins/job/master/build?delay=0 --user %JENKINS_USER% 
 
 
 echo Waiting for jenkins pipeline 
