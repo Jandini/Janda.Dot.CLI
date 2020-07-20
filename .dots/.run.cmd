@@ -3,7 +3,7 @@ if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 rem ::: Dotnet run
 rem ::: 
-rem ::: .PACK [*|.]
+rem ::: .RUN [*|.]
 rem ::: 
 rem ::: Parameters: 
 rem :::     * - Search and run the command for each dot repository found.
