@@ -38,6 +38,10 @@
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false"
+    },
+    "authors": {
+      "type": "parameter",
+      "replaces": "_Authors_"
     }
   }
 }

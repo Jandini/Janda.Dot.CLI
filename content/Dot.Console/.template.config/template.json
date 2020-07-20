@@ -53,6 +53,11 @@
       "type": "parameter",
       "defaultValue": "",
       "replaces": "Dot.Namespace"
+    },
+    "authors": {
+      "type": "parameter",
+      "defaultValue": "",
+      "replaces": "_Authors_"
     }
   }
 }
