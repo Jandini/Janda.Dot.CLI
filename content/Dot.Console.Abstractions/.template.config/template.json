@@ -47,6 +47,10 @@
     "nameSpace": {
       "type": "parameter",
       "replaces": "_NameSpace_"
+    },
+    "authors": {
+      "type": "parameter",
+      "replaces": "_Authors_"
     }
   }
 }

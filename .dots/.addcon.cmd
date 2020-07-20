@@ -23,7 +23,7 @@ call _dotname "%~1" PROJECT_NAME
 call _dotsrc
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-call _dotadd dotcon %PROJECT_NAME% 
+call _dotadd dotcon %PROJECT_NAME%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 call _dotsln %PROJECT_NAME%

@@ -62,6 +62,3 @@ curl %CURL_PARAMS% -X POST %JENKINS_JOB%/%PROJECT_NAME%/build?delay=0sec --user 
 
 :exit
 
-
-
-
