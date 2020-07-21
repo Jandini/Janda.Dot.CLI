@@ -21,13 +21,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.json">
+    <EmbeddedResource Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Janda.Dot.Console" Version="0.3.0" />
+    <PackageReference Include="Janda.Dot.Console" Version="0.4.0" />
     <PackageReference Include="Janda.Dot.Serilog" Version="0.3.0" />
 <!--#if (!noGitVersion)-->
     <PackageReference Include="Janda.Dot.Version" Version="0.3.0">

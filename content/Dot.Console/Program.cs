@@ -1,7 +1,9 @@
 ﻿using System.IO;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using CommandLine;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -27,17 +29,22 @@ namespace Dot.Appname
 
         public IConfiguration CreateConfiguration()
         {
+            const string APP_SETTINGS_FILE_NAME = "appsettings.json";
+            
+            using var appSettingsStream = new EmbeddedFileProvider(Assembly.GetEntryAssembly(), typeof(Program).Namespace)
+                .GetFileInfo(APP_SETTINGS_FILE_NAME).CreateReadStream();
+
             return new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true)
+                .AddJsonStream(appSettingsStream)
+                .AddJsonFile(APP_SETTINGS_FILE_NAME, true)
                 .Build();
         }
 
         public void ConfigureLogging(ILoggingBuilder loggingBuilder)
         {
             var loggerConfiguration = new LoggerConfiguration()
-                .ReadFrom.Configuration(Application.Configuration)
-                .WriteTo.Console(theme: AnsiConsoleTheme.Code, outputTemplate: "{Message:lj}{NewLine}{Exception}");
+                .ReadFrom.Configuration(Application.Configuration);
 
             var applicationOptions = Application.Options as Options;
 

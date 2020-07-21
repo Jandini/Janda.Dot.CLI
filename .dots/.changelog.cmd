@@ -29,7 +29,7 @@ set RELEASE_AS=%DOT_ARG_VERSION%
 
 rem --tag-prefix "" so the version tags can go without "v" letter
 rem --skip.commit --skip.bump
-set ARGS=--skip.tag --release-as %RELEASE_AS% 
+set ARGS=--skip.tag --release-as %RELEASE_AS%
 
 if defined DOT_ARG_SILENT set ARGS=%ARGS% --silent
 if defined DOT_ARG_FIRST set ARGS=%ARGS% --first-release
