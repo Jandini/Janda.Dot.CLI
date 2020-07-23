@@ -35,10 +35,7 @@ namespace Dot.Appname
 
                 return parseArgs(options =>
                 {
-                    Options = new ApplicationOptions()
-                    {
-                        RunOptions = options as IRunOptions
-                    };
+                    Options = new ApplicationOptions() { CurrentOptions = options };
 
                     var services = new ServiceCollection();
                     var settings = new ApplicationSettings();

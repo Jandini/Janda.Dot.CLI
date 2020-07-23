@@ -6,6 +6,10 @@ namespace Dot.Appname
 {
     internal class ApplicationOptions : IApplicationOptions
     {
-        public IRunOptions RunOptions { get; set; }
+        public object CurrentOptions { get; set; }
+        public T Cast<T>()
+        {
+            return (T)CurrentOptions;
+        }
     }
 }

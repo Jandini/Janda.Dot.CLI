@@ -6,6 +6,7 @@ namespace Dot.Appname
 {
     public interface IApplicationOptions
     {
-        IRunOptions RunOptions { get; set; }
+        object CurrentOptions { get; set; }
+        T Cast<T>();
     }
 }
