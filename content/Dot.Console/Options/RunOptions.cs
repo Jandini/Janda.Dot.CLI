@@ -7,7 +7,7 @@ namespace Dot.Appname
 <!--#endif -->
 {
     [Verb("run", isDefault: true, HelpText = "Run application")]
-    internal class RuntimeOptions : LoggingOptions, IRuntimeOptions
+    internal class RunOptions : LoggingOptions, IRunOptions
     {
 #if (addArgs)
         [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]

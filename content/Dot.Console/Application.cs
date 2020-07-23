@@ -37,7 +37,7 @@ namespace Dot.Appname
                 {
                     Options = new ApplicationOptions()
                     {
-                        RuntimeOptions = options as IRuntimeOptions
+                        RunOptions = options as IRunOptions
                     };
 
                     var services = new ServiceCollection();

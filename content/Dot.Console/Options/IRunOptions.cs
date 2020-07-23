@@ -4,7 +4,7 @@ namespace Dot.Namespace
 namespace Dot.Appname
 <!--#endif -->
 {
-    public interface IRuntimeOptions
+    public interface IRunOptions
     {
 #if (addArgs)
         bool Verbose { get; }  

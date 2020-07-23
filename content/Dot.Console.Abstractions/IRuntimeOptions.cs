@@ -1,6 +1,6 @@
 ﻿namespace _NameSpace_
 {
-    public interface IRuntimeOptions
+    public interface IRunOptions
     {
 #if (addArgs)
         bool Verbose { get; }  

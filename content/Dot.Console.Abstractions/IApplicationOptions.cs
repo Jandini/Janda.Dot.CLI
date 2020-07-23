@@ -2,6 +2,6 @@
 {
     public interface IApplicationOptions
     {
-        IRuntimeOptions RuntimeOptions { get; set; }
+        IRunOptions RunOptions { get; set; }
     }
 }

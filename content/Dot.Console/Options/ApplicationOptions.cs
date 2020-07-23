@@ -6,6 +6,6 @@ namespace Dot.Appname
 {
     internal class ApplicationOptions : IApplicationOptions
     {
-        public IRuntimeOptions RuntimeOptions { get; set; }
+        public IRunOptions RunOptions { get; set; }
     }
 }
