@@ -2,8 +2,6 @@
 {
     public interface IApplicationOptions
     {
-#if (addArgs)
-        bool Verbose { get; }  
-#endif
+        IRunOptions RunOptions { get; set; }
     }
 }

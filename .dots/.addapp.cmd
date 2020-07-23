@@ -27,8 +27,9 @@ if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 call _dotadd dotcon %PROJECT_NAME% --addAbsRef
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-rem Remove embedded abstractions
-rd /s/q "%PROJECT_NAME%\Abstractions"
+rem Remove interfaces that are provided in abstractions
+del /q "%PROJECT_NAME%\Options\I*.cs"
+del /q "%PROJECT_NAME%\Settings\I*.cs"
 
 call _dotadd dotconset %PROJECT_NAME% --force
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%

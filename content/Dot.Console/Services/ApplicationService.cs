@@ -22,14 +22,22 @@ namespace Dot.Appname
         public int Run()
         {
 #if (addArgs)
-            if (_options.Verbose)
+            switch (_options.CurrentOptions)
             {
-		_logger.LogInformation("Running {Name} {Version} {Description}", Application.Name, Application.Version, _settings.Description ?? string.Empty);
+                case IRunOptions runOptions:
+                    if (runOptions.Verbose)                        
+                        _logger.LogInformation("Running {Name} {Version} {Description}", Application.Name, Application.Version, _settings.Description ?? string.Empty);
+                    return 0;
             }
 #else
-            _logger.LogInformation("Running {Name} {Version} {Description}", Application.Name, Application.Version, _settings.Description ?? string.Empty);
+            switch (_options.CurrentOptions)
+            {
+                case IRunOptions _:                        
+                    _logger.LogInformation("Running {Name} {Version} {Description}", Application.Name, Application.Version, _settings.Description ?? string.Empty);
+                    return 0;
+            }
 #endif
-            return 0;
+            return 1;
         }
     }
 }
