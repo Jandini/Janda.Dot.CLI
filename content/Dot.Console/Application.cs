@@ -29,20 +29,21 @@ namespace Dot.Appname
 
         public static int Run<TProgram>(Func<Func<object, int>, int> parseArgs) where TProgram : IProgram, new()
         {
-            var program = new TProgram();
-
-            return parseArgs(options =>
+            try
             {
-                Options = new ApplicationOptions()
-                {
-                    RuntimeOptions = options as IRuntimeOptions
-                };
+                var program = new TProgram();
 
-                var services = new ServiceCollection();
-                var settings = new ApplicationSettings();
-
-                try
+                return parseArgs(options =>
                 {
+                    Options = new ApplicationOptions()
+                    {
+                        RuntimeOptions = options as IRuntimeOptions
+                    };
+
+                    var services = new ServiceCollection();
+                    var settings = new ApplicationSettings();
+
+                
                     Configuration = program.CreateConfiguration();
                     Configuration.Bind(Name, settings);
 
@@ -55,17 +56,20 @@ namespace Dot.Appname
 
                     return (Services = services.BuildServiceProvider())
                         .GetService<IApplicationService>()
-                        .Run();
-                }
-                catch (Exception ex)
-                {
-                    var logger = GetService<ILogger<Application>>();
-                    if (logger == null) throw;
+                        .Run();                
+                });
+            }
+            catch (Exception ex)
+            {
+                var logger = GetService<ILogger<Application>>();
 
-                    logger?.LogCritical(ex, ex.Message);
-                    return ex.HResult;                    
-                }
-            });
+                if (logger != null)
+                    logger.LogCritical(ex, ex.Message);
+                else
+                    Console.WriteLine($"{ex.Message}\n{ex.StackTrace}");
+
+                return ex.HResult;
+            }
         }
 
         public static T GetService<T>()

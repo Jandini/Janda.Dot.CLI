@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,8 +26,13 @@ namespace Dot.Appname
 
         static Type[] LoadVerbs()
         {
-            return Assembly.GetExecutingAssembly().GetTypes()
+            var verbs = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => t.GetCustomAttribute<VerbAttribute>() != null).ToArray();
+
+            if (verbs.Length == 0)
+                throw new Exception("At least one command line verb is required.");
+
+            return verbs;
         }
 
         public void ConfigureServices(IServiceCollection serviceCollection)
