@@ -5,7 +5,7 @@ namespace Dot.Namespace
 namespace Dot.Appname
 <!--#endif -->
 {
-    public class Settings : IApplicationSettings
+    public class ApplicationSettings : IApplicationSettings
     {
         public string Description { get; set; }
     }

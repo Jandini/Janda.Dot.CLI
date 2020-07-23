@@ -27,48 +27,45 @@ namespace Dot.Appname
                 .InformationalVersion;
         }
 
-        public static int Run<TProgram, TOptions>(Action<Action<TOptions>> parseArgs)
-            where TProgram : IProgram, new()
-            where TOptions : IApplicationOptions
+        public static int Run<TProgram>(Func<Func<object, int>, int> parseArgs) where TProgram : IProgram, new()
         {
-            var applicationProgram = new TProgram();
-            int returnCode = 0;
+            var program = new TProgram();
 
-            parseArgs(options =>
+            return parseArgs(options =>
             {
-                Options = options;
+                Options = new ApplicationOptions()
+                {
+                    RuntimeOptions = options as IRuntimeOptions
+                };
 
-                var serviceCollection = new ServiceCollection();
-                var settings = new Settings();
+                var services = new ServiceCollection();
+                var settings = new ApplicationSettings();
 
                 try
                 {
-                    Configuration = applicationProgram.CreateConfiguration();
+                    Configuration = program.CreateConfiguration();
                     Configuration.Bind(Name, settings);
 
-                    serviceCollection
-                        .AddLogging(configure => applicationProgram.ConfigureLogging(configure))
-                        .AddSingleton<IApplicationOptions>(options)
+                    services
+                        .AddLogging(configure => program.ConfigureLogging(configure))
+                        .AddSingleton(Options)
                         .AddSingleton<IApplicationSettings>(settings);
 
-                    applicationProgram.ConfigureServices(serviceCollection);
+                    program.ConfigureServices(services);
 
-                    returnCode = (Services = serviceCollection.BuildServiceProvider())
+                    return (Services = services.BuildServiceProvider())
                         .GetService<IApplicationService>()
                         .Run();
                 }
                 catch (Exception ex)
                 {
                     var logger = GetService<ILogger<Application>>();
-                    logger?.LogCritical(ex, ex.Message);
-                    returnCode = ex.HResult;
+                    if (logger == null) throw;
 
-                    if (logger == null)
-                        throw;
+                    logger?.LogCritical(ex, ex.Message);
+                    return ex.HResult;                    
                 }
             });
-
-            return returnCode;
         }
 
         public static T GetService<T>()
