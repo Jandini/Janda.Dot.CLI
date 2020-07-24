@@ -60,7 +60,7 @@ namespace Dot.Appname
             var loggerConfiguration = new LoggerConfiguration()
                 .ReadFrom.Configuration(Application.Configuration);
 
-            var loggingOptions = Application.Options as LoggingOptions;
+            var loggingOptions = Application.Options.CurrentOptions as LoggingOptions;
 
             if (!string.IsNullOrEmpty(loggingOptions?.LogDir))
                 loggerConfiguration.WriteTo.File(
