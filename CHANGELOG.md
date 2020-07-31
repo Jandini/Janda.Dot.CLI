@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](http://nas/matt/Janda.Dot.CLI/compare/1.4.0...1.4.1) (2020-07-31)
+
+
+### Bug Fixes
+
+* Add missing prerequisite ([9f8d8ae](http://nas/matt/Janda.Dot.CLI/commit/9f8d8aea81dcded08dc9bb038ee1a63ff33827a5))
+
 ## [1.4.0](http://nas/matt/Janda.Dot.CLI/compare/1.3.0...1.4.0) (2020-07-17)
 
 
