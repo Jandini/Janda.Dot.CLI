@@ -1,7 +1,7 @@
 @echo off
 
 echo Synchronizing system time...
-w32tm /resync
+w32tm /resync 2>nul
 if %ERRORLEVEL% neq 0 echo Make sure your system time is synchronized. Some packages may not install if the system time is out of sync.
 
 

@@ -1,7 +1,7 @@
 @echo off
 
 set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion "C:\Program Files\dotnet\sdk" dotnet npm standard-version
-set DOT_PREREQUISITES_CHOCO="7zip.install" "nuget.commandline" "git.install" "git" "jq" "gitversion.portable --pre" "dotnetcore-sdk" "dotnetcore" "nodejs-lts"
+set DOT_PREREQUISITES_CHOCO="7zip.install" "nuget.commandline" "git.install" "git" "jq" "curl" "gitversion.portable --pre" "dotnetcore-sdk" "dotnetcore" "nodejs-lts"
 set DOT_PREREQUISITES_NPM=standard-version 
 
 
@@ -67,6 +67,7 @@ goto :eof
 title Choco is installing "%~1"...
 choco install %~1
 set EXITCODE=%ERRORLEVEL%
+rem this is where npm is not going through
 if %EXITCODE% neq 0 pause&exit %EXITCODE%
 title  
 goto :eof 
