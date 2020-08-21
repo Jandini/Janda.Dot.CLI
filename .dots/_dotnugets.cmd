@@ -14,6 +14,6 @@ rem it is important that https://api.nuget.org/v3/index.json is first
 set DOT_NUGET_SOURCES=
 rem use DOT_NUGET_OFFLINE_ONLY to disable online nuget source (dotnet will work only if cached packages are available)
 if not defined DOT_NUGET_OFFLINE_ONLY set DOT_NUGET_SOURCES=--source https://api.nuget.org/v3/index.json
-set DOT_NUGET_SOURCES=%DOT_NUGET_SOURCES% --source %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources 
+set DOT_NUGET_SOURCES=%DOT_NUGET_SOURCES% --source %DOT_LOCAL_NUGET_FEED% --ignore-failed-sources
 
 

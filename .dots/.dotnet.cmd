@@ -3,11 +3,13 @@ if %ERRORLEVEL% equ 1 exit /b
 
 rem ::: Dotnet wrapper
 rem ::: 
-rem ::: .DOTNET <command> [.]
+rem ::: .DOTNET <command> [.] [--verbose]
+rem :::         build [--release]
 rem ::: 
 rem ::: Parameters: 
 rem :::     command - available commands are clean|restore|pack|build|run|test|graph
 rem :::     . - Execute the command within current directory. Project or solution must be present in the directory.
+rem :::     verbose - display dotnet calls with arguments
 rem ::: 
 rem ::: Description: 
 rem :::     Execute dotnet command for all projects within solution(s) or current project directory. 
@@ -27,6 +29,7 @@ rem get solution name
 call :configure-source "%~2"
 if %ERRORLEVEL% equ 1 goto :dotnet-solutions
 
+REM DISPLAY NAME ? DO WE NEED THAT TO BE PASSED INTO EXECUTE ?????
 call :dotnet-execute "%~1" "%SOURCE_SOLUTION_NAME%" "%SOURCE_DISPLAY_NAME%" 
 goto :eof
 
@@ -38,22 +41,16 @@ for %%S in ("%DOT_BUILD_SOLUTIONS:;=" "%") do if "%%S" neq "" call :dotnet-execu
 goto :eof
 
 
-
 :dotnet-execute
-if /i "%~1" equ "run" call :run "%~2" "%~3" & goto :eof
-if /i "%~1" equ "pack" call :pack "%~2" "%~3" & goto :eof
-if /i "%~1" equ "build" call :build "%~2" "%~3" & goto :eof
-if /i "%~1" equ "restore" call :restore "%~2" "%~3" & goto :eof
-if /i "%~1" equ "test" call :test "%~2" "%~3" & goto :eof
-if /i "%~1" equ "clean" call :clean "%~2" "%~3" & goto :eof
-if /i "%~1" equ "graph" call :graph "%~2" "%~3" & goto :eof
-
+set AVAILABLE_COMMANDS=run pack build restore test clean graph
+for %%S in (%AVAILABLE_COMMANDS%) do if "%%S" equ "%~1" call :%~1 "%~2" "%~3"&exit /b %ERRORLEVEL%
 echo Invalid dotnet command.
 goto :eof
 
 
 rem Select source project or default solution
 rem Returns ERRORLEVEL=1 if default solution does not exist
+
 :configure-source
 if /i "%~1" equ "." goto :this
 
@@ -66,6 +63,7 @@ if not exist %SOURCE_SOLUTION_NAME% exit /b 1
 set SOURCE_DISPLAY_NAME=%SOURCE_SOLUTION_NAME%
 goto :eof
 
+
 :this
 cd %DOT_CURRENT_DIR_PATH%
 set SOURCE_SOLUTION_NAME=
@@ -73,32 +71,35 @@ set SOURCE_DISPLAY_NAME=%DOT_CURRENT_DIR_NAME%
 goto :eof
 
 
-
-
 :pack
 echo Packing %~2...
+if defined DOT_ARG_VERBOSE echo dotnet pack "%~1" --configuration Release /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
 dotnet pack "%~1" --configuration Release /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
 :build 
 echo Building %~2...
-dotnet build "%~1" /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
+if "%~1" neq "" set DOT_BUILD_SOLUTION="%~1" 
+if defined DOT_ARG_RELEASE set DOT_BUILD_CONFIGURATION=-c Release 
+if defined DOT_ARG_VERBOSE echo dotnet build %DOT_BUILD_SOLUTION%/p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES% %DOT_BUILD_CONFIGURATION%
+dotnet build %DOT_BUILD_SOLUTION%/p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES% %DOT_BUILD_CONFIGURATION%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
 :restore
 echo Restoring %~2...
+if defined DOT_ARG_VERBOSE echo dotnet restore "%~1" %DOT_NUGET_SOURCES%
 dotnet restore "%~1" %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
 :test
 echo Testing %~2...
+if defined DOT_ARG_VERBOSE echo dotnet test "%~1"
 dotnet test "%~1"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
-
 
 :run
 if /i "%DOT_PUBLISH_PROJECTS%" equ "" echo No projects defined in %%DOT_PUBLISH_PROJECTS%%&goto :eof
@@ -109,6 +110,7 @@ goto :eof
 
 :run_project
 echo Running %~1...
+if defined DOT_ARG_VERBOSE echo dotnet run --project "%~1"
 dotnet run --project "%~1"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
@@ -116,6 +118,7 @@ goto :eof
 
 :clean
 echo Cleaning %~2...
+if defined DOT_ARG_VERBOSE echo dotnet clean "%~1"
 dotnet clean "%~1"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
@@ -129,6 +132,7 @@ echo Generating restore graph file for %~2...
 set OUTPUT_FILE=%~n1.dg
 if "%~1" equ "" set OUTPUT_FILE=%~n2.dg
 echo Creating %OUTPUT_FILE%
+if defined DOT_ARG_VERBOSE echo dotnet msbuild %~1 /t:GenerateRestoreGraphFile /p:RestoreGraphOutputPath=%OUTPUT_FILE%
 dotnet msbuild %~1 /t:GenerateRestoreGraphFile /p:RestoreGraphOutputPath=%OUTPUT_FILE%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
