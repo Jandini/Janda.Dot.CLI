@@ -14,6 +14,8 @@ exit /b %ERRORLEVEL%
 call :elevate_privileges
 if %ERRORLEVEL% equ 1 exit /b
 
+
+call :synch_time
 call :install_choco
 call :choco_prerequisites
 call :npm_prerequisites
@@ -78,6 +80,13 @@ goto :eof
 if exist "%~1" goto :eof
 where %~1 >nul 2>nul
 if %ERRORLEVEL% neq 0 set DOT_PREREQUISITE_IS_MISSING=1&echo %~1 is missing
+goto :eof
+
+
+:synch_time
+echo Synchronizing system time...
+w32tm /resync 2>nul
+if %ERRORLEVEL% neq 0 echo Make sure your system time is synchronized. Some packages may not install if the system time is out of sync.
 goto :eof
 
 
