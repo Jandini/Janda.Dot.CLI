@@ -2,7 +2,7 @@
 
 set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion "C:\Program Files\dotnet\sdk" dotnet npm standard-version
 set DOT_PREREQUISITES_CHOCO="7zip.install" "nuget.commandline" "git.install" "git" "jq" "curl" "gitversion.portable --pre" "dotnetcore-sdk" "dotnetcore" "nodejs-lts"
-set DOT_PREREQUISITES_NPM=standard-version 
+set DOT_PREREQUISITES_NPM=standard-version
 
 
 if "%~1" neq "check" goto :start
