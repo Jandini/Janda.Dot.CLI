@@ -40,3 +40,9 @@ Manual installation from command line:
 Installation script downloads and install all required prerequisites.
 
 
+### Choco
+
+```
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+
