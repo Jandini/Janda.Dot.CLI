@@ -42,7 +42,20 @@ Installation script downloads and install all required prerequisites.
 
 ### Choco
 
+PowerShell:
 ```
-iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+[System.Net.ServicePointManager]::Expect100Continue=$true;[System.Net.ServicePointManager]::SecurityProtocol=[System.Net.SecurityProtocolType]::Tls12;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 ```
+
+CommandLine:
+```
+powershell.exe -NoP -NonI -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::Expect100Continue=$true;[System.Net.ServicePointManager]::SecurityProtocol=[System.Net.SecurityProtocolType]::Tls12;iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+```
+
+### Prerequisites
+
+```
+choco install 7zip.install nuget.commandline git.install git jq curl gitversion.portable dotnetcore-sdk dotnetcore nodejs-lts
+```
+
 
