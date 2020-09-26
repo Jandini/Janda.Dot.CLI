@@ -48,10 +48,10 @@ goto :eof
 
 
 :install_choco
-choco -v 1>2>nul || goto :install
-goto :configure
-:install
-%DOT_POWERSHELL_CMD% "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && set "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+echo Finding choco...
+where choco 1>2>nul
+if %ERRORLEVEL% equ 0  goto :configure 
+%DOT_POWERSHELL_CMD% "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 call RefreshEnv
 :configure
 choco feature enable -n allowGlobalConfirmation > nul

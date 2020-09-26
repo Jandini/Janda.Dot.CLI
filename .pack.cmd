@@ -22,9 +22,6 @@ rem output can be overriden by setting OUTPUT_DIR variable
 if "%OUTPUT_DIR%" equ "" set OUTPUT_DIR=bin
 
 
-call :update_path "%%userprofile%%\.dots"
-
-
 
 rem Add current dot version to template.config files
 call :prepare_templates
@@ -90,14 +87,5 @@ type "%~1.org" | jq --arg version %DOT_GIT_VERSION% ".classifications += [$versi
 if %ERRORLEVEL% neq 0 call :revert_templates -1 "%~1"
 goto :eof
 
-
-:update_path
-set INSTALL_PATH=%~1
-set PATH | find "%INSTALL_PATH%" > nul
-if %ERRORLEVEL% equ 0 goto :eof
-echo Adding %INSTALL_PATH% to PATH environment
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -Command "$path=[Environment]::GetEnvironmentVariable('path', 'user'); if (!$path.contains('%INSTALL_PATH%')) { $path+=';%INSTALL_PATH%'; [Environment]::SetEnvironmentVariable('path', $($path -join ';'), 'user'); }"
-call RefreshEnv
-exit /b %ERRORLEVEL%
 
 
