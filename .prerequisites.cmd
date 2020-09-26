@@ -50,7 +50,7 @@ goto :eof
 :install_choco
 echo Finding choco...
 where choco 1>2>nul
-if %ERRORLEVEL% equ 0  goto :configure 
+if %ERRORLEVEL% equ 0 goto :configure 
 %DOT_POWERSHELL_CMD% "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 set "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 call RefreshEnv
