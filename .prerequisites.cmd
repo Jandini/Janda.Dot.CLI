@@ -1,7 +1,7 @@
 @echo off
 
 set DOT_PREREQUISITES_CHECK=7z nuget git jq curl gitversion "C:\Program Files\dotnet\sdk" dotnet npm standard-version
-set DOT_PREREQUISITES_CHOCO=7zip.install nuget.commandline git jq curl gitversion.portable dotnetcore-sdk dotnetcore nodejs-lts
+set DOT_PREREQUISITES_CHOCO=7zip.install nuget.commandline git.install jq curl gitversion.portable dotnetcore-sdk dotnetcore nodejs-lts
 set DOT_PREREQUISITES_NPM=standard-version
 set DOT_POWERSHELL_CMD="%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoLogo -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command
 
@@ -14,11 +14,12 @@ exit /b %ERRORLEVEL%
 call :elevate_privileges
 if %ERRORLEVEL% equ 1 exit /b
 
-
+title Installing prerequisites...
 call :synch_time
 call :install_choco
 call :choco_prerequisites
 call :npm_prerequisites
+title
 goto :eof
 
 
@@ -28,11 +29,9 @@ goto :eof
 
 
 :npm_install
-title npm is installing "%~1"...
 call npm -g install %~1
 set EXITCODE=%ERRORLEVEL%
 if %EXITCODE% neq 0 pause&exit %EXITCODE%
-title  
 goto :eof 
 
 
@@ -42,20 +41,16 @@ for %%p in (%DOT_PREREQUISITES_CHECK%) do call :check_prerequisite %%p
 exit /b %DOT_PREREQUISITE_IS_MISSING%
 
 
-
 :choco_prerequisites
-:: for %%p in (%DOT_PREREQUISITES_CHOCO%) do call :choco_install_prerequisite %%p
 choco install %DOT_PREREQUISITES_CHOCO%
 call RefreshEnv
 goto :eof
 
 
 :install_choco
-title Checking choco...
 choco -v 1>2>nul || goto :install
 goto :configure
 :install
-title Installing choco...
 %DOT_POWERSHELL_CMD% "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && set "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 call RefreshEnv
 :configure
@@ -64,16 +59,11 @@ choco feature enable -n exitOnRebootDetected > nul
 goto :eof
 
 
-
 :choco_install_prerequisite
-title Choco is installing "%~1"...
 choco install %~1
 set EXITCODE=%ERRORLEVEL%
-rem this is where npm is not going through
 if %EXITCODE% neq 0 pause&exit %EXITCODE%
-title  
 goto :eof 
-
 
 
 :check_prerequisite
