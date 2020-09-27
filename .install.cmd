@@ -38,4 +38,5 @@ set PATH | find "%INSTALL_PATH%" > nul
 if %ERRORLEVEL% equ 0 goto :eof
 echo Adding %INSTALL_PATH% to PATH environment
 %DOT_POWERSHELL_CMD% "$path=[Environment]::GetEnvironmentVariable('path', 'user'); if (!$path.contains('%INSTALL_PATH%')) { $path+=';%INSTALL_PATH%'; [Environment]::SetEnvironmentVariable('path', $($path -join ';'), 'user'); }"
+call RefreshEnv
 exit /b %ERRORLEVEL%
