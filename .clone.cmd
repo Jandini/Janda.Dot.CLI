@@ -30,6 +30,7 @@ goto :eof
 
 
 :git_clone
+:: Running git config --global http.sslbackend schannel would avoid using -c http.sslVerify=false
 git -c http.sslVerify=false clone https://github.com/Jandini/%~1.git
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
 goto :eof
