@@ -30,6 +30,6 @@ goto :eof
 
 
 :git_clone
-git clone https://github.com/Jandini/%~1.git
+git -c http.sslVerify=false clone https://github.com/Jandini/%~1.git
 if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
 goto :eof
