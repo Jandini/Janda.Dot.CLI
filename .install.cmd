@@ -9,8 +9,6 @@ if %ERRORLEVEL% equ 0 goto build
 
 echo Installing prerequisites...
 %DOT_POWERSHELL_CMD% "$process = (Start-Process -Wait -PassThru -FilePath 'cmd.exe' -ArgumentList '/c \"%~dp0\.prerequisites.cmd\"' -Verb runAs); exit $process.ExitCode"
-
-
 if %ERRORLEVEL% equ 350 echo Computer restart is required to complete prerequisites installation. & exit %ERRORLEVEL%
 if %ERRORLEVEL% neq 0 echo Prerequisites are incomplete. Re-open command prompt and try again. & exit %ERRORLEVEL%
 call RefreshEnv
@@ -18,9 +16,9 @@ call RefreshEnv
 
 call :add_dots_path "%%userprofile%%\.dots"
 call :add_nuget_source "%USERPROFILE%\.nuget\local" nuget.local
-call .pack
 
-
+git rev-parse --is-inside-work-tree 1>nul 2>nul
+if %ERRORLEVEL% equ 0 (call .pack) else (call .clone)
 echo Installation complete.
 goto :eof
 
