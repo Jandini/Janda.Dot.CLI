@@ -14,6 +14,7 @@ call :refresh_env
 :build
 
 call :add_dots_path "%%USERPROFILE%%\.dots"
+call :add_dots_path "%%ALLUSERSPROFILE%%\chocolatey\bin"
 call :add_nuget_source "%USERPROFILE%\.nuget\local" nuget.local
 
 git rev-parse --is-inside-work-tree 1>nul 2>nul
