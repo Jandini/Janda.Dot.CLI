@@ -13,8 +13,9 @@ rem :::     Run git push
 rem ::: 
 
 set PARAMS=%1
-if defined DOT_ARG_ALL set PARAMS=--all --follow-tags %1
+if defined DOT_ARG_ALL set PARAMS=--all --follow-tags %2 %3
 
+echo Running git push %PARAMS%
 git push
 
 

@@ -15,12 +15,8 @@ rem ::: Description:
 rem :::     Create nuget package and add to dot nuget feed.
 rem ::: 
 
-
 if defined DOT_ARG_PACK call :pack_nuget
-
 goto :eof
-
-
 
 :pack_nuget
 
@@ -74,7 +70,6 @@ set PACKAGE_FOLDER="%NUGET_SOURCE%\%DOT_BASE_NAME%\%DOT_GIT_VERSION%"
 
 if exist %PACKAGE_FOLDER% echo WARNING: Removing %PACKAGE_FOLDER%...&rd /s /q %PACKAGE_FOLDER%
 goto :eof
-
 
 
 
