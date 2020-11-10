@@ -28,4 +28,16 @@ git branch
 goto :eof
 
 :find_branch
+:: use .checkout command to find and checkout branch 
 call .checkout %BRANCH_NAME%
+
+:: if branch was found by .checkout exit the script
+if %ERRORLEVEL% equ 0 goto :eof
+
+:: fetch before calling checkout again
+echo Fetching...
+git fetch
+
+:: try one more time to checkout branch
+call .checkout %BRANCH_NAME%
+

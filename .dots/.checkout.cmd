@@ -20,7 +20,9 @@ echo.
 
 if "%CHECKOUT_BRANCH_NAME%" neq "" goto branch_found
 echo Branch like %1 not found.
-exit /b
+
+:: Return error code 1 so for example .branch is aware of branch not found 
+exit /b 1
 
 :branch_found
 
