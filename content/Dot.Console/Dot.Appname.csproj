@@ -10,6 +10,7 @@
 <!--#if (authors != "")-->
     <Authors>_Authors_</Authors>
 <!--#endif -->
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
