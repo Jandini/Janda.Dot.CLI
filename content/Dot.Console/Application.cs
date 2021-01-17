@@ -61,7 +61,7 @@ namespace Dot.Appname
                 var logger = GetService<ILogger<Application>>();
 
                 if (logger != null)
-                    logger.LogCritical(ex, ex.Message);
+                    logger.LogCritical(ex.Message, ex);
                 else
                     Console.WriteLine($"{ex.Message}\n{ex.StackTrace}");
 
