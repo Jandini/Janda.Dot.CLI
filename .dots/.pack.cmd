@@ -15,8 +15,12 @@ rem :::     This script can automatically add dot nuget tergets before packing p
 rem :::     Use DOT_NUGET_PROJECTS semicolon delimited variable in .dotconfig to define the project names.
 rem ::: 
 
+rem Allow to override the entire dotnet command by adding .command.cmd script in root of the dot repository
+if exist .\.%~n1.cmd .\.%~n1.cmd
+
+
 call _dotsrc
-if %ERRORLEVEL% neq 0 exist /b 1
+if %ERRORLEVEL% neq 0 exit /b 1
 
 call :DotNuget add %DOT_NUGET_SOURCES%
 call .dotnet pack %*
