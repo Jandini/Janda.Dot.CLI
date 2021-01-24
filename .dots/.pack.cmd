@@ -11,10 +11,13 @@ rem :::
 rem ::: Description: 
 rem :::     Run the command for solution(s) found in dot repository.
 rem :::     For more details see .dotnet --help
+rem :::     This script can automatically add dot nuget tergets before packing projects and remove after.
+rem :::     Use DOT_NUGET_PROJECTS semicolon delimited variable in .dotconfig to define the project names.
 rem ::: 
 
-
 call _dotsrc
+if %ERRORLEVEL% neq 0 exist /b 1
+
 call :DotNuget add %DOT_NUGET_SOURCES%
 call .dotnet pack %*
 call :DotNuget remove
@@ -22,6 +25,9 @@ goto :eof
 
 
 :DotNuget
+:: The for will stop entire script if no DOT_NUGET_PROJECTS is available. 
+if not defined DOT_NUGET_PROJECTS goto :eof
+if "%DOT_NUGET_PROJECTS%" equ "" goto :eof
 for %%R in ("%DOT_NUGET_PROJECTS:;=" "%") do if "%%R" neq "" call :DotNugetAddRemove %1 %%R %2
 goto :eof
 

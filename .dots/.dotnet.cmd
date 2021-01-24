@@ -54,8 +54,8 @@ rem Returns ERRORLEVEL=1 if default solution does not exist
 :configure-source
 if /i "%~1" equ "." goto :this
 
-cd src 2>nul
-if %ERRORLEVEL% neq 0 echo The src directory was not found.&exit /b 1
+call _dotsrc
+if %ERRORLEVEL% neq 0 exist /b 1
 
 rem use default solution
 set SOURCE_SOLUTION_NAME=%DOT_BASE_NAME%.sln

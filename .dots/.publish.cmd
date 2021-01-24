@@ -13,11 +13,13 @@ rem :::
 
 if /i "%DOT_PUBLISH_PROJECTS%" equ "" echo No projects defined in %%DOT_PUBLISH_PROJECTS%%&exit /b 
 
-rem configure nuget sources DOT_NUGET_SOURCES
+::Configure nuget sources DOT_NUGET_SOURCES
 call _dotnugets
 
-cd src 2>nul
-if %ERRORLEVEL% neq 0 echo The src directory was not found.& exit /b %ERRORLEVEL%
+:: Make sure we are in src folder
+call _dotsrc
+if %ERRORLEVEL% neq 0 exist /b 1
+
 
 for %%S in ("%DOT_PUBLISH_PROJECTS:;=" "%") do if "%%S" neq "" call :publish_runtime %%S
 goto :eof
