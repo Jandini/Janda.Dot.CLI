@@ -12,11 +12,12 @@ rem ::: Description:
 rem :::     Run git push 
 rem ::: 
 
+:: params are not avaialbe for the time being
 set PARAMS=%1
 if defined DOT_ARG_ALL set PARAMS=--all --follow-tags %2 %3
 
 echo Running git push %PARAMS%
 git push
-
+if %ERRORLEVEL% equ 128 git push --set-upstream origin %DOT_GIT_BRANCH%
 
 
