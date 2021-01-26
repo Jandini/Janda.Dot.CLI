@@ -58,4 +58,22 @@ powershell.exe -NoP -NonI -ExecutionPolicy Bypass -Command "[System.Net.ServiceP
 choco install 7zip.install nuget.commandline git.install git jq curl gitversion.portable dotnetcore-sdk dotnetcore nodejs-lts
 ```
 
+#### Create multiple repositories from batch file:
 
+```
+set DOT_CID_GITLAB_URL=https://github.com
+set DOT_CID_GITLAB_USER=Jandini
+
+call .newlib RightTurn.Extensions.CommandLine
+cd ..
+cd ..
+call .newlib RightTurn.Extensions.Configuration
+cd ..
+cd ..
+call .newlib RightTurn.Extensions.Logging
+cd ..
+cd ..
+call .newlib RightTurn.Extensions.Serilog
+cd ..
+cd ..
+```
