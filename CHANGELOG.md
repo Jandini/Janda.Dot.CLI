@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/Jandini/Janda.Dot.CLI/compare/1.4.1...1.5.0) (2021-03-10)
+
+
+### Features
+
+* **pack:** Use nuget to add dots to local nuget packages ([2bf77c2](https://github.com/Jandini/Janda.Dot.CLI/commit/2bf77c2e2d6594311aa3b92583b05f3b27d27726))
+* Add nuget push to nuget.org ([13b1a78](https://github.com/Jandini/Janda.Dot.CLI/commit/13b1a78260a3a035988a4621690a7801cc9b405e))
+* Add set upstream to push command ([95f5e9e](https://github.com/Jandini/Janda.Dot.CLI/commit/95f5e9ec365328dc56966dd28ba32c6f8636930c))
+* Add static nuspec file ([686d6bd](https://github.com/Jandini/Janda.Dot.CLI/commit/686d6bd2bd8f492f367d91a82d8e45399c40d05e))
+* Add yes parameter to nuget push ([68bcada](https://github.com/Jandini/Janda.Dot.CLI/commit/68bcadaec622d35d122be60c81daa2f4fcd60357))
+* Automatically add and remove dot nuget to projects given in dot config ([68863ad](https://github.com/Jandini/Janda.Dot.CLI/commit/68863adf529f6dfc4fa65aeb6389ebf13250b8a4))
+* Exclude console template from packing ([3257d1d](https://github.com/Jandini/Janda.Dot.CLI/commit/3257d1d1102f4958bc56daa86fe1296e57692f7b))
+* Move jenkins and readme file to separate template ([73bd6aa](https://github.com/Jandini/Janda.Dot.CLI/commit/73bd6aa8913e896b3d736e9e887a5cd34b0e9963))
+* **.dotnet:** Remove foreach from wrapper scripts ([61a972c](https://github.com/Jandini/Janda.Dot.CLI/commit/61a972c9f526f74559afd3ebe88b1191d930bc28))
+* **.foreach:** Remove slash dot from running message ([cdfd3b8](https://github.com/Jandini/Janda.Dot.CLI/commit/cdfd3b855fa9293cfe41d81995713e723ee488d6))
+* **.pull:** Add fetch ([822b967](https://github.com/Jandini/Janda.Dot.CLI/commit/822b967c9ef2a922c2e7dc454aae8db168fc4cba))
+* **.pull:** Add fetch ([314ab40](https://github.com/Jandini/Janda.Dot.CLI/commit/314ab40d00838866aaa6421898a728acd1bb653b))
+* **.pull:** Automatically add branch tracking ([66c8f1e](https://github.com/Jandini/Janda.Dot.CLI/commit/66c8f1e8b167991c5d276f34cd8e6fde8b7203de))
+* **branch:** Add fetch and retry checkout ([6d8e002](https://github.com/Jandini/Janda.Dot.CLI/commit/6d8e002355e4998fbbe5b72bdef3165ec5d7db83))
+* **branch:** Add pull switch ([a7bacb0](https://github.com/Jandini/Janda.Dot.CLI/commit/a7bacb0c521a35bbb256b22ab0d2a08108e56312))
+* **push:** Add all parameter ([a808a95](https://github.com/Jandini/Janda.Dot.CLI/commit/a808a95315f0c4b887dc85508d3ebd94c7fbca4f))
+* Add authors to templates ([375b427](https://github.com/Jandini/Janda.Dot.CLI/commit/375b427f6b11ba2e1d5b7a0f4574d58fad77faa3))
+* Add command line verb based options ([62b3b63](https://github.com/Jandini/Janda.Dot.CLI/commit/62b3b6386576e2d09d5ea3969b52156c5759f093))
+* Add current options switch for verb options ([440e369](https://github.com/Jandini/Janda.Dot.CLI/commit/440e36986bafc49f871de353de97bc0bd0b4b1d7))
+* Add embedded appsettings ([6fce850](https://github.com/Jandini/Janda.Dot.CLI/commit/6fce85076a22544acef774c98c28e04de8f4b1ec))
+* Change error handling ([e23935f](https://github.com/Jandini/Janda.Dot.CLI/commit/e23935f943fe2a7c266256f38dd165e7da50685f))
+* Remove exception from console log output ([cbfca3f](https://github.com/Jandini/Janda.Dot.CLI/commit/cbfca3f105c4e155d2b28ebdf814195b3e9bb54f))
+* Update clone script ([ac312a7](https://github.com/Jandini/Janda.Dot.CLI/commit/ac312a7b6fda0f15af1bb3047ad7cbfa97a42dea))
+
+
+### Bug Fixes
+
+* Logging critical error message ([5252568](https://github.com/Jandini/Janda.Dot.CLI/commit/5252568bcd0eecd08777be607d704b041c5456cd))
+
 ### [1.4.1](http://nas/matt/Janda.Dot.CLI/compare/1.4.0...1.4.1) (2020-07-31)
 
 
