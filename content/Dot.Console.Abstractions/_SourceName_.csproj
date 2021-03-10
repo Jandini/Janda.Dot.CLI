@@ -5,6 +5,9 @@
 <!--#if (nameSpace != "")-->
     <RootNamespace>_NameSpace_</RootNamespace>
 <!--#endif -->
+<!--#if (authors != "")-->
+    <Authors>_Authors_</Authors>
+<!--#endif -->
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

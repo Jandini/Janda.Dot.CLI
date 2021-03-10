@@ -3,7 +3,7 @@ if %ERRORLEVEL% equ 1 call :display_hint & exit /b
 
 rem ::: Dots new console
 rem ::: 
-rem ::: .NEWCON <.|repository name> [--project <.|[.]name>] [--namespace <.|[.]name>]
+rem ::: .NEWCON <.|repository name> [--project <.|[.]name>] [--namespace <.|[.]name>] [--add-args]
 rem ::: 
 rem ::: Parameters: 
 rem :::     repository name - repository name

@@ -28,7 +28,8 @@ goto :eof
 pushd "%~1"
 if exist .template.config goto next
 if not exist %DOT_CONFIG% goto next
-echo Running %~2 for %~1 
+set REPO_PATH=%~1
+echo Running %~2 for %REPO_PATH:~0,-2%
 call .%2 %3 %4 %5 %6 %7 %8 %9
 :next
 popd 

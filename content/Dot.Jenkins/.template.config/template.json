@@ -2,18 +2,18 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Matt Janda",
   "classifications": ["Janda.Dot.CLI"],
-  "name": "dot class library",
+  "name": "dot jenkins",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "cot class library",
-  "groupIdentity": "dot.library",
+  "description": "dot jenkins",
+  "groupIdentity": "dot.jenkins",
   "precedence": "4000",
-  "identity": "dot.library",
-  "shortName": "dotlib",
+  "identity": "dot.jenkins",
+  "shortName": "dotjenkins",
   "tags": {
     "language": "",
     "type": "library"
   },
-  "sourceName": "Dot.Library",
+  "sourceName": "Dot.Solution",
   "preferNameDirectory": true,
   "sources": [
     {
@@ -25,28 +25,36 @@
             ".cid/**",
             ".nuspec"
           ]
+        },
+        {
+          "condition": "(noGitVersion)",
+          "exclude": [
+            "GitVersion.yml",
+            "**/GitVersion.targets"
+          ]
         }
       ]
     }
   ],
   "symbols": {
-    "nameSpace": {
-      "type": "parameter",
-      "defaultValue": "",
-      "replaces": "Dot.Namespace"
-    },
     "sourceName": {
       "type": "parameter",
-      "replaces": "Dot.Library"
+      "defaultValue": "Dot.Solution",
+      "replaces": "Dot.Solution"
+    },
+    "sourceNameLower": {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source": "name",
+        "toLower": true
+      },
+      "replaces": "dot.solution"
     },
     "noGitVersion": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false"
-    },
-    "authors": {
-      "type": "parameter",
-      "replaces": "_Authors_"
     }
   }
 }

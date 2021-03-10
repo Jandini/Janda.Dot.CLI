@@ -1,10 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using CommandLine;
 using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
 
 <!--#if (nameSpace != "")-->
 namespace Dot.Namespace
@@ -16,7 +19,20 @@ namespace Dot.Appname
     {
         static int Main(string[] args)
         {
-            return Application.Run<Program, Options>(options => Parser.Default.ParseArguments<Options>(args).WithParsed(options));
+            return Application.Run<Program>(main => Parser.Default.ParseArguments(args, LoadVerbs()).MapResult(
+                (object options) => main(options),
+                errors => 1));
+        }
+
+        static Type[] LoadVerbs()
+        {
+            var verbs = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => t.GetCustomAttribute<VerbAttribute>() != null).ToArray();
+
+            if (verbs.Length == 0)
+                throw new Exception("At least one command line verb is required.");
+
+            return verbs;
         }
 
         public void ConfigureServices(IServiceCollection serviceCollection)
@@ -27,23 +43,28 @@ namespace Dot.Appname
 
         public IConfiguration CreateConfiguration()
         {
+            const string APP_SETTINGS_FILE_NAME = "appsettings.json";
+            
+            using var appSettingsStream = new EmbeddedFileProvider(Assembly.GetEntryAssembly(), typeof(Program).Namespace)
+                .GetFileInfo(APP_SETTINGS_FILE_NAME).CreateReadStream();
+
             return new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true)
+                .AddJsonStream(appSettingsStream)
+                .AddJsonFile(APP_SETTINGS_FILE_NAME, true)
                 .Build();
         }
 
         public void ConfigureLogging(ILoggingBuilder loggingBuilder)
         {
             var loggerConfiguration = new LoggerConfiguration()
-                .ReadFrom.Configuration(Application.Configuration)
-                .WriteTo.Console(theme: AnsiConsoleTheme.Code, outputTemplate: "{Message:lj}{NewLine}{Exception}");
+                .ReadFrom.Configuration(Application.Configuration);
 
-            var applicationOptions = Application.Options as Options;
+            var loggingOptions = Application.Options.CurrentOptions as LoggingOptions;
 
-            if (!string.IsNullOrEmpty(applicationOptions?.LogDir))
+            if (!string.IsNullOrEmpty(loggingOptions?.LogDir))
                 loggerConfiguration.WriteTo.File(
-                    path: Path.Combine(applicationOptions.LogDir, Path.ChangeExtension(Application.Name, "log")),
+                    path: Path.Combine(loggingOptions.LogDir, Path.ChangeExtension(Application.Name, "log")),
                     rollingInterval: RollingInterval.Day);
 
             loggingBuilder.AddSerilog(

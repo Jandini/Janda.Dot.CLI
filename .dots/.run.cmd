@@ -1,16 +1,15 @@
-@_dotnet run %~1
+@.dotnet run %*
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 rem ::: Dotnet run
 rem ::: 
-rem ::: .PACK [*|.]
+rem ::: .RUN [.]
 rem ::: 
 rem ::: Parameters: 
-rem :::     * - Search and run the command for each dot repository found.
-rem :::     . - Run the command for current directory only.
+rem :::     . - Run for project within current directory only
 rem ::: 
 rem ::: Description: 
-rem :::     Run the command for solution(s) found in dot repository.
+rem :::     Wrapper over .dotnet command. Run this command for solution(s) found in dot repository.
 rem :::     For more details see .dotnet --help
 rem ::: 
 

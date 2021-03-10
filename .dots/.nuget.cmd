@@ -5,9 +5,11 @@ rem ::: Dots nuget
 rem ::: 
 rem ::: .NUGET [--pack] 
 rem :::        [--delete branch|nonalpha] [--branch name]
+rem :::        [--push] [--yes]
 rem ::: 
 rem ::: Parameters: 
 rem :::     pack - pack nuget package from .nuspec file
+rem :::     push - push nuget package to https://api.nuget.org/v3/index.json using DOT_
 rem :::     delete - Delete nuget packages created within current "branch" or all "nonalpha" packages
 rem :::     branch - Override current branch name 
 rem ::: 
@@ -15,12 +17,9 @@ rem ::: Description:
 rem :::     Create nuget package and add to dot nuget feed.
 rem ::: 
 
-
-if defined DOT_ARG_PACK call :pack_nuget
-
+if defined DOT_ARG_PACK goto :pack_nuget
+if defined DOT_ARG_PUSH goto :push_nuget
 goto :eof
-
-
 
 :pack_nuget
 
@@ -28,7 +27,35 @@ call :configure_nuget
 call :build_nuget
 call :remove_nuget
 call :add_nuget
+goto :eof
 
+
+
+
+:push_nuget
+
+if not defined DOT_NUGET_ORG_API_KEY echo DOT_NUGET_ORG_API_KEY was not found. Add DOT_NUGET_ORG_API_KEY=yourkey into .dotlocal file.&goto :eof
+echo Getting semantic version...
+
+:: using inline git version because call .version resets arguments
+set DOT_GIT_VERSION=
+for /f %%i in ('gitversion /showvariable SemVer') do set DOT_GIT_VERSION=%%i
+if "%DOT_GIT_VERSION%" equ "" echo Get version failed.&goto :eof
+
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+set PACKAGE_NAME=%DOT_BASE_NAME%.%DOT_GIT_VERSION%.nupkg
+
+dir bin\%PACKAGE_NAME% > nul
+if %ERRORLEVEL% neq 0 echo %PACKAGE_NAME% package not found in bin folder.&exit /b %ERRORLEVEL%
+echo Package found in bin\%PACKAGE_NAME%
+
+:: remember not to call .command because it resets arguments
+if defined DOT_ARG_YES goto :push
+set /P CONFIRM=Do you push %PACKAGE_NAME% to nuget.org now (Y/[N])?
+if /i "%CONFIRM%" neq "Y" goto :eof
+
+:push
+dotnet nuget push bin\%PACKAGE_NAME% --api-key %DOT_NUGET_ORG_API_KEY% --source https://api.nuget.org/v3/index.json
 goto :eof
 
 
@@ -74,7 +101,6 @@ set PACKAGE_FOLDER="%NUGET_SOURCE%\%DOT_BASE_NAME%\%DOT_GIT_VERSION%"
 
 if exist %PACKAGE_FOLDER% echo WARNING: Removing %PACKAGE_FOLDER%...&rd /s /q %PACKAGE_FOLDER%
 goto :eof
-
 
 
 

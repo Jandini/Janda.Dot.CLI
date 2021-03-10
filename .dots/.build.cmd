@@ -1,15 +1,18 @@
-@_dotnet build %~1
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+@call _dots %~n0 %* --require-dot
+if %ERRORLEVEL% equ 1 exit /b
+
+.dotnet build %*
 
 rem ::: Dotnet build
 rem ::: 
-rem ::: .BUILD [*|.]
+rem ::: .BUILD [.] [--release] [--verbose]
 rem ::: 
 rem ::: Parameters: 
-rem :::     * - Search and run the command for each dot repository found.
-rem :::     . - Run the command for current directory only.
+rem :::     . - Run for project within current directory only
+rem :::     release - use release configuration (-c Release)
+rem :::     verbose - show executed commands 
 rem ::: 
 rem ::: Description: 
-rem :::     Run the command for solution(s) found in dot repository.
+rem :::     Wrapper over .dotnet command. Run this command for solution(s) found in dot repository.
 rem :::     For more details see .dotnet --help
 rem ::: 
