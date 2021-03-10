@@ -16,29 +16,36 @@ rem :::     Use DOT_NUGET_PROJECTS semicolon delimited variable in .dotconfig to
 rem ::: 
 
 rem Allow to override the entire dotnet command by adding .command.cmd script in root of the dot repository
-if exist .\.%~n1.cmd .\.%~n1.cmd
+if exist %~n0.cmd %~n0.cmd
 
 
 call _dotsrc
 if %ERRORLEVEL% neq 0 exit /b 1
 
-call :DotNuget add %DOT_NUGET_SOURCES%
 call .dotnet pack %*
-call :DotNuget remove
+call :AddToLocal
 goto :eof
 
 
-:DotNuget
+:AddToLocal
 :: The for will stop entire script if no DOT_NUGET_PROJECTS is available. 
 if not defined DOT_NUGET_PROJECTS goto :eof
 if "%DOT_NUGET_PROJECTS%" equ "" goto :eof
-for %%R in ("%DOT_NUGET_PROJECTS:;=" "%") do if "%%R" neq "" call :DotNugetAddRemove %1 %%R %2
+
+
+set DOT_GIT_VERSION=
+for /f %%i in ('gitversion /showvariable SemVer') do set DOT_GIT_VERSION=%%i
+if "%DOT_GIT_VERSION%" equ "" echo Get version failed.&goto :eof
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+
+for %%R in ("%DOT_NUGET_PROJECTS:;=" "%") do if "%%R" neq "" call :AddPackage %%R
 goto :eof
 
-:DotNugetAddRemove
-echo Performing %1 package Janda.Dot.Nuget for project %2...
-dotnet %1 %2 package Janda.Dot.Nuget %3
-if %ERRORLEVEL% neq 0 exit 
+
+
+:AddPackage
+set PACKAGE_NAME=%~1.%DOT_GIT_VERSION%.nupkg
+nuget add ..\bin\%PACKAGE_NAME% -source %DOT_LOCAL_NUGET_FEED%
 goto :eof
 
 
