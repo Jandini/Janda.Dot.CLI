@@ -51,7 +51,7 @@ if "%DOT_GIT_VERSION%" equ "" echo Get version failed.&goto :eof
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 set PACKAGE_NAME=%DOT_BASE_NAME%.%DOT_GIT_VERSION%.nupkg
 
-dir bin\%PACKAGE_NAME% > nul
+dir bin\Release\%PACKAGE_NAME% > nul
 if %ERRORLEVEL% neq 0 echo %PACKAGE_NAME% package not found in bin folder.&exit /b %ERRORLEVEL%
 echo Package found in bin\%PACKAGE_NAME%
 
@@ -61,7 +61,7 @@ set /P CONFIRM=Do you push %PACKAGE_NAME% to %DOT_NUGET_SOURCE_URL% now (Y/[N])?
 if /i "%CONFIRM%" neq "Y" goto :eof
 
 :push
-dotnet nuget push bin\%PACKAGE_NAME% --api-key %DOT_NUGET_SOURCE_API_KEY% --source %DOT_NUGET_SOURCE_URL% --skip-duplicate
+dotnet nuget push bin\Release\%PACKAGE_NAME% --api-key %DOT_NUGET_SOURCE_API_KEY% --source %DOT_NUGET_SOURCE_URL% --skip-duplicate
 goto :eof
 
 

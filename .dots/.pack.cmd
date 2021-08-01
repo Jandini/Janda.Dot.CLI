@@ -45,7 +45,7 @@ goto :eof
 
 :AddPackage
 set PACKAGE_NAME=%~1.%DOT_GIT_VERSION%.nupkg
-nuget add ..\bin\%PACKAGE_NAME% -source %DOT_LOCAL_NUGET_FEED%
+nuget add ..\bin\Release\%PACKAGE_NAME% -source %DOT_LOCAL_NUGET_FEED%
 goto :eof
 
 
