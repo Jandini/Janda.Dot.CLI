@@ -15,8 +15,9 @@ call :elevate_privileges
 if %ERRORLEVEL% equ 1 exit /b
 
 title Installing prerequisites...
-call :synch_time
+:: call :synch_time
 call :install_choco
+call :install_npm
 call :choco_prerequisites
 call :npm_prerequisites
 title
@@ -51,14 +52,22 @@ goto :eof
 echo Finding choco...
 where choco 1>nul 2>nul
 if %ERRORLEVEL% equ 0 goto :configure 
-%DOT_POWERSHELL_CMD% "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+%DOT_POWERSHELL_CMD% "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 set "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 call RefreshEnv
+
 :configure
 choco feature enable -n allowGlobalConfirmation > nul
 choco feature enable -n exitOnRebootDetected > nul
 goto :eof
 
+:install_npm
+echo Finding npm...
+where npm 1>nul 2>nul
+if %ERRORLEVEL% equ 0 goto :eof 
+echo Nodejs not found. Installing...
+choco install nodejs --force
+goto :eof
 
 :choco_install_prerequisite
 choco install %~1
@@ -79,7 +88,6 @@ echo Synchronizing system time...
 w32tm /resync 2>nul
 if %ERRORLEVEL% neq 0 echo Make sure your system time is synchronized. Some packages may not install if the system time is out of sync.
 goto :eof
-
 
 :elevate_privileges
 setlocal enableextensions
