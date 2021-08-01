@@ -9,7 +9,8 @@ rem :::        [--push] [--yes]
 rem ::: 
 rem ::: Parameters: 
 rem :::     pack - pack nuget package from .nuspec file
-rem :::     push - push nuget package to https://api.nuget.org/v3/index.json using DOT_
+rem :::     push - push nuget package to given nuget source with DOT_NUGET_SOURCE_URL 
+rem :::            Default is https://api.nuget.org/v3/index.json
 rem :::     delete - Delete nuget packages created within current "branch" or all "nonalpha" packages
 rem :::     branch - Override current branch name 
 rem ::: 
@@ -17,8 +18,13 @@ rem ::: Description:
 rem :::     Create nuget package and add to dot nuget feed.
 rem ::: 
 
+if not defined DOT_NUGET_SOURCE_URL set DOT_NUGET_SOURCE_URL=https://api.nuget.org/v3/index.json
+echo Using %DOT_NUGET_SOURCE_URL%
+
 if defined DOT_ARG_PACK goto :pack_nuget
 if defined DOT_ARG_PUSH goto :push_nuget
+
+
 goto :eof
 
 :pack_nuget
@@ -34,7 +40,7 @@ goto :eof
 
 :push_nuget
 
-if not defined DOT_NUGET_ORG_API_KEY echo DOT_NUGET_ORG_API_KEY was not found. Add DOT_NUGET_ORG_API_KEY=yourkey into .dotlocal file.&goto :eof
+if not defined DOT_NUGET_SOURCE_API_KEY echo DOT_NUGET_SOURCE_API_KEY was not found. Add DOT_NUGET_SOURCE_API_KEY=yourkey into .dotlocal file.&goto :eof
 echo Getting semantic version...
 
 :: using inline git version because call .version resets arguments
@@ -51,11 +57,11 @@ echo Package found in bin\%PACKAGE_NAME%
 
 :: remember not to call .command because it resets arguments
 if defined DOT_ARG_YES goto :push
-set /P CONFIRM=Do you push %PACKAGE_NAME% to nuget.org now (Y/[N])?
+set /P CONFIRM=Do you push %PACKAGE_NAME% to %DOT_NUGET_SOURCE_URL% now (Y/[N])?
 if /i "%CONFIRM%" neq "Y" goto :eof
 
 :push
-dotnet nuget push bin\%PACKAGE_NAME% --api-key %DOT_NUGET_ORG_API_KEY% --source https://api.nuget.org/v3/index.json
+dotnet nuget push bin\%PACKAGE_NAME% --api-key %DOT_NUGET_SOURCE_API_KEY% --source %DOT_NUGET_SOURCE_URL% --skip-duplicate
 goto :eof
 
 
