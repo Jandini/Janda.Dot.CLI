@@ -12,7 +12,8 @@ rem ::: Parameters:
 rem :::     pack - pack nuget package from .nuspec file
 rem :::     push - push nuget package to given nuget source with DOT_NUGET_SOURCE_URL 
 rem :::            Default is https://api.nuget.org/v3/index.json
-rem :::     delete - Delete nuget packages created within current "branch" or all "nonalpha" packages
+rem :::     delete - Delete nuget packages created within current "branch"
+rem :::              or all "nonalpha" packages
 rem :::     branch - Override current branch name 
 rem :::     add - Add nuget source based on DOT_NUGET_SOURCE_URL
 rem ::: 
