@@ -19,5 +19,9 @@ if defined DOT_ARG_ALL set PARAMS=--all --follow-tags %2 %3
 echo Running git push %PARAMS%
 git push
 if %ERRORLEVEL% equ 128 git push --set-upstream origin %DOT_GIT_BRANCH%
-
+if not defined DOT_ARG_ALL goto :eof
+echo Running git push --all
+git push --all
+echo Running git push --tags
+git push --tags
 
