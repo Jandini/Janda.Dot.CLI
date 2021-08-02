@@ -44,8 +44,13 @@ goto :eof
 
 
 :AddPackage
+:: Find output bin dir. In the past it was bin for both Debug and Release configuraitons.
+:: Newer repositories uses Debug or Release foldres.
+set BIN_DIR=..\bin
+if exist ..\bin\%DOT_BUILD_CONFIGURATION% set BIN_DIR=..\bin\%DOT_BUILD_CONFIGURATION%
+
 set PACKAGE_NAME=%~1.%DOT_GIT_VERSION%.nupkg
-nuget add ..\bin\Release\%PACKAGE_NAME% -source %DOT_LOCAL_NUGET_FEED%
+nuget add %BIN_DIR%\%PACKAGE_NAME% -source %DOT_LOCAL_NUGET_FEED%
 goto :eof
 
 

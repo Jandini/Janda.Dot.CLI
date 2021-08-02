@@ -73,17 +73,20 @@ goto :eof
 
 :pack
 echo Packing %~2...
-if defined DOT_ARG_VERBOSE echo dotnet pack "%~1" --configuration Release /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
-dotnet pack "%~1" --configuration Release /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
+set DOT_BUILD_CONFIGURATION=Release
+if defined DOT_ARG_VERBOSE echo dotnet pack "%~1" --configuration %DOT_BUILD_CONFIGURATION% /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
+dotnet pack "%~1" --configuration %DOT_BUILD_CONFIGURATION% /p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
 :build 
-echo Building %~2...
 if "%~1" neq "" set DOT_BUILD_SOLUTION="%~1" 
-if defined DOT_ARG_RELEASE set DOT_BUILD_CONFIGURATION=-c Release 
-if defined DOT_ARG_VERBOSE echo dotnet build %DOT_BUILD_SOLUTION%/p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES% %DOT_BUILD_CONFIGURATION%
-dotnet build %DOT_BUILD_SOLUTION%/p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES% %DOT_BUILD_CONFIGURATION%
+
+set DOT_BUILD_CONFIGURATION=Debug
+if defined DOT_ARG_RELEASE set DOT_BUILD_CONFIGURATION=Release
+if defined DOT_ARG_VERBOSE echo dotnet build %DOT_BUILD_SOLUTION%/p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES% -c %DOT_BUILD_CONFIGURATION%
+echo Building %~2 (%DOT_BUILD_CONFIGURATION%)...
+dotnet build %DOT_BUILD_SOLUTION%/p:PackageTargetFeed=%DOT_LOCAL_NUGET_FEED% %DOT_NUGET_SOURCES% -c %DOT_BUILD_CONFIGURATION%
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 goto :eof
 
