@@ -24,6 +24,12 @@ rem :::
 if not defined DOT_NUGET_SOURCE_URL set DOT_NUGET_SOURCE_URL=https://api.nuget.org/v3/index.json
 echo Using %DOT_NUGET_SOURCE_URL%
 
+:: Find output bin dir. In the past it was bin for both Debug and Release configuraitons.
+:: Newer repositories uses Debug or Release foldres.
+set BIN_DIR=bin
+if exist bin\Release set BIN_DIR=bin\Release
+
+
 if defined DOT_ARG_PACK goto :pack_nuget
 if defined DOT_ARG_PUSH goto :push_nuget
 if defined DOT_ARG_ADD goto :AddNugetSource
@@ -55,12 +61,8 @@ if "%DOT_GIT_VERSION%" equ "" echo Get version failed.&goto :eof
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 set PACKAGE_NAME=%DOT_BASE_NAME%.%DOT_GIT_VERSION%.nupkg
 
-:: Find output bin dir. In the past it was bin for both Debug and Release configuraitons.
-:: Newer repositories uses Debug or Release foldres.
-set BIN_DIR=bin
-if exist bin\Release set BIN_DIR=..\bin\Release
 
-
+echo Using %BIN_DIR%\%PACKAGE_NAME%
 dir %BIN_DIR%\%PACKAGE_NAME% > nul
 if %ERRORLEVEL% neq 0 echo %PACKAGE_NAME% package not found in bin folder.&exit /b %ERRORLEVEL%
 echo Package found in bin\%PACKAGE_NAME%
@@ -82,7 +84,7 @@ echo Configuring package...
 call .version %* >nul
 call _dotnugets
 
-set OUTPUT_DIR=bin
+set OUTPUT_DIR=%BIN_DIR%
 set OUTPUT_PACKAGE=%DOT_BASE_NAME%.%DOT_GIT_VERSION%.nupkg
 
 
