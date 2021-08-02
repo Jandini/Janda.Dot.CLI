@@ -6,6 +6,7 @@ rem :::
 rem ::: .NUGET [--pack] 
 rem :::        [--delete branch|nonalpha] [--branch name]
 rem :::        [--push] [--yes]
+rem :::        [--add name] [--user name] [--password text]
 rem ::: 
 rem ::: Parameters: 
 rem :::     pack - pack nuget package from .nuspec file
@@ -13,6 +14,7 @@ rem :::     push - push nuget package to given nuget source with DOT_NUGET_SOURC
 rem :::            Default is https://api.nuget.org/v3/index.json
 rem :::     delete - Delete nuget packages created within current "branch" or all "nonalpha" packages
 rem :::     branch - Override current branch name 
+rem :::     add - Add nuget source based on DOT_NUGET_SOURCE_URL
 rem ::: 
 rem ::: Description: 
 rem :::     Create nuget package and add to dot nuget feed.
@@ -23,6 +25,7 @@ echo Using %DOT_NUGET_SOURCE_URL%
 
 if defined DOT_ARG_PACK goto :pack_nuget
 if defined DOT_ARG_PUSH goto :push_nuget
+if defined DOT_ARG_ADD goto :AddNugetSource
 
 
 goto :eof
@@ -117,8 +120,6 @@ goto :eof
 
 
 
-
-
 :remove_non_release_packages
 set DOT_PSCMD="%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoLogo -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command
 
@@ -129,5 +130,31 @@ echo Removing Janda.* non-release and non-alpha packages from nuget cache...
 echo Removing non-release and non-alpha packages from local nuget...
 %DOT_PSCMD% "$path = $env:userprofile + '\.nuget\local'; Get-ChildItem -Path $path -Recurse -Directory | Where-Object {$_.PSIsContainer -eq $true -and $_.Name -like '*.*.*-*' -and $_.Name -notlike '*alpha*'} | Out-Host " 
 %DOT_PSCMD% "$path = $env:userprofile + '\.nuget\local'; Get-ChildItem -Path $path -Recurse -Directory | Where-Object {$_.PSIsContainer -eq $true -and $_.Name -like '*.*.*-*' -and $_.Name -notlike '*alpha*'} | Remove-Item -Recurse " 
+
+goto :eof
+
+
+:AddNugetSource
+:: by default argument without parameter returns value 1
+if "%DOT_ARG_ADD%" equ "1" echo You must provide nuget source name, for example: .nuget --add nuget.jandini&goto :eof
+if not defined DOT_NUGET_SOURCE_URL echo DOT_NUGET_SOURCE_URL is missing in .dotconfig or .dotlocal&goto :eof
+
+echo Checking %DOT_NUGET_SOURCE_URL%
+dotnet nuget list source | find "%DOT_NUGET_SOURCE_URL%"
+if %ERRORLEVEL% equ 0 echo The nuget source already exist.&goto :eof
+
+set REQUIRE_PASSWORD=
+if defined DOT_NUGET_SOURCE_API_KEY set REQUIRE_PASSWORD=-p %DOT_NUGET_SOURCE_API_KEY%&echo Using DOT_NUGET_SOURCE_API_KEY as password
+if defined DOT_ARG_PASSWORD set REQUIRE_PASSWORD=-p %DOT_ARG_PASSWORD%&echo Using password given in password parameter.
+
+if "%REQUIRE_PASSWORD%" equ "" goto :_AddSource
+if not defined DOT_ARG_USER echo User name parameter is required.&goto :eof
+
+set REQUIRE_PASSWORD=%REQUIRE_PASSWORD% -u %DOT_ARG_USER%
+
+
+:_AddSource
+echo Adding %DOT_NUGET_SOURCE_URL% to nuget source...
+dotnet nuget add source "%DOT_NUGET_SOURCE_URL%" -n %DOT_ARG_ADD% %REQUIRE_PASSWORD%
 
 goto :eof
