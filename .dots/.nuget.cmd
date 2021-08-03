@@ -59,7 +59,23 @@ for /f %%i in ('gitversion /showvariable SemVer') do set DOT_GIT_VERSION=%%i
 if "%DOT_GIT_VERSION%" equ "" echo Get version failed.&goto :eof
 
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-set PACKAGE_NAME=%DOT_BASE_NAME%.%DOT_GIT_VERSION%.nupkg
+
+if "%DOT_NUGET_PROJECTS%" equ "" goto :PushDefaultProject
+
+
+for %%R in ("%DOT_NUGET_PROJECTS:;=" "%") do if "%%R" neq "" call :PushPackage %%R
+goto :eof
+
+:PushDefaultProject
+echo DOT_NUGET_PROJECTS was not found. Pushing %DOT_BASE_NAME%
+call :PushPackage %DOT_BASE_NAME%
+
+
+goto :eof
+
+
+:PushPackage
+set PACKAGE_NAME=%1.%DOT_GIT_VERSION%.nupkg
 
 
 echo Using %BIN_DIR%\%PACKAGE_NAME%
@@ -73,7 +89,7 @@ set /P CONFIRM=Do you push %PACKAGE_NAME% to %DOT_NUGET_SOURCE_URL% now (Y/[N])?
 if /i "%CONFIRM%" neq "Y" goto :eof
 
 :push
-dotnet nuget push %BIN_DIR%\%PACKAGE_NAME% --api-key %DOT_NUGET_SOURCE_API_KEY% --source %DOT_NUGET_SOURCE_URL% --skip-duplicate
+dotnet nuget push %BIN_DIR%\%PACKAGE_NAME% --api-key %DOT_NUGET_SOURCE_API_KEY% --source %DOT_NUGET_SOURCE_URL% --skip-duplicate --timeout 600
 goto :eof
 
 
