@@ -75,7 +75,7 @@ goto :eof
 
 
 :PushPackage
-set PACKAGE_NAME=%1.%DOT_GIT_VERSION%.nupkg
+set PACKAGE_NAME=%~1.%DOT_GIT_VERSION%.nupkg
 
 
 echo Using %BIN_DIR%\%PACKAGE_NAME%
