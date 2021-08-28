@@ -5,8 +5,9 @@ rem ::: Dots nuget
 rem ::: 
 rem ::: .NUGET [--pack] 
 rem :::        [--delete branch|nonalpha] [--branch name]
-rem :::        [--push] [--yes]
+rem :::        [--push] [--yes] [--version] <override version>
 rem :::        [--add name] [--user name] [--password text]
+rem :::        
 rem ::: 
 rem ::: Parameters: 
 rem :::     pack - pack nuget package from .nuspec file
@@ -51,12 +52,19 @@ goto :eof
 :push_nuget
 
 if not defined DOT_NUGET_SOURCE_API_KEY echo DOT_NUGET_SOURCE_API_KEY was not found. Add DOT_NUGET_SOURCE_API_KEY=yourkey into .dotlocal file.&goto :eof
+
+if defined DOT_ARG_VERSION goto override_version
 echo Getting semantic version...
 
 :: using inline git version because call .version resets arguments
 set DOT_GIT_VERSION=
 for /f %%i in ('gitversion /showvariable SemVer') do set DOT_GIT_VERSION=%%i
 if "%DOT_GIT_VERSION%" equ "" echo Get version failed.&goto :eof
+
+:override_version
+if defined DOT_ARG_VERSION set DOT_GIT_VERSION=%DOT_ARG_VERSION%&echo Overriding version to %DOT_ARG_VERSION%
+
+
 
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
@@ -77,10 +85,9 @@ goto :eof
 :PushPackage
 set PACKAGE_NAME=%~1.%DOT_GIT_VERSION%.nupkg
 
-
 echo Using %BIN_DIR%\%PACKAGE_NAME%
 dir %BIN_DIR%\%PACKAGE_NAME% > nul
-if %ERRORLEVEL% neq 0 echo %PACKAGE_NAME% package not found in bin folder.&exit /b %ERRORLEVEL%
+if %ERRORLEVEL% neq 0 echo %PACKAGE_NAME% package not found in %BIN_DIR%\%PACKAGE_NAME%&exit /b %ERRORLEVEL%
 echo Package found in bin\%PACKAGE_NAME%
 
 :: remember not to call .command because it resets arguments
@@ -98,6 +105,7 @@ goto :eof
 
 echo Configuring package...
 call .version %* >nul
+
 call _dotnugets
 
 set OUTPUT_DIR=%BIN_DIR%
