@@ -5,8 +5,6 @@ set DOT_LOCAL_PATH=.\.dots\
 set PATH | find "%LOCAL_DOTS%" > nul
 if %ERRORLEVEL% neq 0 set PATH=%DOT_LOCAL_PATH%;%PATH%
 
-:: Clear variables with multiline values that breaks args paraser 
-set ViewClient_Displays.TopologyV3=
 
 echo Building dots package...
 
