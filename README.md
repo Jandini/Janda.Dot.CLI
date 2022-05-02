@@ -7,7 +7,7 @@
 Download and install from command line: 
 ```
 
-powershell.exe -NoP -NonI -ExecutionPolicy Bypass -Command "$branch='develop';$repo='Janda.Dot.CLI';$ProgressPreference = 'SilentlyContinue';[System.Net.ServicePointManager]::SecurityProtocol = 3072;cd $env:TEMP;Invoke-WebRequest -Uri \"https://github.com/Jandini/$repo/archive/$branch.zip\" -OutFile \"$branch.zip\";Expand-Archive -LiteralPath \"$branch.zip\" -DestinationPath $branch -Force;cd \"$branch\$repo-$branch\";.install.cmd"
+powershell.exe -NoP -NonI -Command "Set-ExecutionPolicy Bypass -Force;$branch='develop';$repo='Janda.Dot.CLI';$ProgressPreference = 'SilentlyContinue';[System.Net.ServicePointManager]::SecurityProtocol = 3072;cd $env:TEMP;Invoke-WebRequest -Uri \"https://github.com/Jandini/$repo/archive/$branch.zip\" -OutFile \"$branch.zip\";Expand-Archive -LiteralPath \"$branch.zip\" -DestinationPath $branch -Force;cd \"$branch\$repo-$branch\";.install.cmd"
 
 ```
 
