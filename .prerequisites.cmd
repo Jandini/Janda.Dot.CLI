@@ -25,7 +25,10 @@ goto :eof
 
 
 :npm_prerequisites
+:: Avoid certificate problems
+npm config set strict-ssl false
 call :npm_install "standard-version"
+npm config set strict-ssl true
 goto :eof
 
 
